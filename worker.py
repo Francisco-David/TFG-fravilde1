@@ -1,7 +1,5 @@
 import asyncio
-from pyzeebe import ZeebeWorker, Job, create_camunda_cloud_channel, create_insecure_channel
-from dotenv import load_dotenv
-import os
+from pyzeebe import ZeebeWorker, create_insecure_channel
 from task import router
 
 
