@@ -1,0 +1,3 @@
+test-examples/examples/__pycache__/*
+__pycache__/
+*.pyc
