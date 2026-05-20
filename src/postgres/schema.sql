@@ -8,12 +8,12 @@
 --      , departments.name AS dept_name
 
 CREATE TYPE nivel_alerta AS ENUM ('critico', 'medio', 'bajo');
-CREATE TYPE estado_sesion AS ENUM ('pendiente', 'en_curso', 'finalizada');
+CREATE TYPE estado_sesion AS ENUM ('en_curso', 'finalizada');
 
 CREATE TABLE sensor (
     sensor_id VARCHAR(3) PRIMARY KEY
         CHECK (sensor_id IN ('tem', 'hum', 'vib', 'son', 'gas', 'luz')),
-    validez BOOLEAN NOT NULL DEFAULT TRUE
+    validez INTEGER NOT NULL
 );
 
 CREATE TABLE horario (

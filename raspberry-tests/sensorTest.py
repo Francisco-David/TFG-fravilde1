@@ -16,7 +16,7 @@ client.loop_start()
 
 async def sensor_task(name, interval, channel=None):
     while True:
-        if name == "sound":
+        if name == "son":
             try:
                 value = random.randint(30, 90)
                 timestamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -27,7 +27,7 @@ async def sensor_task(name, interval, channel=None):
                 print(f"Error reading {name}: {e}")
             await asyncio.sleep(interval)
 
-        elif name == "light":
+        elif name == "luz":
             try:
                 value = random.randint(50, 300)
                 timestamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -38,7 +38,7 @@ async def sensor_task(name, interval, channel=None):
                 print(f"Error reading {name}: {e}")
             await asyncio.sleep(interval)
 
-        elif name == "temp":
+        elif name == "tem":
             try:
                 value = round(random.uniform(16.0, 32.0), 1)
                 timestamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -87,9 +87,9 @@ async def sensor_task(name, interval, channel=None):
 
 async def main():
     tasks = [
-        sensor_task("sound", 2),
-        sensor_task("light", 10),
-        sensor_task("temp", 2),
+        sensor_task("son", 1),
+        sensor_task("luz", 10),
+        sensor_task("tem", 2),
         sensor_task("hum", 2),
         sensor_task("vib", 0.5),
         sensor_task("gas", 1),

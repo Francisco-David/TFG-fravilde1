@@ -29,7 +29,7 @@ client.loop_start()
 
 async def sensor_task(name, interval, channel=None):
     while True:
-        if name=="sound" or name=="light":
+        if name=="son" or name=="luz":
             try:
                 value = ADC.read(channel)
                 timestamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -40,7 +40,7 @@ async def sensor_task(name, interval, channel=None):
                 print(f"Error reading {name}: {e}")
             await asyncio.sleep(interval)
             
-        elif name=="temp":
+        elif name=="tem":
             try:
                 #global ds18b20
                 #for i in os.listdir('/sys/bus/w1/devices'):
