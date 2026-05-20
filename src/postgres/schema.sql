@@ -1,0 +1,48 @@
+-- -- sso not like this --
+-- SELECT employees.emp_name
+--      , departments.dept_name
+--      , ...
+-- instead, provide the distinction with column aliases like this --
+
+-- SELECT employees.name AS emp_name
+--      , departments.name AS dept_name
+
+CREATE TYPE nivel_alerta AS ENUM ('critico', 'medio', 'bajo');
+CREATE TYPE estado_sesion AS ENUM ('pendiente', 'en_curso', 'finalizada');
+
+CREATE TABLE sensor (
+    sensor_id VARCHAR(3) PRIMARY KEY
+        CHECK (sensor_id IN ('tem', 'hum', 'vib', 'son', 'gas', 'luz')),
+    validez BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE horario (
+    horario_id SERIAL PRIMARY KEY,
+    asignatura TEXT NOT NULL,
+    profesor TEXT,
+    grupo VARCHAR(3) CHECK (grupo ~ '^[0-9]-[0-9]$'),  -- Grupo clase (ej. 1-1, 1-2, 2-1)
+    aula VARCHAR(5) NOT NULL CHECK (aula ~ '^[A-Za-z][0-9]\.[0-9]{2}$'), 
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    dia_semana SMALLINT NOT NULL CHECK (dia_semana BETWEEN 1 AND 7) 
+);
+
+CREATE TABLE sesion (
+    sesion_id SERIAL PRIMARY KEY,
+    horario_id INTEGER REFERENCES horario(horario_id) ON DELETE CASCADE,
+    fecha DATE NOT NULL,
+    comienza TIME,
+    finaliza TIME,
+    estado estado_sesion            -- Opcional: 'pendiente','en_curso','finalizada'
+);
+
+
+CREATE TABLE alerta (
+    alerta_id SERIAL PRIMARY KEY,
+    sensor_id VARCHAR(16) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
+    tipo TEXT NOT NULL,
+    nivel nivel_alerta NOT NULL,        -- enum: critico, medio, bajo
+    ts TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_alerta_sensor_ts ON alerta(sensor_id, ts);

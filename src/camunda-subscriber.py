@@ -7,9 +7,9 @@ import threading
 # Config
 PROCESS_ID = "temp-process"
 ZEEBE_ADDRESS = "localhost:26500"
-BROKER_ADDRESS = "10.245.208.86"
+BROKER_ADDRESS = "10.44.199.86"
 MQTT_PORT = 1883
-MQTT_TOPIC = "tfg/sensors/temp"
+MQTT_TOPIC = "tfg/sensors/+"  # valor'+' para el siguiente nivel (temp, hum, etc.) y '#' para todo el árbol (tfg/sensors/...)
 
 # Background asyncio loop setup
 def start_asyncio_loop(loop):
@@ -25,18 +25,19 @@ loop_thread.start()
 # MQTT Callback
 def on_message(client, userdata, msg):
     print(f"Received on {msg.topic}: {msg.payload.decode()}")
-    try:
-        payload = json.loads(msg.payload.decode())
-        variables = {"temperature": payload.get("value")}
+    if "temp" in msg.topic:
+        try:
+            payload = json.loads(msg.payload.decode())
+            variables = {"temperature": payload.get("value")}
 
-        future = asyncio.run_coroutine_threadsafe(
-            start_camunda_process(variables), async_loop
-        )
-        # Callback to see exceptions from the async task
-        future.add_done_callback(lambda f: f.result() if f.exception() is None else print(f"Async task failed: {f.exception()}"))
+            future = asyncio.run_coroutine_threadsafe(
+                start_camunda_process(variables), async_loop
+            )
+            # Callback to see exceptions from the async task
+            future.add_done_callback(lambda f: f.result() if f.exception() is None else print(f"Async task failed: {f.exception()}"))
 
-    except Exception as e:
-        print(f"Error handling message: {e}")
+        except Exception as e:
+            print(f"Error handling message: {e}")
 
 # Async function to start camunda (via Zeebe) process. Create BOTH the channel and the client INSIDE the coroutine.
 async def start_camunda_process(variables):
@@ -48,7 +49,7 @@ async def start_camunda_process(variables):
         await zeebe_client.run_process(PROCESS_ID, variables)
         print("Process started successfully.")
     except Exception as e:
-        print(f"Error starting Camunda process: {e}")
+        print(f"[ERROR] Couldn't start Camunda process: {e}")
 
 
 # MQTT Config
