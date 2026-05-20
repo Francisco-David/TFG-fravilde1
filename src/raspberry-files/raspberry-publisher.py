@@ -107,9 +107,9 @@ async def sensor_task(name, interval, channel=None):
 
 async def main():
     tasks = [
-        sensor_task("sound", 2, SOUND_PCF8591_PIN),
-        sensor_task("light", 10, LIGHT_PCF8591_PIN),
-        sensor_task("temp", 2),
+        sensor_task("son", 1, SOUND_PCF8591_PIN),
+        sensor_task("luz", 10, LIGHT_PCF8591_PIN),
+        sensor_task("tem", 2),
         sensor_task("hum", 2, HUMIDITY_PIN),
         sensor_task("vib", 0.5, VIBRATION_PIN),
         sensor_task("gas", 1, GAS_PIN),
