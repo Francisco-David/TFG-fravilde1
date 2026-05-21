@@ -37,6 +37,15 @@ CREATE TABLE sesion (
 );
 
 
+CREATE TABLE lectura (
+    lectura_id SERIAL PRIMARY KEY,
+    sensor_id VARCHAR(16) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
+    valor REAL NOT NULL,
+    timestamp TIMESTAMPTZ NOT NULL DEFAULT now(),
+    sesion_id INTEGER REFERENCES sesion(sesion_id) ON DELETE SET NULL
+);
+
+
 CREATE TABLE alerta (
     alerta_id SERIAL PRIMARY KEY,
     sensor_id VARCHAR(16) REFERENCES sensor(sensor_id) ON DELETE SET NULL,

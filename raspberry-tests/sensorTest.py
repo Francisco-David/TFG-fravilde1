@@ -20,7 +20,7 @@ async def sensor_task(name, interval, channel=None):
             try:
                 value = random.randint(30, 90)
                 timestamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-                message = {"sensor": name, "value": value, "timestamp": timestamp}
+                message = {"value": value, "timestamp": timestamp}
                 client.publish(TOPIC + name, json.dumps(message))
                 print(f"Published: {message}")
             except Exception as e:

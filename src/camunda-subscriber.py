@@ -14,6 +14,16 @@ MQTT_PORT = 1883
 MQTT_TOPIC = "tfg/sensors/+"  # valor'+' para el siguiente nivel (temp, hum, etc.) y '#' para todo el árbol (tfg/sensors/...)
 
 
+# Obtener fecha y hora actual para la lógica de sesión
+ahora = datetime.now()
+# HORA_ACTUAL = ahora.strftime("%H:%M")
+# DIA_SEMANA = int(ahora.strftime("%w"))
+# FECHA_ACTUAL = ahora.strftime("%Y-%m-%d")
+HORA_ACTUAL = "10:50"       # Para pruebas
+FECHA_ACTUAL = "2026-05-20" # Para pruebas (miércoles)
+DIA_SEMANA = 3              # Para pruebas (lunes=1)
+
+
 # Background asyncio loop setup
 def start_asyncio_loop(loop):
     asyncio.set_event_loop(loop)
@@ -27,12 +37,20 @@ loop_thread.start()
 
 # MQTT Callback
 def on_message(client, userdata, msg):
-    print(f"Recibido en {msg.topic}: {msg.payload.decode()}")
+    # print(f"Recibido en {msg.topic}: {msg.payload.decode()}")
     sensorId = msg.topic.split("/")[-1]
     try:
         payload = json.loads(msg.payload.decode())
         value = payload.get("value")
         timestamp = payload.get("timestamp")
+
+        print(f"Sensor: {sensorId} | Valor: {value} | Timestamp: {timestamp}")
+
+        # query_insert_nueva_lectura = """
+        # INSERT INTO lectura
+        # (sensor_id, valor, timestamp, sesion_id)
+        # VALUES (%s, %s, %s, %s)
+        # """
 
         # variables = {"temperature": payload.get("value")}
 
@@ -58,17 +76,6 @@ async def start_camunda_process(variables):
         print(f"[ERROR] No se pudo iniciar el proceso de Camunda: {e}")
 
 
-ahora = datetime.now()
-
-# hora_actual = ahora.strftime("%H:%M")
-# dia_semana = int(ahora.strftime("%w"))
-# fecha_actual = ahora.strftime("%Y-%m-%d")
-
-hora_actual = ahora.strftime("10:50")  # Para pruebas, fijamos una hora concreta
-fecha_actual = ahora.strftime("2026-05-20")  # Para pruebas, fijamos una fecha concreta
-dia_semana = 1  # Para pruebas, fijamos un día de la semana concreto 
-
-print("- SESIÓN INICIADA " + f"{fecha_actual} | {hora_actual} -")
 
 conn = psycopg2.connect(
     host="localhost",
@@ -76,13 +83,15 @@ conn = psycopg2.connect(
     user="postgres",
     # password="admin"
 )
-
-aula = input("Introduce el aula (p.e A0.12): ")
-
 cur = conn.cursor()
 
+
+print("- BIENVENIDO: " + f"{FECHA_ACTUAL} | {HORA_ACTUAL} -")
+aula = input("Introduce el aula (p.e A0.12): ")
+
+
 # BUSCAR HORARIO ACTIVO
-querie_encontrar_sesion = """
+query_encontrar_sesion = """
 SELECT horario_id
 FROM horario
 WHERE aula = %s
@@ -90,7 +99,7 @@ AND dia_semana = %s
 AND %s BETWEEN hora_inicio AND hora_fin
 """
 
-cur.execute(querie_encontrar_sesion, (aula, dia_semana, hora_actual))
+cur.execute(query_encontrar_sesion, (aula, DIA_SEMANA, HORA_ACTUAL))
 sesion_horario = cur.fetchone()
 
 if sesion_horario is None:
@@ -106,7 +115,7 @@ else:
     AND fecha = %s
     """
 
-    cur.execute(query_comprobar_sesion, (horario_id, fecha_actual))
+    cur.execute(query_comprobar_sesion, (horario_id, FECHA_ACTUAL))
     sesion_en_curso = cur.fetchone()
 
     if sesion_en_curso is not None:
@@ -132,7 +141,7 @@ else:
 
         cur.execute(query_insert_nueva_sesion, (
             horario_id,
-            fecha_actual,
+            FECHA_ACTUAL,
             "en_curso"
         ))
         sesion_id = cur.fetchone()[0]
