@@ -33,19 +33,21 @@ def start_asyncio_loop(loop):
 # MQTT ON MESSAGE CALLBACK
 def on_message(client, userdata, msg):
     sensorId = msg.topic.split("/")[-1]
+    sesion_id = userdata.get("sesion_id")
+    conn = userdata.get("conn")
+    tipo_sensor = database.find_sensor_tipo(conn, sensorId)
     try:
-        payload = json.loads(msg.payload.decode())
-        value = payload.get("value")
-        timestamp = payload.get("timestamp")
-
-        print(f"Sensor: {sensorId} | Valor: {value} | Timestamp: {timestamp}")
-
-        # query_insert_nueva_lectura = """
-        # INSERT INTO lectura
-        # (sensor_id, valor, timestamp, sesion_id)
-        # VALUES (%s, %s, %s, %s)
-        # """
-
+        if tipo_sensor == "ambiental":
+            payload = json.loads(msg.payload.decode())
+            value = payload.get("value")
+            timestamp = payload.get("timestamp")
+            database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
+        elif tipo_sensor == "alarma":
+            pass
+        else:
+            print(f"[MQTT] Sensor desconocido '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
+            return
+        
         # variables = {"temperature": payload.get("value")}
 
         # future = asyncio.run_coroutine_threadsafe(
@@ -55,7 +57,12 @@ def on_message(client, userdata, msg):
         # future.add_done_callback(lambda f: f.result() if f.exception() is None else print(f"Async task failed: {f.exception()}"))
 
     except Exception as e:
-        print(f"[ERROR] No se pudo leer el mensaje MQTT: {e}")
+        try:
+            conn.rollback()  # Si ha habido un error al insertar la lectura en la base de datos, hacemos rollback para evitar dejar la conexión en un estado inconsistente.
+                             #   Si el error no es de base de datos, evitamos que el programa caiga por un error que no se puede manejar.
+        except:
+            pass
+        print(f"[MQTT] ERROR: {e}")
 
 # FUNCION ASÍNCRONA PARA LAS LLAMADAS A CAMUNDA (VIA ZEEBE)
 async def start_camunda_process(variables):
@@ -121,7 +128,8 @@ def main():
         return
 
     # CONFIGURACION MQTT CLIENTE
-    mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2) #Error al ejecutar: [Callback API version 1 is deprecated, update to latest version]
+    mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+    mqtt_client.user_data_set({"sesion_id": sesion_id, "conn": conn}) # Pasamos el ID de sesión y la conexión a la base de datos al callback de MQTT
     mqtt_client.on_message = on_message
     mqtt_client.connect(BROKER_ADDRESS, MQTT_PORT, 60)
     mqtt_client.subscribe(MQTT_TOPIC)

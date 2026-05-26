@@ -9,10 +9,13 @@
 
 CREATE TYPE nivel_alerta AS ENUM ('critico', 'medio', 'bajo');
 CREATE TYPE estado_sesion AS ENUM ('en_curso', 'finalizada');
+CREATE TYPE tipo_sensor AS ENUM ('ambiental', 'alarma');
 
 CREATE TABLE sensor (
-    sensor_id VARCHAR(3) PRIMARY KEY
-        CHECK (sensor_id IN ('tem', 'hum', 'vib', 'son', 'gas', 'luz')),
+    sensor_id VARCHAR(3) PRIMARY KEY,
+        -- Mejor no usar CHECK para validar el sensor_id, ya que si en el futuro se añaden nuevos tipos de sensores
+        -- CHECK (sensor_id IN ('tem', 'hum', 'vib', 'son', 'gas', 'luz')),
+    tipo tipo_sensor NOT NULL,
     validez INTEGER NOT NULL
 );
 
@@ -41,7 +44,7 @@ CREATE TABLE lectura (
     lectura_id SERIAL PRIMARY KEY,
     sensor_id VARCHAR(16) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
     valor REAL NOT NULL,
-    timestamp TIMESTAMPTZ NOT NULL DEFAULT now(),
+    timestamp TIMESTAMP NOT NULL DEFAULT now(),
     sesion_id INTEGER REFERENCES sesion(sesion_id) ON DELETE SET NULL
 );
 

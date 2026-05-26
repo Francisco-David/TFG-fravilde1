@@ -53,11 +53,50 @@ def find_horario(conn, aula, dia_semana, hora_actual):
         """
         cur.execute(query, (aula, dia_semana, hora_actual))
         return cur.fetchone()
-    
-if __name__ == "__main__":
-    files = ["/TFG-fravilde1/src/postgres/drop.sql", "/TFG-fravilde1/src/postgres/schema.sql", "/TFG-fravilde1/src/postgres/seed.sql"]
 
-    with psycopg2.connect(host="localhost", database="fravilde1_tfg", user="postgres") as conn:
-        with conn.cursor() as cur:
-            for f in files:
-                cur.execute(open(PROJECT_PATH + f, encoding="utf-8").read())
+def find_sensor_tipo(conn, sensor_id):
+    with conn.cursor() as cur:
+        query = """
+        SELECT tipo
+        FROM sensor
+        WHERE sensor_id = %s
+        """
+        cur.execute(query, (sensor_id,))
+        result = cur.fetchone()
+        return result[0] if result else None
+
+def insert_lectura(conn, sensor_id, valor, timestamp, sesion_id):
+    with conn.cursor() as cur:
+        query = """
+        INSERT INTO lectura
+        (sensor_id, valor, timestamp, sesion_id)
+        VALUES (%s, %s, %s, %s)
+        """
+        cur.execute(query, (sensor_id, valor, timestamp, sesion_id))
+    conn.commit()
+    print(f"[DATABASE] Nueva lectura: Sensor {sensor_id}: [{valor}] -  [{timestamp}]")
+
+def main_delete_db(conn):
+    files = ["/TFG-fravilde1/src/postgres/drop.sql", "/TFG-fravilde1/src/postgres/schema.sql", "/TFG-fravilde1/src/postgres/seed.sql"]
+    with conn.cursor() as cur:
+        for f in files:
+            cur.execute(open(PROJECT_PATH + f, encoding="utf-8").read())
+    conn.commit()
+
+def main_check_db(table_name, conn):
+    with conn.cursor() as cur:
+        cur.execute(f"SELECT * FROM {table_name}")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+
+if __name__ == "__main__":
+    conn = psycopg2.connect(
+        host="localhost",
+        database="fravilde1_tfg",
+        user="postgres",
+        # password="admin"
+    )
+    # main_delete_db(conn)
+    main_check_db("lectura", conn)
+    conn.close()
