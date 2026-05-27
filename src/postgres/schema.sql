@@ -9,7 +9,7 @@
 
 CREATE TYPE nivel_alerta AS ENUM ('critico', 'medio', 'bajo');
 CREATE TYPE estado_sesion AS ENUM ('en_curso', 'finalizada');
-CREATE TYPE tipo_sensor AS ENUM ('ambiental', 'alarma');
+CREATE TYPE tipo_sensor AS ENUM ('ambiental', 'alarma', 'hibrido');
 
 CREATE TABLE sensor (
     sensor_id VARCHAR(3) PRIMARY KEY,

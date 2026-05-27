@@ -32,20 +32,25 @@ def start_asyncio_loop(loop):
 
 # MQTT ON MESSAGE CALLBACK
 def on_message(client, userdata, msg):
-    sensorId = msg.topic.split("/")[-1]
+    sensorId = msg.topic.split("/")[-1]  # El sensorId lo obtenemos del topic MQTT "tfg/sensors/{sensorId}"
+
     sesion_id = userdata.get("sesion_id")
     conn = userdata.get("conn")
-    tipo_sensor = database.find_sensor_tipo(conn, sensorId)
+
+    tipo_sensor = database.find_sensor_tipo(conn, sensorId) # Tipo sensor para saber como procesar la lectura
+    
+    # Lectura de valor y timestamp del mensaje MQTT (message = {"sensor": name, "value": value, "timestamp": timestamp})
+    payload = json.loads(msg.payload.decode())
+    value = payload.get("value")
+    timestamp = payload.get("timestamp")
+
     try:
-        if tipo_sensor == "ambiental":
-            payload = json.loads(msg.payload.decode())
-            value = payload.get("value")
-            timestamp = payload.get("timestamp")
-            database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
-        elif tipo_sensor == "alarma":
+        if tipo_sensor=="hibrido" or tipo_sensor == "ambiental":
+            database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)  # Dejar que lo haga camunda?
+        elif tipo_sensor=="hibrido" or tipo_sensor == "alarma":
             pass
         else:
-            print(f"[MQTT] Sensor desconocido '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
+            print(f"[MQTT] Sensor desconocido: ID '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
             return
         
         # variables = {"temperature": payload.get("value")}
@@ -59,7 +64,7 @@ def on_message(client, userdata, msg):
     except Exception as e:
         try:
             conn.rollback()  # Si ha habido un error al insertar la lectura en la base de datos, hacemos rollback para evitar dejar la conexión en un estado inconsistente.
-                             #   Si el error no es de base de datos, evitamos que el programa caiga por un error que no se puede manejar.
+                             #   Asi si el error no es de base de datos, evitamos que el programa caiga por un error que no se puede manejar.
         except:
             pass
         print(f"[MQTT] ERROR: {e}")
@@ -143,6 +148,7 @@ def main():
     except KeyboardInterrupt:
         print("\nApagando...")
     finally:
+
         # Al finalizar, actualizar el estado de la sesión a "finalizada"
         if sesion_id is not None:
             database.update_sesion_estado(conn, sesion_id, "finalizada")
