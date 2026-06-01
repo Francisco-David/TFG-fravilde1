@@ -36,22 +36,20 @@ CREATE TABLE sesion (
     fecha DATE NOT NULL,
     comienza TIME,
     finaliza TIME,
-    estado estado_sesion NOT NULL DEFAULT 'en_curso',    
+    estado estado_sesion NOT NULL DEFAULT 'en_curso'    
 );
-
 
 CREATE TABLE lectura (
     lectura_id SERIAL PRIMARY KEY,
-    sensor_id VARCHAR(16) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
+    sensor_id VARCHAR(3) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
     valor REAL NOT NULL,
     timestamp TIMESTAMP NOT NULL DEFAULT now(),
     sesion_id INTEGER REFERENCES sesion(sesion_id) ON DELETE SET NULL
 );
 
-
 CREATE TABLE alerta (
     alerta_id SERIAL PRIMARY KEY,
-    sensor_id VARCHAR(16) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
+    sensor_id VARCHAR(3) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
     tipo TEXT NOT NULL,
     nivel nivel_alerta NOT NULL DEFAULT 'bajo',     
     timestamp TIMESTAMP NOT NULL DEFAULT now()
@@ -59,7 +57,7 @@ CREATE TABLE alerta (
 
 CREATE TABLE evaluacion (
     evaluacion_id SERIAL PRIMARY KEY,
-    sesion_id INTEGER REFERENCES sesion(sesion_id) ON DELETE CASCADE,
+    sesion_id  INTEGER REFERENCES sesion(sesion_id) ON DELETE SET NULL,
     resultado TEXT NOT NULL,
     timestamp TIMESTAMP NOT NULL DEFAULT now()
 );

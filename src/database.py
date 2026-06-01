@@ -97,6 +97,6 @@ if __name__ == "__main__":
         user="postgres",
         # password="admin"
     )
-    # main_delete_db(conn)
-    main_check_db("lectura", conn)
+    main_delete_db(conn)
+    # main_check_db("lectura", conn)
     conn.close()

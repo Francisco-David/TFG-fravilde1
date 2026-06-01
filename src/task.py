@@ -3,8 +3,10 @@ from pyzeebe import ZeebeTaskRouter, Job
 router = ZeebeTaskRouter()
 
 
-@router.task(task_type="activarAlarmaTem")
-async def activar_alarma_tem():
+@router.task(task_type="leerLecturas")
+async def leer_lecturas(job: Job):
+    sesion_id = job.variables.get("sesion_id")
+    
     pass
     return {}
 

@@ -1,6 +1,7 @@
 from datetime import datetime
 import database
 import psycopg2
+from psycopg2 import pool
 import json
 import paho.mqtt.client as mqtt
 from pyzeebe import ZeebeClient, create_insecure_channel
@@ -8,9 +9,8 @@ import asyncio
 import threading
 
 # CONFIGURACIÓN SCRIPT PYTHON
-PROCESS_ID = "temp-process"
 ZEEBE_ADDRESS = "localhost:26500"
-BROKER_ADDRESS = "10.198.77.86"
+BROKER_ADDRESS = "10.134.208.86"
 MQTT_PORT = 1883
 MQTT_TOPIC = "tfg/sensors/+"  # valor'+' para el siguiente nivel (temp, hum, etc.) y '#' para todo el árbol (tfg/sensors/...)
 
@@ -35,72 +35,96 @@ def on_message(client, userdata, msg):
     sensorId = msg.topic.split("/")[-1]  # El sensorId lo obtenemos del topic MQTT "tfg/sensors/{sensorId}"
 
     sesion_id = userdata.get("sesion_id")
-    conn = userdata.get("conn")
+    db_pool = userdata.get("pool")
+    conn = None
 
-    tipo_sensor = database.find_sensor_tipo(conn, sensorId) # Tipo sensor para saber como procesar la lectura
-    
     # Lectura de valor y timestamp del mensaje MQTT (message = {"sensor": name, "value": value, "timestamp": timestamp})
     payload = json.loads(msg.payload.decode())
     value = payload.get("value")
     timestamp = payload.get("timestamp")
-
     try:
-        if tipo_sensor=="mixto" or tipo_sensor == "ambiental":
-            database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
-        elif tipo_sensor=="mixto" or tipo_sensor == "alarma":
-            if sensorId != "vib": # Para el sensor de vibración, solo insertamos la lectura si detecta vibración
-                database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
-            elif sensorId == "vib":
-                pass
-            elif sensorId == "gas":
-                # Para el sensor de gas, solo insertamos la lectura si el valor supera un umbral ¿Empezar temporizador?
-                # if value > :
-                #     database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
-                pass
-        else:
-            print(f"[MQTT] Sensor desconocido: ID '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
-            return
-        
-        # variables = {"temperature": payload.get("value")}
-
-        # future = asyncio.run_coroutine_threadsafe(
-        #     start_camunda_process(variables), async_loop
-        # )
-
-        # future.add_done_callback(lambda f: f.result() if f.exception() is None else print(f"Async task failed: {f.exception()}"))
-
-    except Exception as e:
+        conn = db_pool.getconn()  # Obtenemos una conexión del pool para insertar la lectura
+        tipo_sensor = database.find_sensor_tipo(conn, sensorId) # Tipo sensor para saber como procesar la lectura
         try:
-            conn.rollback()  # Si ha habido un error al insertar la lectura en la base de datos, hacemos rollback para evitar dejar la conexión en un estado inconsistente.
-                             #   Asi si el error no es de base de datos, evitamos que el programa caiga por un error que no se puede manejar.
-        except:
-            pass
-        print(f"[MQTT] ERROR: {e}")
+            if tipo_sensor=="mixto" or tipo_sensor == "ambiental":
+                database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
+
+            elif tipo_sensor=="mixto" or tipo_sensor == "alarma":
+                if sensorId != "vib": # Para el sensor de vibración, solo insertamos la lectura si detecta vibración
+                    database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
+                elif sensorId == "vib":
+                    # variables = {
+                    #     "sensorId": sensorId,
+                    #     "value": value,
+                    #     "timestamp": timestamp
+                    # }
+
+                    # future = asyncio.run_coroutine_threadsafe(
+                    #     start_camunda_process(variables), async_loop
+                    # )
+
+                    # future.add_done_callback(lambda f: f.result() if f.exception() is None else print(f"Async task failed: {f.exception()}"))
+                    pass
+                elif sensorId == "gas":
+                    # Para el sensor de gas, solo insertamos la lectura si el valor supera un umbral ¿Empezar temporizador?
+                    # if value > :
+                    #     database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
+                    pass
+            else:
+                print(f"[MQTT] Sensor desconocido: ID '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
+                return
+
+        except Exception as e:
+            try:
+                conn.rollback()  # Si ha habido un error al insertar la lectura en la base de datos, hacemos rollback para evitar dejar la conexión en un estado inconsistente.
+                                #   Asi si el error no es de base de datos, evitamos que el programa caiga por un error que no se puede manejar.
+            except:
+                pass
+            print(f"[MQTT] ERROR: {e}")
+    finally:
+        if conn is not None:
+            db_pool.putconn(conn)  # Devolvemos la conexión al pool para que pueda ser reutilizada por otros hilos o procesos
 
 # FUNCION ASÍNCRONA PARA LAS LLAMADAS A CAMUNDA (VIA ZEEBE)
-async def start_camunda_process(variables):
+async def comenzar_proceso_camunda_async(zeebe_client, process_id, variables):
     try:
-        channel = create_insecure_channel(grpc_address=ZEEBE_ADDRESS)
-        zeebe_client = ZeebeClient(channel)
-
-        print(f"[ZEEBE] Comenzando el proceso '{PROCESS_ID}' con variables: {variables}")
-        await zeebe_client.run_process(PROCESS_ID, variables)
+        print(f"[ZEEBE] Comenzando el proceso '{process_id}' con variables: {variables}")
+        await zeebe_client.run_process(process_id, variables)
         print("[ZEEBE] Proceso iniciado correctamente.")
     except Exception as e:
         print(f"[ERROR] No se pudo iniciar el proceso de Camunda: {e}")
 
+# FUNCION PARA INICIAR PROCESOS DE CAMUNDA
+def crear_proceso_camunda(async_loop, zeebe_client, process_id, variables):
+    future = asyncio.run_coroutine_threadsafe(
+        comenzar_proceso_camunda_async(zeebe_client, process_id, variables),
+        async_loop
+    )
+    future.add_done_callback(camunda_callback, process_id)
+
+# FUNCION QUE SE EJECUTA CUANDO LA COROUTINE DE CAMUNDA TERMINA, PARA REGISTRAR ERRORES O INSPECCIONAR RESULTADOS
+def camunda_callback(fut, process_id):
+    exc = fut.exception()
+    if exc:
+        print(f"[ZEEBE] Error al iniciar proceso async (ID: {process_id}): {exc}")
+    else:
+        res = fut.result()
+        if res is not None:
+            print(f"[ZEEBE] Resultado de inicio (ID: {process_id}): {res}")
+
+# FUNCION PARA INICIAR SESIÓN: PIDE EL AULA, BUSCA EL HORARIO CORRESPONDIENTE Y CREA LA SESIÓN EN LA BASE DE DATOS, SI EXISTE LA PONE EN CURSO, SI NO EXISTE LA CREA Y LA PONE EN CURSO
 def iniciar_sesion(conn):
     while True:
         aula = input("\t · Introduzca el aula (p.e A0.12):").strip()
 
         # Buscar el horario que corresponda al aula, día de la semana y hora actual
         sesion_horario = database.find_horario(conn, aula, DIA_SEMANA, HORA_ACTUAL)
-        
+
         if sesion_horario is None:
             print("[ERROR] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.")
         else:
              break
-        
+
     horario_id = sesion_horario[0]
     #Comprobar si ya hay una sesión con ese horario_id y dia actual
     sesion_en_curso = database.find_sesion(conn, horario_id, FECHA_ACTUAL)
@@ -110,22 +134,22 @@ def iniciar_sesion(conn):
         sesion_id = sesion_en_curso[0]
         database.update_sesion_estado(conn, sesion_id, "en_curso")
         print(f"Ya existe una sesión (ID: {sesion_id}) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.\n\n  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.\n")
-        
+
     else:
         #Creamos la sesión y obtenemos su ID
         sesion_id = database.insert_nueva_sesion(conn, horario_id, FECHA_ACTUAL)
         print(f"Sesión creada correctamente. ID: {sesion_id}\n\n  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.\n")
 
     return sesion_id
-    
+
 def main():
-    # CONEXIÓN A LA BASE DE DATOS
-    conn = psycopg2.connect(
-        host="localhost",
-        database="fravilde1_tfg",
-        user="postgres",
-        # password="admin"
-    )
+    # CONEXIÓN A LA BASE DE DATOS CON POOL DE CONEXIONES PARA USARLA DESDE VARIOS HILOS (MQTT Y ASYNCIO) SIN PROBLEMAS DE CONCURRENCIA
+    db_pool = psycopg2.pool.ThreadedConnectionPool(1, 10,
+    host="localhost", database="fravilde1_tfg", user="postgres")
+
+    # CONEXIÓN A CAMUNDA (VIA ZEEBE)
+    channel = create_insecure_channel(grpc_address=ZEEBE_ADDRESS)
+    zeebe_client = ZeebeClient(channel)
 
     # CONFIGURACION DE EL LOOP DE ASYNCIO EN UN HILO SEPARADO PARA PODER USARLO DESDE EL CALLBACK DE MQTT
     async_loop = asyncio.new_event_loop()
@@ -135,14 +159,25 @@ def main():
 
     print("\n-  BIENVENIDO: " + f"{FECHA_ACTUAL} | {HORA_ACTUAL}  - \n\n  -  Use Ctrl+C si desea salir del programa.\n")
     try:
-        sesion_id = iniciar_sesion(conn)
+        conn = db_pool.getconn()  # Obtenemos una conexión del pool para iniciar la sesión
+        try:
+            sesion_id = iniciar_sesion(conn)
+        finally:
+            db_pool.putconn(conn)
+        # INICIAR PROCESO DE EVALUACION EN CAMUNDA
+        variables = {
+            "sesion_id": sesion_id,
+        }
+
+        # crear_proceso_camunda(async_loop, zeebe_client, "eval-ambiental", variables)
+
     except KeyboardInterrupt:
         print("\n Sesión no iniciada. Apagando...")
         return
 
-    # CONFIGURACION MQTT CLIENTE
+    # CONEXION MQTT y CONFIGURACION MQTT CLIENTE
     mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
-    mqtt_client.user_data_set({"sesion_id": sesion_id, "conn": conn}) # Pasamos el ID de sesión y la conexión a la base de datos al callback de MQTT
+    mqtt_client.user_data_set({"sesion_id": sesion_id, "pool": db_pool}) # Pasamos el ID de sesión y la conexión a la base de datos al callback de MQTT
     mqtt_client.on_message = on_message
     mqtt_client.connect(BROKER_ADDRESS, MQTT_PORT, 60)
     mqtt_client.subscribe(MQTT_TOPIC)
@@ -159,8 +194,10 @@ def main():
 
         # Al finalizar, actualizar el estado de la sesión a "finalizada"
         if sesion_id is not None:
+            conn = db_pool.getconn()  # Obtenemos una conexión del pool para actualizar el estado de la sesión
             database.update_sesion_estado(conn, sesion_id, "finalizada")
-        conn.close()
+            db_pool.putconn(conn)  # Devolvemos la conexión al pool
+        db_pool.closeall()  # Cerramos todas las conexiones del pool
 
         # Detener MQTT y el loop de asyncio
         mqtt_client.disconnect()
