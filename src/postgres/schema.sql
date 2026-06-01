@@ -9,7 +9,7 @@
 
 CREATE TYPE nivel_alerta AS ENUM ('critico', 'medio', 'bajo');
 CREATE TYPE estado_sesion AS ENUM ('en_curso', 'finalizada');
-CREATE TYPE tipo_sensor AS ENUM ('ambiental', 'alarma', 'hibrido');
+CREATE TYPE tipo_sensor AS ENUM ('ambiental', 'alarma', 'mixto');
 
 CREATE TABLE sensor (
     sensor_id VARCHAR(3) PRIMARY KEY,
@@ -36,7 +36,7 @@ CREATE TABLE sesion (
     fecha DATE NOT NULL,
     comienza TIME,
     finaliza TIME,
-    estado estado_sesion            -- Opcional: 'pendiente','en_curso','finalizada'
+    estado estado_sesion NOT NULL DEFAULT 'en_curso',    
 );
 
 
@@ -53,8 +53,13 @@ CREATE TABLE alerta (
     alerta_id SERIAL PRIMARY KEY,
     sensor_id VARCHAR(16) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
     tipo TEXT NOT NULL,
-    nivel nivel_alerta NOT NULL,        -- enum: critico, medio, bajo
-    ts TIMESTAMPTZ NOT NULL DEFAULT now()
+    nivel nivel_alerta NOT NULL DEFAULT 'bajo',     
+    timestamp TIMESTAMP NOT NULL DEFAULT now()
 );
 
-CREATE INDEX IF NOT EXISTS idx_alerta_sensor_ts ON alerta(sensor_id, ts);
+CREATE TABLE evaluacion (
+    evaluacion_id SERIAL PRIMARY KEY,
+    sesion_id INTEGER REFERENCES sesion(sesion_id) ON DELETE CASCADE,
+    resultado TEXT NOT NULL,
+    timestamp TIMESTAMP NOT NULL DEFAULT now()
+);

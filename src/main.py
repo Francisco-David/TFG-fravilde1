@@ -45,10 +45,18 @@ def on_message(client, userdata, msg):
     timestamp = payload.get("timestamp")
 
     try:
-        if tipo_sensor=="hibrido" or tipo_sensor == "ambiental":
-            database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)  # Dejar que lo haga camunda?
-        elif tipo_sensor=="hibrido" or tipo_sensor == "alarma":
-            pass
+        if tipo_sensor=="mixto" or tipo_sensor == "ambiental":
+            database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
+        elif tipo_sensor=="mixto" or tipo_sensor == "alarma":
+            if sensorId != "vib": # Para el sensor de vibración, solo insertamos la lectura si detecta vibración
+                database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
+            elif sensorId == "vib":
+                pass
+            elif sensorId == "gas":
+                # Para el sensor de gas, solo insertamos la lectura si el valor supera un umbral ¿Empezar temporizador?
+                # if value > :
+                #     database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
+                pass
         else:
             print(f"[MQTT] Sensor desconocido: ID '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
             return
