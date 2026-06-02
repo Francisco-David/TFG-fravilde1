@@ -15,10 +15,10 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1jfb7xu" sourceRef="EvaluacionAmbiental" targetRef="PuntuacionEvaluacion" />
     <bpmn:sequenceFlow id="noValida" name="No" sourceRef="SonValidas" targetRef="AlarmaSensor">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=esValida</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=sonValidas</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="esValida" name="Si" sourceRef="SonValidas" targetRef="EvaluacionAmbiental">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=esValida</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=sonValidas</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1tfdt8g" sourceRef="UltimaLectura" targetRef="SonValidas" />
     <bpmn:serviceTask id="Activity_10jcal5" name="Mostrar alarma ambiental">

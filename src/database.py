@@ -126,12 +126,13 @@ def find_validez_sensor(conn, sensor_id):
         WHERE sensor_id = %s
         """
         cur.execute(query, (sensor_id,))
-        return cur.fetchone()
-    
+        res = cur.fetchone()
+        return res[0] if res else None
+
 def find_todos_los_sensores(conn):
     with conn.cursor() as cur:
         query = """
-        SELECT sensor_id
+        SELECT sensor_id, tipo, validez
         FROM sensor
         """
         cur.execute(query)
@@ -156,6 +157,11 @@ if __name__ == "__main__":
     conn = get_conn()
 
     # main_delete_db(conn)
-    # main_check_db("lectura", conn)
-    print(find_ultima_lectura_por_sensor(conn, 1))
-    conn.close()
+    # main_check_db("sensor", conn)
+    # print(find_ultima_lectura_por_sensor(conn, 1))
+    # print(find_ultima_lectura_por_sensor(conn, 1)[0][0])
+    # print(find_validez_sensor(conn, "vib"))
+    print(find_todos_los_sensores(conn))
+
+    put_conn(conn)
+    close_all()
