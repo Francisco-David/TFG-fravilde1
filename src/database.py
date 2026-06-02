@@ -1,6 +1,33 @@
 import psycopg2
+from psycopg2.pool import ThreadedConnectionPool
 
 PROJECT_PATH = "I:/UNIVERSIDAD/TFG"
+
+LOCALHOST = "localhost"
+DATABASE = "fravilde1_tfg"
+USER = "postgres"
+# PASSWORD = "admin"
+
+_pool = None
+
+def init_pool():
+    global _pool
+    _pool = ThreadedConnectionPool(
+        1, 10,
+        host=LOCALHOST,
+        database=DATABASE,
+        user=USER,
+        # password=PASSWORD
+    )
+
+def get_conn():
+    return _pool.getconn()
+
+def put_conn(conn):
+    _pool.putconn(conn)
+
+def close_all():
+    _pool.closeall()
 
 def update_sesion_estado(conn, sesion_id, estado):
     with conn.cursor() as cur:
@@ -76,6 +103,40 @@ def insert_lectura(conn, sensor_id, valor, timestamp, sesion_id):
     conn.commit()
     print(f"[DATABASE] Nueva lectura: Sensor {sensor_id}: [{valor}] -  [{timestamp}]")
 
+def find_ultima_lectura_por_sensor(conn, sesion_id):
+    with conn.cursor() as cur:
+        query = """
+        SELECT l.sensor_id, l.valor, l.timestamp
+        FROM lectura l
+        JOIN (
+            SELECT sensor_id, MAX(timestamp) AS max_timestamp
+            FROM lectura
+            WHERE sesion_id = %s
+            GROUP BY sensor_id
+        ) AS max_lecturas ON l.sensor_id = max_lecturas.sensor_id AND l.timestamp = max_lecturas.max_timestamp
+        """
+        cur.execute(query, (sesion_id,))
+        return cur.fetchall()
+
+def find_validez_sensor(conn, sensor_id):
+    with conn.cursor() as cur:
+        query = """
+        SELECT validez
+        FROM sensor
+        WHERE sensor_id = %s
+        """
+        cur.execute(query, (sensor_id,))
+        return cur.fetchone()
+    
+def find_todos_los_sensores(conn):
+    with conn.cursor() as cur:
+        query = """
+        SELECT sensor_id
+        FROM sensor
+        """
+        cur.execute(query)
+        return cur.fetchall()
+
 def main_delete_db(conn):
     files = ["/TFG-fravilde1/src/postgres/drop.sql", "/TFG-fravilde1/src/postgres/schema.sql", "/TFG-fravilde1/src/postgres/seed.sql"]
     with conn.cursor() as cur:
@@ -91,12 +152,10 @@ def main_check_db(table_name, conn):
             print(row)
 
 if __name__ == "__main__":
-    conn = psycopg2.connect(
-        host="localhost",
-        database="fravilde1_tfg",
-        user="postgres",
-        # password="admin"
-    )
-    main_delete_db(conn)
+    init_pool()
+    conn = get_conn()
+
+    # main_delete_db(conn)
     # main_check_db("lectura", conn)
+    print(find_ultima_lectura_por_sensor(conn, 1))
     conn.close()
