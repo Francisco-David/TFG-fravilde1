@@ -29,6 +29,8 @@ def put_conn(conn):
 def close_all():
     _pool.closeall()
 
+
+# FUNCIONES SESION
 def update_sesion_estado(conn, sesion_id, estado):
     with conn.cursor() as cur:
         query = """
@@ -69,6 +71,19 @@ def find_sesion(conn, horario_id, fecha):
         cur.execute(query, (horario_id, fecha))
         return cur.fetchone()
 
+def find_estado_sesion(conn, sesion_id):
+    with conn.cursor() as cur:
+        query = """
+        SELECT estado
+        FROM sesion
+        WHERE sesion_id = %s
+        """
+        cur.execute(query, (sesion_id,))
+        res = cur.fetchone()
+        return res[0] if res else None
+
+
+# FUNCIONES HORARIO
 def find_horario(conn, aula, dia_semana, hora_actual):
     with conn.cursor() as cur:
         query = """
@@ -80,7 +95,9 @@ def find_horario(conn, aula, dia_semana, hora_actual):
         """
         cur.execute(query, (aula, dia_semana, hora_actual))
         return cur.fetchone()
+    
 
+# FUNCIONES SENSOR
 def find_sensor_tipo(conn, sensor_id):
     with conn.cursor() as cur:
         query = """
@@ -91,17 +108,6 @@ def find_sensor_tipo(conn, sensor_id):
         cur.execute(query, (sensor_id,))
         result = cur.fetchone()
         return result[0] if result else None
-
-def insert_lectura(conn, sensor_id, valor, timestamp, sesion_id):
-    with conn.cursor() as cur:
-        query = """
-        INSERT INTO lectura
-        (sensor_id, valor, timestamp, sesion_id)
-        VALUES (%s, %s, %s, %s)
-        """
-        cur.execute(query, (sensor_id, valor, timestamp, sesion_id))
-    conn.commit()
-    print(f"[DATABASE] Nueva lectura: Sensor {sensor_id}: [{valor}] -  [{timestamp}]")
 
 def find_ultima_lectura_por_sensor(conn, sesion_id):
     with conn.cursor() as cur:
@@ -137,6 +143,33 @@ def find_todos_los_sensores(conn):
         """
         cur.execute(query)
         return cur.fetchall()
+    
+
+# FUNCIONES LECTURA
+def insert_lectura(conn, sensor_id, valor, timestamp, sesion_id):
+    with conn.cursor() as cur:
+        query = """
+        INSERT INTO lectura
+        (sensor_id, valor, timestamp, sesion_id)
+        VALUES (%s, %s, %s, %s)
+        """
+        cur.execute(query, (sensor_id, valor, timestamp, sesion_id))
+    conn.commit()
+    print(f"[DATABASE] Nueva lectura: Sensor {sensor_id}: [{valor}] -  [{timestamp}]")
+
+
+# FUNCIONES EVALUACION
+def insert_evaluacion(conn, sesion_id, puntuacion):
+    with conn.cursor() as cur:
+        query = """
+        INSERT INTO evaluacion
+        (sesion_id, puntuacion, timestamp)
+        VALUES (%s, %s, NOW()::timestamp)
+        """
+        cur.execute(query, (sesion_id, puntuacion))
+    conn.commit()
+    print(f"[DATABASE] Nueva evaluación: Sesión {sesion_id}: [{puntuacion}]")
+
 
 def main_delete_db(conn):
     files = ["/TFG-fravilde1/src/postgres/drop.sql", "/TFG-fravilde1/src/postgres/schema.sql", "/TFG-fravilde1/src/postgres/seed.sql"]
@@ -156,12 +189,12 @@ if __name__ == "__main__":
     init_pool()
     conn = get_conn()
 
-    # main_delete_db(conn)
+    main_delete_db(conn)
     # main_check_db("sensor", conn)
     # print(find_ultima_lectura_por_sensor(conn, 1))
     # print(find_ultima_lectura_por_sensor(conn, 1)[0][0])
     # print(find_validez_sensor(conn, "vib"))
-    print(find_todos_los_sensores(conn))
+    # print(find_todos_los_sensores(conn))
 
     put_conn(conn)
     close_all()

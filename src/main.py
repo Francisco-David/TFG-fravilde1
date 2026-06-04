@@ -10,7 +10,7 @@ import threading
 
 # CONFIGURACIÓN SCRIPT PYTHON
 ZEEBE_ADDRESS = "localhost:26500"
-BROKER_ADDRESS = "10.134.208.86"
+BROKER_ADDRESS = "192.168.1.145" #"10.134.208.86"
 MQTT_PORT = 1883
 MQTT_TOPIC = "tfg/sensors/+"  # valor'+' para el siguiente nivel (temp, hum, etc.) y '#' para todo el árbol (tfg/sensors/...)
 

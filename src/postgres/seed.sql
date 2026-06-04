@@ -56,7 +56,7 @@ INSERT INTO sensor
 (sensor_id, tipo, validez)
 VALUES
 ('tem', 'mixto', 60*30),
-('son', 'mixto', 60*1),
+('son', 'mixto', 60*2),
 ('luz', 'mixto', 60*5),
 ('hum', 'ambiental', 60*20),
 ('vib', 'alarma', 60*10),
