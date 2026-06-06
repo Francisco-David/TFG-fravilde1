@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1tlaywq" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.37.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="eval-sensores" isExecutable="true">
+    <bpmn:endEvent id="EventoFinalizarEvaluacionesSensor" name="Finalizar evaluaciones sensor">
+      <bpmn:incoming>Flow_0tlg5p9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="ComprobarSensores" name="Comprobar estado sensores">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="comprobarSensores" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1jvo5sh</bpmn:incoming>
+      <bpmn:incoming>Flow_1y03not</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ccakvm</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Transcurso" name="Transcurso">
+      <bpmn:incoming>Flow_1yztjd2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0k5epoi</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0tlg5p9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="EventoComenzarEvaluacion" name="Comenzar evaluaciones sesión">
+      <bpmn:outgoing>Flow_0127g2c</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:intermediateCatchEvent id="TimerBucle" name="2 Segundos">
+      <bpmn:incoming>Flow_0k5epoi</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jvo5sh</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0brl2ni">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT2S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="TimerSetup" name="Temporizador Setup">
+      <bpmn:incoming>Flow_0127g2c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y03not</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1ij2lee">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT3S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1jvo5sh" sourceRef="TimerBucle" targetRef="ComprobarSensores" />
+    <bpmn:sequenceFlow id="Flow_1y03not" sourceRef="TimerSetup" targetRef="ComprobarSensores" />
+    <bpmn:sequenceFlow id="Flow_0k5epoi" name="En curso" sourceRef="Transcurso" targetRef="TimerBucle">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=estadoSesion="en_curso"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0127g2c" sourceRef="EventoComenzarEvaluacion" targetRef="TimerSetup" />
+    <bpmn:sequenceFlow id="Flow_0tlg5p9" name="Finalizada" sourceRef="Transcurso" targetRef="EventoFinalizarEvaluacionesSensor">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=estadoSesion="finalizada"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="ComprobarEstado" name="Comprobar estado de sesión">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="comprobarEstado" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ccakvm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yztjd2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1yztjd2" sourceRef="ComprobarEstado" targetRef="Transcurso" />
+    <bpmn:sequenceFlow id="Flow_0ccakvm" sourceRef="ComprobarSensores" targetRef="ComprobarEstado" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="eval-sensores">
+      <bpmndi:BPMNShape id="Activity_0gd9bxn_di" bpmnElement="ComprobarSensores">
+        <dc:Bounds x="410" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x8d4tl_di" bpmnElement="ComprobarEstado">
+        <dc:Bounds x="580" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_10u3id1_di" bpmnElement="EventoFinalizarEvaluacionesSensor">
+        <dc:Bounds x="932" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="918" y="165" width="65" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1yzhgi9_di" bpmnElement="Transcurso" isMarkerVisible="true">
+        <dc:Bounds x="735" y="115" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="733" y="93" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jgx6yl_di" bpmnElement="TimerBucle">
+        <dc:Bounds x="562" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="551" y="295" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0n1ic9c_di" bpmnElement="EventoComenzarEvaluacion">
+        <dc:Bounds x="202" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="188" y="165" width="65" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1ct704w" bpmnElement="TimerSetup">
+        <dc:Bounds x="312" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="298" y="165" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1jvo5sh_di" bpmnElement="Flow_1jvo5sh">
+        <di:waypoint x="562" y="270" />
+        <di:waypoint x="460" y="270" />
+        <di:waypoint x="460" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1y03not_di" bpmnElement="Flow_1y03not">
+        <di:waypoint x="348" y="140" />
+        <di:waypoint x="410" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k5epoi_di" bpmnElement="Flow_0k5epoi">
+        <di:waypoint x="760" y="165" />
+        <di:waypoint x="760" y="270" />
+        <di:waypoint x="598" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="768" y="203" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ccakvm_di" bpmnElement="Flow_0ccakvm">
+        <di:waypoint x="510" y="140" />
+        <di:waypoint x="580" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yztjd2_di" bpmnElement="Flow_1yztjd2">
+        <di:waypoint x="680" y="140" />
+        <di:waypoint x="735" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tlg5p9_di" bpmnElement="Flow_0tlg5p9">
+        <di:waypoint x="785" y="140" />
+        <di:waypoint x="932" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="835" y="122" width="51" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0127g2c_di" bpmnElement="Flow_0127g2c">
+        <di:waypoint x="238" y="140" />
+        <di:waypoint x="312" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

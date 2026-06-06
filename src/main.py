@@ -48,10 +48,10 @@ def on_message(client, userdata, msg):
             database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
 
         if tipo_sensor in ["alarma", "mixto"]:
-            if sensorId != "vib": # Para el sensor de vibración, solo insertamos la lectura si detecta vibración
+            if sensorId == "vib": # Para el sensor de vibración, solo insertamos la lectura si detecta vibración
                 # database.insert_alarma()
                 pass
-            elif sensorId == "vib":
+            elif sensorId == "gas":
                 # variables = {
                 #     "sensorId": sensorId,
                 #     "value": value,
@@ -91,9 +91,9 @@ async def comenzar_proceso_camunda_async(process_id, variables):
     try:
         print(f"[ZEEBE] Comenzando el proceso '{process_id}' con variables: {variables}")
         await zeebe_client.run_process(process_id, variables)
-        print("[ZEEBE] Proceso iniciado correctamente.")
+        print(f"[ZEEBE] Proceso '{process_id}' iniciado correctamente.")
     except Exception as e:
-        print(f"[ERROR] No se pudo iniciar el proceso de Camunda: {e}")
+        print(f"[ERROR] No se pudo iniciar el proceso '{process_id}' de Camunda: {e}")
 
 # FUNCION PARA INICIAR PROCESOS DE CAMUNDA
 def crear_proceso_camunda(async_loop, process_id, variables):
@@ -160,13 +160,12 @@ def main():
             sesion_id = iniciar_sesion(conn)
         finally:
             database.put_conn(conn)
-        # INICIAR PROCESO DE EVALUACION EN CAMUNDA
 
+        # INICIAR PROCESO DE EVALUACION AMBIENTE EN CAMUNDA
         variables = {
             "sesion_id": sesion_id
         }
-
-        crear_proceso_camunda(async_loop, "eval-ambiental", variables)
+        # crear_proceso_camunda(async_loop, "eval-ambiental", variables)
 
     except KeyboardInterrupt:
         print("\n Sesión no iniciada. Apagando...")
@@ -180,8 +179,13 @@ def main():
     mqtt_client.subscribe(MQTT_TOPIC)
 
     print(f"[MQTT] Suscrito a topic '{MQTT_TOPIC}'. Esperando mensajes...")
+    
+    # INICIAR PROCESO DE EVALUACION SENSORES EN CAMUNDA
+    crear_proceso_camunda(async_loop, "eval-sensores", variables)
 
+    # INICAR PROCESO DE ESTADO DE SENSORES
 
+    
     # Gestion de cerrado de sesion y desconexión MQTT
     try:
         mqtt_client.loop_forever()

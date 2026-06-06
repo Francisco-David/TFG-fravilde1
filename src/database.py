@@ -109,21 +109,6 @@ def find_sensor_tipo(conn, sensor_id):
         result = cur.fetchone()
         return result[0] if result else None
 
-def find_ultima_lectura_por_sensor(conn, sesion_id):
-    with conn.cursor() as cur:
-        query = """
-        SELECT l.sensor_id, l.valor, l.timestamp
-        FROM lectura l
-        JOIN (
-            SELECT sensor_id, MAX(timestamp) AS max_timestamp
-            FROM lectura
-            WHERE sesion_id = %s
-            GROUP BY sensor_id
-        ) AS max_lecturas ON l.sensor_id = max_lecturas.sensor_id AND l.timestamp = max_lecturas.max_timestamp
-        """
-        cur.execute(query, (sesion_id,))
-        return cur.fetchall()
-
 def find_validez_sensor(conn, sensor_id):
     with conn.cursor() as cur:
         query = """
@@ -138,11 +123,22 @@ def find_validez_sensor(conn, sensor_id):
 def find_todos_los_sensores(conn):
     with conn.cursor() as cur:
         query = """
-        SELECT sensor_id, tipo, validez
+        SELECT sensor_id, tipo, validez, estado
         FROM sensor
         """
         cur.execute(query)
         return cur.fetchall()
+
+def update_estado_sensor(conn, sensor_id, estado):
+    with conn.cursor() as cur:
+        query = """
+        UPDATE sensor
+        SET estado = %s
+        WHERE sensor_id = %s
+        """
+        cur.execute(query, (estado,sensor_id))
+    conn.commit()
+    print(f"[DATABASE] Sensor '{sensor_id}' {estado}.")
     
 
 # FUNCIONES LECTURA
@@ -156,6 +152,21 @@ def insert_lectura(conn, sensor_id, valor, timestamp, sesion_id):
         cur.execute(query, (sensor_id, valor, timestamp, sesion_id))
     conn.commit()
     print(f"[DATABASE] Nueva lectura: Sensor {sensor_id}: [{valor}] -  [{timestamp}]")
+
+def find_ultima_lectura_por_sensor(conn, sesion_id):
+    with conn.cursor() as cur:
+        query = """
+        SELECT l.sensor_id, l.valor, l.timestamp
+        FROM lectura l
+        JOIN (
+            SELECT sensor_id, MAX(timestamp) AS max_timestamp
+            FROM lectura
+            WHERE sesion_id = %s
+            GROUP BY sensor_id
+        ) AS max_lecturas ON l.sensor_id = max_lecturas.sensor_id AND l.timestamp = max_lecturas.max_timestamp
+        """
+        cur.execute(query, (sesion_id,))
+        return cur.fetchall()
 
 
 # FUNCIONES EVALUACION
@@ -195,6 +206,11 @@ if __name__ == "__main__":
     # print(find_ultima_lectura_por_sensor(conn, 1)[0][0])
     # print(find_validez_sensor(conn, "vib"))
     # print(find_todos_los_sensores(conn))
+
+    # ================= TESTING FUNCTIONS =================
+
+
+    # =====================================================
 
     put_conn(conn)
     close_all()

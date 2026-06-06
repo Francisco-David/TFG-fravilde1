@@ -7,16 +7,18 @@
 -- SELECT employees.name AS emp_name
 --      , departments.name AS dept_name
 
-CREATE TYPE nivel_alerta AS ENUM ('critico', 'medio', 'bajo');
+CREATE TYPE nivel_alerta AS ENUM ('ALARMA', 'AVISO', 'OK');
 CREATE TYPE estado_sesion AS ENUM ('en_curso', 'finalizada');
 CREATE TYPE tipo_sensor AS ENUM ('ambiental', 'alarma', 'mixto');
+CREATE TYPE estado_sensor AS ENUM ('operativo', 'defectuoso');
 
 CREATE TABLE sensor (
     sensor_id VARCHAR(3) PRIMARY KEY,
         -- Mejor no usar CHECK para validar el sensor_id, ya que si en el futuro se añaden nuevos tipos de sensores
         -- CHECK (sensor_id IN ('tem', 'hum', 'vib', 'son', 'gas', 'luz')),
     tipo tipo_sensor NOT NULL,
-    validez INTEGER NOT NULL
+    validez INTEGER NOT NULL,
+    estado estado_sensor NOT NULL DEFAULT 'operativo'
 );
 
 CREATE TABLE horario (
@@ -51,8 +53,9 @@ CREATE TABLE alerta (
     alerta_id SERIAL PRIMARY KEY,
     sensor_id VARCHAR(3) REFERENCES sensor(sensor_id) ON DELETE SET NULL,
     tipo TEXT NOT NULL,
-    nivel nivel_alerta NOT NULL DEFAULT 'bajo',     
-    timestamp TIMESTAMP NOT NULL DEFAULT now()
+    nivel nivel_alerta NOT NULL DEFAULT 'AVISO',     
+    timestamp TIMESTAMP NOT NULL DEFAULT now(),
+    reconocida BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE evaluacion (

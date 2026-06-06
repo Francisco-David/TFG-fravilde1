@@ -53,11 +53,11 @@ VALUES
 ('FP', 'David Felipe Benavides Cuevas', '1-1', 'A0.12', '12:40', '14:30', 5);
 
 INSERT INTO sensor
-(sensor_id, tipo, validez)
+(sensor_id, tipo, validez, estado)
 VALUES
-('tem', 'mixto', 60*30),
-('son', 'mixto', 60*2),
-('luz', 'mixto', 60*5),
-('hum', 'ambiental', 60*20),
-('vib', 'alarma', 60*10),
-('gas', 'alarma', 60*10);
+('tem', 'mixto', 60*30, 'defectuoso'),
+('son', 'mixto', 60*2, 'defectuoso'),
+('luz', 'mixto', 60*5, 'defectuoso'),
+('hum', 'ambiental', 60*20, 'defectuoso'),
+('vib', 'alarma', 60*10, 'defectuoso'),
+('gas', 'alarma', 60*10, 'defectuoso');

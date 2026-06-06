@@ -15,7 +15,7 @@ client.connect(BROKER, PORT, 60)
 client.loop_start()
 
 TEMPERATURE_INTERVAL = 120
-SOUND_INTERVAL = 1
+SOUND_INTERVAL = 30
 LIGHT_INTERVAL = 210
 HUMIDITY_INTERVAL = 120
 VIBRATION_INTERVAL = 0.5
@@ -64,8 +64,8 @@ async def main():
         sensor_test("son", SOUND_INTERVAL),
         sensor_test("luz", LIGHT_INTERVAL),
         sensor_test("hum", HUMIDITY_INTERVAL),
-        sensor_test("vib", VIBRATION_INTERVAL),
-        sensor_test("gas", GAS_INTERVAL),
+        # sensor_test("vib", VIBRATION_INTERVAL),
+        # sensor_test("gas", GAS_INTERVAL),
     ]
     await asyncio.gather(*tasks, return_exceptions=True)
 
