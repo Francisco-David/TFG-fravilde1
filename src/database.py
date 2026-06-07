@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2.pool import ThreadedConnectionPool
+import logging
 
 PROJECT_PATH = "I:/UNIVERSIDAD/TFG"
 
@@ -9,6 +10,7 @@ USER = "postgres"
 # PASSWORD = "admin"
 
 _pool = None
+logger = logging.getLogger(__name__)
 
 def init_pool():
     global _pool
@@ -40,7 +42,7 @@ def update_sesion_estado(conn, sesion_id, estado):
         """
         cur.execute(query, (estado, sesion_id))
     conn.commit()
-    print(f"[DATABASE] Sesión con ID [{sesion_id}] {estado}.")
+    logger.info(f"[DATABASE] Sesión con ID [{sesion_id}] {estado}.")
 
 def insert_nueva_sesion(conn, horario_id, fecha):
     with conn.cursor() as cur:
@@ -57,7 +59,7 @@ def insert_nueva_sesion(conn, horario_id, fecha):
         ))
         sesion_id = cur.fetchone()[0]
     conn.commit()
-    print(f"[DATABASE] Sesión con ID [{sesion_id}] creada y en curso.")
+    logger.info(f"[DATABASE] Sesión con ID [{sesion_id}] creada y en curso.")
     return sesion_id
 
 def find_sesion(conn, horario_id, fecha):
@@ -148,7 +150,7 @@ def update_estado_sensor(conn, sensor_id, estado):
         """
         cur.execute(query, (estado,sensor_id))
     conn.commit()
-    print(f"[DATABASE] Sensor '{sensor_id}' {estado}.")
+    logger.info(f"[DATABASE] Sensor '{sensor_id}' {estado}.")
     
 
 # FUNCIONES LECTURA
@@ -161,7 +163,7 @@ def insert_lectura(conn, sensor_id, valor, timestamp, sesion_id):
         """
         cur.execute(query, (sensor_id, valor, timestamp, sesion_id))
     conn.commit()
-    print(f"[DATABASE] Nueva lectura: Sensor {sensor_id}: [{valor}] -  [{timestamp}]")
+    logger.info(f"[DATABASE] Nueva lectura: Sensor {sensor_id}: [{valor}] -  [{timestamp}]")
 
 def find_ultima_lectura_por_sensor(conn, sesion_id):
     with conn.cursor() as cur:
@@ -189,7 +191,7 @@ def insert_evaluacion(conn, sesion_id, puntuacion):
         """
         cur.execute(query, (sesion_id, puntuacion))
     conn.commit()
-    print(f"[DATABASE] Nueva evaluación: Sesión {sesion_id}: [{puntuacion}]")
+    logger.info(f"[DATABASE] Nueva evaluación: Sesión {sesion_id}: [{puntuacion}]")
 
 
 def main_delete_db(conn):

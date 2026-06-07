@@ -7,12 +7,17 @@ import paho.mqtt.client as mqtt
 from pyzeebe import ZeebeClient, create_insecure_channel
 import asyncio
 import threading
+import logging
+import os
 
 # CONFIGURACIÓN SCRIPT PYTHON
 ZEEBE_ADDRESS = "localhost:26500"
-BROKER_ADDRESS = "10.134.208.86" #"192.168.1.145" 
+BROKER_ADDRESS = "10.129.182.86" #"192.168.1.145" 
 MQTT_PORT = 1883
 MQTT_TOPIC = "tfg/sensors/+"  # valor'+' para el siguiente nivel (temp, hum, etc.) y '#' para todo el árbol (tfg/sensors/...)
+LOGS_DIR = "I:/UNIVERSIDAD/TFG/TFG-fravilde1/logs"
+
+logger = logging.getLogger(__name__)
 
 # OBTENER AULA, FECHA Y HORA ACTUAL PARA LA LÓGICA DE SESIÓN
 ahora = datetime.now()
@@ -46,31 +51,12 @@ def on_message(client, userdata, msg):
         tipo_sensor = database.find_sensor_tipo(conn, sensorId) # Tipo sensor para saber como procesar la lectura
         if tipo_sensor in ["mixto", "ambiental"]:
             database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
+        elif tipo_sensor == 'alarma':
+            # no nos son necesarios los datos de sus medias, sobretodo los de las alarmas.
+            pass
 
-        if tipo_sensor in ["alarma", "mixto"]:
-            if sensorId == "vib": # Para el sensor de vibración, solo insertamos la lectura si detecta vibración
-                # database.insert_alarma()
-                pass
-            elif sensorId == "gas":
-                # variables = {
-                #     "sensorId": sensorId,
-                #     "value": value,
-                #     "timestamp": timestamp
-                # }
-
-                # future = asyncio.run_coroutine_threadsafe(
-                #     start_camunda_process(variables), async_loop
-                # )
-
-                # future.add_done_callback(lambda f: f.result() if f.exception() is None else print(f"Async task failed: {f.exception()}"))
-                pass
-            elif sensorId == "gas":
-                # Para el sensor de gas, solo insertamos la lectura si el valor supera un umbral ¿Empezar temporizador?
-                # if value > :
-                #     database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
-                pass
-        if tipo_sensor not in ["mixto", "ambiental", "alarma"]:
-            print(f"[MQTT] Sensor desconocido: ID '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
+        else:
+            logger.warning(f"[MQTT] Sensor desconocido: ID '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
             return
 
     except Exception as e:
@@ -79,7 +65,7 @@ def on_message(client, userdata, msg):
                             #   Asi si el error no es de base de datos, evitamos que el programa caiga por un error que no se puede manejar.
         except:
             pass
-        print(f"[MQTT] ERROR: {e}")
+        logger.error(f"[MQTT] ERROR: {e}")
     finally:
         if conn is not None:
             database.put_conn(conn)  # Devolvemos la conexión al pool para que pueda ser reutilizada por otros hilos o procesos
@@ -89,11 +75,11 @@ async def comenzar_proceso_camunda_async(process_id, variables):
     channel = create_insecure_channel(grpc_address=ZEEBE_ADDRESS)
     zeebe_client = ZeebeClient(channel)
     try:
-        print(f"[ZEEBE] Comenzando el proceso '{process_id}' con variables: {variables}")
+        logger.info(f"[ZEEBE] Comenzando el proceso '{process_id}' con variables: {variables}")
         await zeebe_client.run_process(process_id, variables)
-        print(f"[ZEEBE] Proceso '{process_id}' iniciado correctamente.")
+        logger.info(f"[ZEEBE] Proceso '{process_id}' iniciado correctamente.")
     except Exception as e:
-        print(f"[ERROR] No se pudo iniciar el proceso '{process_id}' de Camunda: {e}")
+        logger.error(f"[ZEEBE] ERROR No se pudo iniciar el proceso '{process_id}' de Camunda: {e}")
 
 # FUNCION PARA INICIAR PROCESOS DE CAMUNDA
 def crear_proceso_camunda(async_loop, process_id, variables):
@@ -107,11 +93,11 @@ def crear_proceso_camunda(async_loop, process_id, variables):
 def camunda_callback(fut, process_id):
     exc = fut.exception()
     if exc:
-        print(f"[ZEEBE] Error al iniciar proceso async (ID: {process_id}): {exc}")
+        logger.error(f"[ZEEBE] ERROR Error al iniciar proceso async (ID: {process_id}): {exc}")
     else:
         res = fut.result()
         if res is not None:
-            print(f"[ZEEBE] Resultado de inicio (ID: {process_id}): {res}")
+            logger.info(f"[ZEEBE] Resultado de inicio (ID: {process_id}): {res}")
 
 # FUNCION PARA INICIAR SESIÓN: PIDE EL AULA, BUSCA EL HORARIO CORRESPONDIENTE Y CREA LA SESIÓN EN LA BASE DE DATOS, SI EXISTE LA PONE EN CURSO, SI NO EXISTE LA CREA Y LA PONE EN CURSO
 def iniciar_sesion(conn):
@@ -122,7 +108,7 @@ def iniciar_sesion(conn):
         sesion_horario = database.find_horario(conn, aula, DIA_SEMANA, HORA_ACTUAL)
 
         if sesion_horario is None:
-            print("[ERROR] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.")
+            logger.warning("No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.")
         else:
              break
 
@@ -134,16 +120,32 @@ def iniciar_sesion(conn):
         #Solo puede haber una sesión en curso por horario_id y fecha, así que cogemos la primera (y única) que encontremos
         sesion_id = sesion_en_curso[0]
         database.update_sesion_estado(conn, sesion_id, "en_curso")
-        print(f"Ya existe una sesión (ID: {sesion_id}) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.\n\n  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.\n")
+        logger.info(f"Ya existe una sesión (ID: {sesion_id}) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.\n\n  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.\n")
 
     else:
         #Creamos la sesión y obtenemos su ID
         sesion_id = database.insert_nueva_sesion(conn, horario_id, FECHA_ACTUAL)
-        print(f"Sesión creada correctamente. ID: {sesion_id}\n\n  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.\n")
+        logger.info(f"Sesión creada correctamente. ID: {sesion_id}\n\n  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.\n")
 
     return sesion_id
 
 def main():
+    # CONFIGURAR LOGGING
+    if not os.path.exists(LOGS_DIR):
+        os.makedirs(LOGS_DIR)
+    
+    log_file = f"{LOGS_DIR}/main.log"
+    
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s [%(levelname)-s] %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler()
+        ]
+    )
+
     # INICIALIZAR POOL DE CONEXIONES A LA BASE DE DATOS
     database.init_pool()
 
@@ -154,6 +156,8 @@ def main():
     loop_thread.start()
 
     print("\n-  BIENVENIDO: " + f"{FECHA_ACTUAL} | {HORA_ACTUAL}  - \n\n  -  Use Ctrl+C si desea salir del programa.\n")
+    logger.info("-  BIENVENIDO: " + f"{FECHA_ACTUAL} | {HORA_ACTUAL}  - ")
+    print("\n  -  Use Ctrl+C si desea salir del programa.\n")
     try:
         conn = database.get_conn()  # Obtenemos una conexión del pool para iniciar la sesión
         try:
@@ -168,7 +172,7 @@ def main():
         crear_proceso_camunda(async_loop, "eval-ambiental", variables)
 
     except KeyboardInterrupt:
-        print("\n Sesión no iniciada. Apagando...")
+        logger.warning("\n Sesión no iniciada. Apagando...")
         return
 
     # CONEXION MQTT y CONFIGURACION MQTT CLIENTE
@@ -178,19 +182,16 @@ def main():
     mqtt_client.connect(BROKER_ADDRESS, MQTT_PORT, 60)
     mqtt_client.subscribe(MQTT_TOPIC)
 
-    print(f"[MQTT] Suscrito a topic '{MQTT_TOPIC}'. Esperando mensajes...")
+    logger.info(f"[MQTT] Suscrito a topic '{MQTT_TOPIC}'. Esperando mensajes...")
     
     # INICIAR PROCESO DE EVALUACION SENSORES EN CAMUNDA
     crear_proceso_camunda(async_loop, "eval-sensores", variables)
 
-    # INICAR PROCESO DE ESTADO DE SENSORES
-
-    
     # Gestion de cerrado de sesion y desconexión MQTT
     try:
         mqtt_client.loop_forever()
     except KeyboardInterrupt:
-        print("\nApagando...")
+        logger.info("Apagando...")
     finally:
 
         # Al finalizar, actualizar el estado de la sesión a "finalizada"
@@ -202,10 +203,10 @@ def main():
 
         # Detener MQTT y el loop de asyncio
         mqtt_client.disconnect()
-        print("[MQTT] Desconectado del broker MQTT.")
+        logger.info("[MQTT] Desconectado del broker MQTT.")
         if async_loop.is_running():
             async_loop.call_soon_threadsafe(async_loop.stop)
-        print("Apagado completo.")
+        logger.info("Apagado completo.")
 
 if __name__ == "__main__":
     main()

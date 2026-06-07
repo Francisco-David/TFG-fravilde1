@@ -1,8 +1,10 @@
 from pyzeebe import ZeebeTaskRouter, Job
 import database
 from datetime import datetime,timedelta
+import logging
 
 router = ZeebeTaskRouter()
+logger = logging.getLogger(__name__)
 
 
 # FUNCIONES BPMN eval-ambiental
@@ -23,12 +25,8 @@ async def leer_lecturas(job: Job):
             nombre_sensor = sensor[0]
             lectura_sensor = dicc_lecturas[nombre_sensor]
             res[f"{nombre_sensor}Valor"] = lectura_sensor[1]
-            # res[f"{nombre_sensor}Validez"] = (lectura_sensor[2]+timedelta(seconds=validez))>now # Chequeamos que la lectura no sea demasiado antigua sumando el valor de validez del sensor a su timestamp
-
-    # son_validas = all(res[f"{sensor[0]}Validez"] for sensor in sensors if sensor[1] in ["mixto", "ambiental"])
-    # res["sonValidas"] = son_validas
     
-    print(f'[CAMUNDA] "leerLecturas" - sesion_id: {sesion_id}\n (lecturas: {res})')
+    logger.info(f'[CAMUNDA] "leerLecturas" - sesion_id: {sesion_id}\n (lecturas: {res})')
     return res
 
 @router.task(task_type="calculoEvaluacion")
@@ -40,7 +38,7 @@ async def calcular_evaluacion(job: Job):
     database.insert_evaluacion(conn, sesion_id, puntuacion)
     database.put_conn(conn)
 
-    print(f'[CAMUNDA] "calculoEvaluacion" - sesion_id: {sesion_id}, puntuacion: {puntuacion}')
+    logger.info(f'[CAMUNDA] "calculoEvaluacion" - sesion_id: {sesion_id}, puntuacion: {puntuacion}')
     return {'puntuacion': puntuacion}
 
 @router.task(task_type="comprobarEstado")
@@ -51,7 +49,7 @@ async def comprobar_estado(job: Job):
     estado_sesion = database.find_estado_sesion(conn, sesion_id)
     database.put_conn(conn)
 
-    print(f'[CAMUNDA] "comprobarEstado" - sesion_id: {sesion_id}, estado: {estado_sesion}')
+    logger.info(f'[CAMUNDA] "comprobarEstado" - sesion_id: {sesion_id}, estado: {estado_sesion}')
     return {'estadoSesion': estado_sesion}
 
 #FUNCIONES BPMN eval-sensores

@@ -1,0 +1,157 @@
+2026-06-07 18:10:16 - INFO     - ============================================================
+2026-06-07 18:10:16 - INFO     - Programa iniciado
+2026-06-07 18:10:16 - INFO     - Log guardado en: I:/UNIVERSIDAD/TFG/TFG-fravilde1/logs/main.log
+2026-06-07 18:10:16 - INFO     - ============================================================
+2026-06-07 18:10:16 - DEBUG    - Using proactor: IocpProactor
+2026-06-07 18:33:29 - INFO     - ============================================================
+2026-06-07 18:33:29 - INFO     - Programa iniciado
+2026-06-07 18:33:29 - INFO     - Log guardado en: I:/UNIVERSIDAD/TFG/TFG-fravilde1/logs/main.log
+2026-06-07 18:33:29 - INFO     - ============================================================
+2026-06-07 18:33:29 - DEBUG    - Using proactor: IocpProactor
+2026-06-07 18:34:18 - INFO     - ============================================================
+2026-06-07 18:34:18 - INFO     - Programa iniciado
+2026-06-07 18:34:18 - INFO     - Log guardado en: I:/UNIVERSIDAD/TFG/TFG-fravilde1/logs/main.log
+2026-06-07 18:34:18 - INFO     - ============================================================
+2026-06-07 18:34:18 - DEBUG    - Using proactor: IocpProactor
+2026-06-07 18:34:20 - INFO     - [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 18:37:23 - INFO - ============================================================
+2026-06-07 18:37:23 - INFO - Programa iniciado
+2026-06-07 18:37:23 - INFO - Log guardado en: I:/UNIVERSIDAD/TFG/TFG-fravilde1/logs/main.log
+2026-06-07 18:37:23 - INFO - ============================================================
+2026-06-07 18:37:23 - DEBUG - Using proactor: IocpProactor
+2026-06-07 18:37:25 - INFO - [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 18:39:55 - DEBUG - Using proactor: IocpProactor
+2026-06-07 18:39:55 - INFO - -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:39:55 - INFO -   -  Use Ctrl+C si desea salir del programa.
+2026-06-07 18:40:21 - DEBUG - Using proactor: IocpProactor
+2026-06-07 18:40:21 - INFO - -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:40:21 - INFO -   -  Use Ctrl+C si desea salir del programa.
+2026-06-07 18:40:33 - INFO - [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 18:40:41 - DEBUG - Using proactor: IocpProactor
+2026-06-07 18:40:41 - INFO - -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:40:41 - INFO -   -  Use Ctrl+C si desea salir del programa.
+2026-06-07 18:40:56 - DEBUG - Using proactor: IocpProactor
+2026-06-07 18:40:56 - INFO - -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:40:56 - INFO -   -  Use Ctrl+C si desea salir del programa.
+2026-06-07 18:41:27 [DEBUG] Using proactor: IocpProactor
+2026-06-07 18:41:27 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:41:27 [INFO]   -  Use Ctrl+C si desea salir del programa.
+2026-06-07 18:41:55 [DEBUG] Using proactor: IocpProactor
+2026-06-07 18:41:55 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:41:55 [INFO] -  Use Ctrl+C si desea salir del programa.
+2026-06-07 18:42:14 [DEBUG] Using proactor: IocpProactor
+2026-06-07 18:42:14 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:42:23 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 18:42:31 [DEBUG] Using proactor: IocpProactor
+2026-06-07 18:42:31 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:42:43 [DEBUG] Using proactor: IocpProactor
+2026-06-07 18:42:43 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:42:46 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 18:50:47 [DEBUG] Using proactor: IocpProactor
+2026-06-07 18:50:47 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:51:03 [DEBUG] Using proactor: IocpProactor
+2026-06-07 18:51:03 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 18:51:05 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 18:58:17 [DEBUG] Using proactor: IocpProactor
+2026-06-07 18:58:17 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 19:00:46 [DEBUG] Using proactor: IocpProactor
+2026-06-07 19:00:46 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 19:00:49 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 19:00:49 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+
+  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.
+
+2026-06-07 19:02:13 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-07 19:02:14 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:02:16 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:16 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:16 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:16 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:21 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:21 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:21 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:21 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:23 [INFO] [WORKER] Apagado completo.
+2026-06-07 19:02:30 [DEBUG] Using proactor: IocpProactor
+2026-06-07 19:02:30 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 19:02:32 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 19:02:32 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+
+  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.
+
+2026-06-07 19:02:32 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-07 19:02:39 [INFO] [DATABASE] Nueva lectura: Sensor tem: [19.36] -  [07-06-2026 19:02:37]
+2026-06-07 19:02:39 [INFO] [DATABASE] Nueva lectura: Sensor son: [206] -  [07-06-2026 19:02:37]
+2026-06-07 19:02:39 [INFO] [DATABASE] Nueva lectura: Sensor luz: [406] -  [07-06-2026 19:02:37]
+2026-06-07 19:02:39 [INFO] [DATABASE] Nueva lectura: Sensor hum: [63.34] -  [07-06-2026 19:02:37]
+2026-06-07 19:02:46 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-07 19:02:46 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:02:48 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:48 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:48 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:48 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:02:50 [INFO] [WORKER] Apagado completo.
+2026-06-07 19:16:06 [INFO] 
+Apagando...
+2026-06-07 19:16:06 [INFO] [DATABASE] Sesión con ID [1] finalizada.
+2026-06-07 19:16:06 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-07 19:16:06 [INFO] Apagado completo.
+2026-06-07 19:26:39 [DEBUG] Using proactor: IocpProactor
+2026-06-07 19:26:39 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 19:26:51 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 19:26:51 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+
+  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.
+
+2026-06-07 19:26:51 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-07 19:27:08 [INFO] [DATABASE] Nueva lectura: Sensor tem: [19.4] -  [07-06-2026 19:26:58]
+2026-06-07 19:27:08 [INFO] [DATABASE] Nueva lectura: Sensor son: [771] -  [07-06-2026 19:26:58]
+2026-06-07 19:27:08 [INFO] [DATABASE] Nueva lectura: Sensor luz: [484] -  [07-06-2026 19:26:58]
+2026-06-07 19:27:09 [INFO] [DATABASE] Nueva lectura: Sensor hum: [48.68] -  [07-06-2026 19:26:58]
+2026-06-07 19:27:36 [INFO] 
+Apagando...
+2026-06-07 19:27:37 [INFO] [DATABASE] Sesión con ID [1] finalizada.
+2026-06-07 19:27:37 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-07 19:27:37 [INFO] Apagado completo.
+2026-06-07 19:28:01 [DEBUG] Using proactor: IocpProactor
+2026-06-07 19:28:01 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-07 19:28:05 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-07 19:28:05 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+
+  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.
+
+2026-06-07 19:28:05 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-07 19:28:05 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 1}
+2026-06-07 19:28:05 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-07 19:28:05 [INFO] [ZEEBE] Comenzando el proceso 'eval-sensores' con variables: {'sesion_id': 1}
+2026-06-07 19:28:08 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-07 19:28:08 [INFO] [ZEEBE] Proceso 'eval-sensores' iniciado correctamente.
+2026-06-07 19:28:12 [INFO] [DATABASE] Nueva lectura: Sensor tem: [20.37] -  [07-06-2026 19:28:11]
+2026-06-07 19:28:12 [INFO] [DATABASE] Nueva lectura: Sensor son: [818] -  [07-06-2026 19:28:11]
+2026-06-07 19:28:12 [INFO] [DATABASE] Nueva lectura: Sensor luz: [623] -  [07-06-2026 19:28:11]
+2026-06-07 19:28:12 [INFO] [DATABASE] Nueva lectura: Sensor hum: [35.22] -  [07-06-2026 19:28:11]
+2026-06-07 19:28:21 [INFO] [DATABASE] Nueva lectura: Sensor tem: [23.79] -  [07-06-2026 19:28:19]
+2026-06-07 19:28:21 [INFO] [DATABASE] Nueva lectura: Sensor son: [922] -  [07-06-2026 19:28:19]
+2026-06-07 19:28:21 [INFO] [DATABASE] Nueva lectura: Sensor luz: [720] -  [07-06-2026 19:28:19]
+2026-06-07 19:28:21 [INFO] [DATABASE] Nueva lectura: Sensor hum: [59.11] -  [07-06-2026 19:28:19]
+2026-06-07 19:33:06 [INFO] [DATABASE] Nueva lectura: Sensor tem: [28.83] -  [07-06-2026 19:33:04]
+2026-06-07 19:33:06 [INFO] [DATABASE] Nueva lectura: Sensor son: [830] -  [07-06-2026 19:33:04]
+2026-06-07 19:33:06 [INFO] [DATABASE] Nueva lectura: Sensor luz: [243] -  [07-06-2026 19:33:04]
+2026-06-07 19:33:06 [INFO] [DATABASE] Nueva lectura: Sensor hum: [45.73] -  [07-06-2026 19:33:04]
+2026-06-07 19:33:09 [INFO] [DATABASE] Nueva lectura: Sensor tem: [20.64] -  [07-06-2026 19:33:07]
+2026-06-07 19:33:09 [INFO] [DATABASE] Nueva lectura: Sensor son: [1010] -  [07-06-2026 19:33:07]
+2026-06-07 19:33:09 [INFO] [DATABASE] Nueva lectura: Sensor luz: [51] -  [07-06-2026 19:33:07]
+2026-06-07 19:33:09 [INFO] [DATABASE] Nueva lectura: Sensor hum: [61.89] -  [07-06-2026 19:33:07]
+2026-06-07 19:35:13 [INFO] [DATABASE] Nueva lectura: Sensor tem: [29.44] -  [07-06-2026 19:35:12]
+2026-06-07 19:35:13 [INFO] [DATABASE] Nueva lectura: Sensor son: [119] -  [07-06-2026 19:35:12]
+2026-06-07 19:35:14 [INFO] [DATABASE] Nueva lectura: Sensor luz: [410] -  [07-06-2026 19:35:12]
+2026-06-07 19:35:14 [INFO] [DATABASE] Nueva lectura: Sensor hum: [50.71] -  [07-06-2026 19:35:12]
+2026-06-07 19:36:19 [INFO] [DATABASE] Nueva lectura: Sensor tem: [21.03] -  [07-06-2026 19:36:18]
+2026-06-07 19:36:19 [INFO] [DATABASE] Nueva lectura: Sensor son: [463] -  [07-06-2026 19:36:18]
+2026-06-07 19:36:19 [INFO] [DATABASE] Nueva lectura: Sensor luz: [372] -  [07-06-2026 19:36:18]
+2026-06-07 19:36:19 [INFO] [DATABASE] Nueva lectura: Sensor hum: [56.94] -  [07-06-2026 19:36:18]
+2026-06-07 19:36:26 [INFO] 
+Apagando...
+2026-06-07 19:36:26 [INFO] [DATABASE] Sesión con ID [1] finalizada.
+2026-06-07 19:36:26 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-07 19:36:26 [INFO] Apagado completo.

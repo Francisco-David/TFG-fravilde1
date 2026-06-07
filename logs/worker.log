@@ -1,0 +1,97 @@
+2026-06-07 19:06:04 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-07 19:06:04 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:06:07 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:06:07 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:06:07 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:06:07 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:06:08 [INFO] [WORKER] Apagado completo.
+2026-06-07 19:11:03 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-07 19:11:03 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:11:05 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:05 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:05 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:05 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:10 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:10 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:10 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:10 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:15 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:15 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:15 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:15 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:11:19 [INFO] [WORKER] Apagado completo.
+2026-06-07 19:13:12 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-07 19:13:12 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:13:15 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:13:15 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:13:15 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:13:15 [DEBUG] Failed to receive any message from Core
+2026-06-07 19:13:15 [INFO] [WORKER] Apagado completo.
+2026-06-07 19:14:23 + grpc._cython.cygrpc + [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-07 19:14:23 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:14:26 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:14:26 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:14:26 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:14:26 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:14:30 + __main__ + [INFO] [WORKER] Apagado completo.
+2026-06-07 19:15:25 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:27:14 + grpc._cython.cygrpc + [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-07 19:27:26 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:28:52 + pyzeebe.worker.job_executor + [ERROR] Error in job executor. Task: comprobarSensores. Error: Job 2251799814229862 not found.
+Traceback (most recent call last):
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\grpc_internals\zeebe_job_adapter.py", line 124, in complete_job
+    await self._gateway_stub.CompleteJob(CompleteJobRequest(jobKey=job_key, variables=json.dumps(variables)))
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\grpc\aio\_call.py", line 327, in __await__
+    raise _create_rpc_error(
+grpc.aio._call.AioRpcError: <AioRpcError of RPC that terminated with:
+	status = StatusCode.NOT_FOUND
+	details = "Command 'COMPLETE' rejected with code 'NOT_FOUND': Expected to complete job with key '2251799814229862', but no such job was found"
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_status:5, grpc_message:"Command \'COMPLETE\' rejected with code \'NOT_FOUND\': Expected to complete job with key \'2251799814229862\', but no such job was found"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\worker\job_executor.py", line 37, in execute_one_job
+    await self.task.job_handler(job, job_controller)
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\task\task_builder.py", line 50, in job_handler
+    await job_controller.set_success_status(variables=return_variables)
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\job\job.py", line 66, in set_success_status
+    await self._zeebe_adapter.complete_job(job_key=self._job.key, variables=variables or {})
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\grpc_internals\zeebe_job_adapter.py", line 127, in complete_job
+    raise JobNotFoundError(job_key=job_key) from grpc_error
+pyzeebe.errors.job_errors.JobNotFoundError: Job 2251799814229862 not found
+2026-06-07 19:29:14 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:29:16 + database + [INFO] [DATABASE] Nueva evaluación: Sesión 1: [80]
+2026-06-07 19:29:54 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:29:57 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:29:57 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:30:06 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
+2026-06-07 19:30:40 + database + [INFO] [DATABASE] Sensor 'son' defectuoso.
+2026-06-07 19:31:13 + __main__ + [INFO] [WORKER] Apagado completo.
+2026-06-07 19:31:15 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:31:36 + __main__ + [INFO] [WORKER] Apagado completo.
+2026-06-07 19:31:38 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:31:39 + pyzeebe.grpc_internals.zeebe_job_adapter + [DEBUG] Got job: Job(key=2251799814230399, type='calculoEvaluacion', process_instance_key=2251799814229827, bpmn_process_id='eval-ambiental', process_definition_version=10, process_definition_key=2251799814206282, element_id='EvaluacionAmbiental', element_instance_key=2251799814230398, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1780853508427, variables=mappingproxy({'humValor': 59.11, 'luzValor': 720.0, 'sonValor': 922.0, 'temValor': 23.79, 'sesion_id': 1, 'puntuacion': 80, 'estadoSesion': 'en_curso'}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>) from zeebe
+2026-06-07 19:31:40 + database + [INFO] [DATABASE] Nueva evaluación: Sesión 1: [80]
+2026-06-07 19:31:42 + pyzeebe.grpc_internals.zeebe_job_adapter + [DEBUG] Got job: Job(key=2251799814230418, type='comprobarEstado', process_instance_key=2251799814229827, bpmn_process_id='eval-ambiental', process_definition_version=10, process_definition_key=2251799814206282, element_id='ComprobarEstado', element_instance_key=2251799814230417, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1780853511605, variables=mappingproxy({'humValor': 59.11, 'luzValor': 720.0, 'sonValor': 922.0, 'temValor': 23.79, 'sesion_id': 1, 'puntuacion': 80, 'estadoSesion': 'en_curso'}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>) from zeebe
+2026-06-07 19:32:16 + pyzeebe.grpc_internals.zeebe_job_adapter + [DEBUG] Got job: Job(key=2251799814230512, type='comprobarSensores', process_instance_key=2251799814229834, bpmn_process_id='eval-sensores', process_definition_version=2, process_definition_key=2251799814192264, element_id='ComprobarSensores', element_instance_key=2251799814230511, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1780853545455, variables=mappingproxy({'sesion_id': 1, 'estadoSesion': 'en_curso'}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>) from zeebe
+2026-06-07 19:32:22 + pyzeebe.grpc_internals.zeebe_job_adapter + [DEBUG] Got job: Job(key=2251799814230521, type='comprobarEstado', process_instance_key=2251799814229834, bpmn_process_id='eval-sensores', process_definition_version=2, process_definition_key=2251799814192264, element_id='ComprobarEstado', element_instance_key=2251799814230520, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1780853548204, variables=mappingproxy({'sesion_id': 1, 'estadoSesion': 'en_curso'}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>) from zeebe
+2026-06-07 19:32:41 + __main__ + [INFO] [WORKER] Apagado completo.
+2026-06-07 19:32:43 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:33:45 + __main__ + [INFO] [WORKER] Apagado completo.
+2026-06-07 19:33:47 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:34:08 [INFO] [WORKER] Apagado completo.
+2026-06-07 19:35:02 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-07 19:35:03 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [80]
+2026-06-07 19:35:03 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 80
+2026-06-07 19:35:04 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-07 19:35:04 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-07 19:36:37 [INFO] [DATABASE] Sensor 'son' operativo.
+2026-06-07 19:36:38 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
+2026-06-07 19:37:07 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': 21.03, 'humValor': 56.94, 'luzValor': 372.0, 'sonValor': 463.0})
+2026-06-07 19:37:07 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [80]
+2026-06-07 19:37:07 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 80
+2026-06-07 19:37:09 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
+2026-06-07 19:39:05 [INFO] [WORKER] Apagado completo.
