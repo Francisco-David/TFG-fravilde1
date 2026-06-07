@@ -2,7 +2,10 @@ import asyncio
 from pyzeebe import ZeebeWorker, create_insecure_channel
 from task import router
 import database
+import logging
 
+# WARNING de falta de jobs para activar cuando por ejemplo no hay jobs que hacer porque todos los sensores están operativos
+logging.getLogger("pyzeebe").setLevel(logging.ERROR)
 
 async def main():
     channel = create_insecure_channel(grpc_address="localhost:26500")

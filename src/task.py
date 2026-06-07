@@ -10,24 +10,19 @@ router = ZeebeTaskRouter()
 async def leer_lecturas(job: Job):
     res = {}
     sesion_id = job.variables.get("sesion_id")
-    now = datetime.now()
 
     conn = database.get_conn()
     ultimas_lecturas = database.find_ultima_lectura_por_sensor(conn, sesion_id)
-    sensors = database.find_todos_los_sensores(conn)
+    sensores_ambientales = database.find_todos_los_sensores_tipo(conn,'ambiental')
     database.put_conn(conn)
     
     dicc_lecturas = {lectura[0]: lectura for lectura in ultimas_lecturas}  # Creamos un diccionario para acceder a las lecturas por sensor_id
-    for sensor in sensors:
-        tipo_sensor = sensor[1]
-        # estado_sensor = sensor[3]
-        if tipo_sensor in ["mixto", "ambiental"]: # and estado_sensor=="operativo"
+    for sensor in sensores_ambientales:
+        estado_sensor = sensor[3]
+        if estado_sensor=="operativo":
             nombre_sensor = sensor[0]
-            validez = sensor[2]
-            estado_sensor = [3]
             lectura_sensor = dicc_lecturas[nombre_sensor]
-            if estado_sensor == "operativo":
-                res[f"{nombre_sensor}Valor"] = lectura_sensor[1]
+            res[f"{nombre_sensor}Valor"] = lectura_sensor[1]
             # res[f"{nombre_sensor}Validez"] = (lectura_sensor[2]+timedelta(seconds=validez))>now # Chequeamos que la lectura no sea demasiado antigua sumando el valor de validez del sensor a su timestamp
 
     # son_validas = all(res[f"{sensor[0]}Validez"] for sensor in sensors if sensor[1] in ["mixto", "ambiental"])
@@ -70,12 +65,13 @@ async def comprobar_sensores(job: Job):
     sensors = database.find_todos_los_sensores(conn)
     
     dicc_lecturas = {lectura[0]: lectura for lectura in ultimas_lecturas}  # Creamos un diccionario para acceder a las lecturas por sensor_id
+    sensors_received = list(dicc_lecturas.keys())
+
     for sensor in sensors:
         nombre_sensor = sensor[0]
         tipo_sensor = sensor[1] 
         validez = sensor[2]
         estado_sensor = sensor[3]
-        sensors_received = [lectura[0] for lectura in ultimas_lecturas]
         if nombre_sensor in sensors_received:
             if tipo_sensor in ['mixto', 'ambiental']:
                 lectura_sensor = dicc_lecturas[nombre_sensor]
@@ -94,7 +90,7 @@ async def comprobar_sensores(job: Job):
                     #   SI NO HAY ALARMA O LA QUE HAY NO ESTÁ ACK METER AVISO "SE HA PERDIDO LA CONEXION"
                     # print(f'[CAMUNDA] sensor: {nombre_sensor} defectuoso\n')
 
-            else: # Se ha recibido una lectura pero es de alarma, es decir no se registra su valor continuamente por lo que no se puede decir su estado por la tabla de lectura
+            else: # Se ha recibido una lectura pero es de sensor de alarma, es decir no se registra su valor continuamente por lo que no se puede decir su estado por la tabla de lectura
                 pass
     
     database.put_conn(conn)

@@ -129,6 +129,16 @@ def find_todos_los_sensores(conn):
         cur.execute(query)
         return cur.fetchall()
 
+def find_todos_los_sensores_tipo(conn, tipo):
+    with conn.cursor() as cur:
+        query = """
+        SELECT sensor_id, tipo, validez, estado
+        FROM sensor
+        WHERE tipo IN (%s, 'mixto')
+        """
+        cur.execute(query, (tipo,))
+        return cur.fetchall()
+
 def update_estado_sensor(conn, sensor_id, estado):
     with conn.cursor() as cur:
         query = """
@@ -200,9 +210,10 @@ if __name__ == "__main__":
     init_pool()
     conn = get_conn()
 
-    main_delete_db(conn)
+    # main_delete_db(conn)
     # main_check_db("sensor", conn)
-    # print(find_ultima_lectura_por_sensor(conn, 1))
+    print(find_todos_los_sensores_tipo(conn,'ambiental'))
+    print(find_ultima_lectura_por_sensor(conn, 1))
     # print(find_ultima_lectura_por_sensor(conn, 1)[0][0])
     # print(find_validez_sensor(conn, "vib"))
     # print(find_todos_los_sensores(conn))

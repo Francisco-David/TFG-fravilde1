@@ -20,18 +20,18 @@
     <bpmn:startEvent id="EventoComenzarEvaluacion" name="Comenzar evaluaciones sesión">
       <bpmn:outgoing>Flow_0127g2c</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:intermediateCatchEvent id="TimerBucle" name="2 Segundos">
+    <bpmn:intermediateCatchEvent id="TimerBucle" name="90 segundos">
       <bpmn:incoming>Flow_0k5epoi</bpmn:incoming>
       <bpmn:outgoing>Flow_1jvo5sh</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0brl2ni">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT2S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT90S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateCatchEvent id="TimerSetup" name="Temporizador Setup">
       <bpmn:incoming>Flow_0127g2c</bpmn:incoming>
       <bpmn:outgoing>Flow_1y03not</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_1ij2lee">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT3S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1jvo5sh" sourceRef="TimerBucle" targetRef="ComprobarSensores" />
@@ -55,30 +55,20 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="eval-sensores">
-      <bpmndi:BPMNShape id="Activity_0gd9bxn_di" bpmnElement="ComprobarSensores">
-        <dc:Bounds x="410" y="100" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0x8d4tl_di" bpmnElement="ComprobarEstado">
-        <dc:Bounds x="580" y="100" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_10u3id1_di" bpmnElement="EventoFinalizarEvaluacionesSensor">
         <dc:Bounds x="932" y="122" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="918" y="165" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gd9bxn_di" bpmnElement="ComprobarSensores">
+        <dc:Bounds x="410" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1yzhgi9_di" bpmnElement="Transcurso" isMarkerVisible="true">
         <dc:Bounds x="735" y="115" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="733" y="93" width="54" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1jgx6yl_di" bpmnElement="TimerBucle">
-        <dc:Bounds x="562" y="252" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="551" y="295" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0n1ic9c_di" bpmnElement="EventoComenzarEvaluacion">
@@ -87,11 +77,21 @@
           <dc:Bounds x="188" y="165" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jgx6yl_di" bpmnElement="TimerBucle">
+        <dc:Bounds x="562" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="549" y="295" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1ct704w" bpmnElement="TimerSetup">
         <dc:Bounds x="312" y="122" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="298" y="165" width="67" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x8d4tl_di" bpmnElement="ComprobarEstado">
+        <dc:Bounds x="580" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1jvo5sh_di" bpmnElement="Flow_1jvo5sh">
         <di:waypoint x="562" y="270" />
@@ -110,13 +110,9 @@
           <dc:Bounds x="768" y="203" width="44" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ccakvm_di" bpmnElement="Flow_0ccakvm">
-        <di:waypoint x="510" y="140" />
-        <di:waypoint x="580" y="140" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1yztjd2_di" bpmnElement="Flow_1yztjd2">
-        <di:waypoint x="680" y="140" />
-        <di:waypoint x="735" y="140" />
+      <bpmndi:BPMNEdge id="Flow_0127g2c_di" bpmnElement="Flow_0127g2c">
+        <di:waypoint x="238" y="140" />
+        <di:waypoint x="312" y="140" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0tlg5p9_di" bpmnElement="Flow_0tlg5p9">
         <di:waypoint x="785" y="140" />
@@ -125,9 +121,13 @@
           <dc:Bounds x="835" y="122" width="51" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0127g2c_di" bpmnElement="Flow_0127g2c">
-        <di:waypoint x="238" y="140" />
-        <di:waypoint x="312" y="140" />
+      <bpmndi:BPMNEdge id="Flow_1yztjd2_di" bpmnElement="Flow_1yztjd2">
+        <di:waypoint x="680" y="140" />
+        <di:waypoint x="735" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ccakvm_di" bpmnElement="Flow_0ccakvm">
+        <di:waypoint x="510" y="140" />
+        <di:waypoint x="580" y="140" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

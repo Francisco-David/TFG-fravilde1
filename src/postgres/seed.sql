@@ -54,10 +54,10 @@ VALUES
 
 INSERT INTO sensor
 (sensor_id, tipo, validez, estado)
-VALUES
-('tem', 'mixto', 60*30, 'defectuoso'),
-('son', 'mixto', 60*2, 'defectuoso'),
-('luz', 'mixto', 60*5, 'defectuoso'),
-('hum', 'ambiental', 60*20, 'defectuoso'),
+VALUES -- La validez está para el estado del sensor, es decir, si no hay nueva lectura en los ultimos 3 segundos
+('tem', 'mixto', 120*3, 'defectuoso'),
+('son', 'mixto', 30*3, 'defectuoso'),
+('luz', 'mixto', 210*3, 'defectuoso'),
+('hum', 'ambiental', 120*3, 'defectuoso'),
 ('vib', 'alarma', 60*10, 'defectuoso'),
 ('gas', 'alarma', 60*10, 'defectuoso');
