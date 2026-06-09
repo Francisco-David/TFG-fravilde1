@@ -1,4 +1,3 @@
-import psycopg2
 from psycopg2.pool import ThreadedConnectionPool
 import logging
 
@@ -187,13 +186,53 @@ def insert_evaluacion(conn, sesion_id, puntuacion):
         query = """
         INSERT INTO evaluacion
         (sesion_id, puntuacion, timestamp)
-        VALUES (%s, %s, NOW()::timestamp)
+        VALUES (%s, %s, NOW()::timestamp(0))
         """
         cur.execute(query, (sesion_id, puntuacion))
     conn.commit()
     logger.info(f"[DATABASE] Nueva evaluación: Sesión {sesion_id}: [{puntuacion}]")
 
 
+# FUNCIONES ALERTAS
+def insert_alerta(conn, sensor_id, texto, codigo, nivel, sesion_id):
+    with conn.cursor() as cur:
+        query = """
+        INSERT INTO alerta
+        (sensor_id, texto, codigo, nivel, timestamp, sesion_id, reconocida)
+        VALUES (%s, %s, %s, %s, NOW()::timestamp(0), %s, FALSE)
+        RETURNING alerta_id
+        """
+        cur.execute(query, (sensor_id, texto, codigo, nivel, sesion_id))
+        alerta_id = cur.fetchone()[0]
+    conn.commit()
+    logger.info(f"[DATABASE] Nueva alerta: Sesión {sesion_id}: [{nivel}] {sensor_id}({codigo}) - {texto}")
+    return alerta_id
+
+def find_reconocimiento_alerta_por_codigo_en_sesion(conn, codigo, sesion_id):
+    with conn.cursor() as cur:
+        query = """
+        SELECT alerta_id, reconocida
+        FROM alerta
+        WHERE sesion_id = %s AND codigo = %s
+        ORDER BY timestamp DESC
+        LIMIT 1
+        """
+        cur.execute(query, (sesion_id, codigo))
+        return cur.fetchone()
+
+def update_reconocimiento_alerta(conn, alerta_id, reconocida):
+    with conn.cursor() as cur:
+        query = """
+        UPDATE alerta
+        SET reconocida = %s
+        WHERE alerta_id = %s
+        """
+        cur.execute(query, (reconocida,alerta_id))
+    conn.commit()
+    logger.info(f"[DATABASE] Alerta '{alerta_id}' recnonocida: {reconocida}")
+
+
+# FUNCIONES DB
 def main_delete_db(conn):
     files = ["/TFG-fravilde1/src/postgres/drop.sql", "/TFG-fravilde1/src/postgres/schema.sql", "/TFG-fravilde1/src/postgres/seed.sql"]
     with conn.cursor() as cur:
@@ -212,15 +251,38 @@ if __name__ == "__main__":
     init_pool()
     conn = get_conn()
 
-    # main_delete_db(conn)
+    main_delete_db(conn)
     # main_check_db("sensor", conn)
-    print(find_todos_los_sensores_tipo(conn,'ambiental'))
-    print(find_ultima_lectura_por_sensor(conn, 1))
+    # print(find_todos_los_sensores_tipo(conn,'ambiental'))
+    # print(find_ultima_lectura_por_sensor(conn, 1))
     # print(find_ultima_lectura_por_sensor(conn, 1)[0][0])
     # print(find_validez_sensor(conn, "vib"))
     # print(find_todos_los_sensores(conn))
+    # main_check_db("sesion", conn)
+    # insert_alerta(conn, 'tem', 'EX', 'AVtemX', 'AVISO', 1)
+    # main_check_db("alerta", conn)
+    # alarm.lanzar_popup_alerta('HOLA',25,conn)
+    main_check_db("alerta", conn)
+    # print(insert_alerta(conn, 'tem', 'EX', 'AVT1', 'AVISO', 1))
+    # print(find_reconocimiento_alerta_por_codigo_en_sesion(conn, 'AVT1', 1)[0])
 
-    # ================= TESTING FUNCTIONS =================
+    # ================= TESTING FUNCTIONS ================
+
+    # ack_alerta = find_reconocimiento_alerta_por_codigo_en_sesion(conn, 'AVT1', 1)
+    # print(ack_alerta)
+    # if ack_alerta == None or not ack_alerta[1]:
+    #     print("O no existe todavia o no está ack, creamos otra")
+    # elif ack_alerta:
+    #     print("existia una y está ack, no hacemos nada")
+
+    # update_reconocimiento_alerta(conn, ack_alerta[0], True)
+    # ack_alerta = find_reconocimiento_alerta_por_codigo_en_sesion(conn, 'AVT1', 1)
+    # print(ack_alerta)
+    # if ack_alerta == None or not ack_alerta[1]:
+    #     print("O no existe todavia o no está ack, creamos otra")
+    # elif ack_alerta:
+    #     print("existia una y está ack, no hacemos nada")
+
 
 
     # =====================================================

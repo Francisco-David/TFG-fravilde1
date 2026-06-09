@@ -1,5 +1,6 @@
 from datetime import datetime
 import database
+import alarm
 import psycopg2
 from psycopg2 import pool
 import json
@@ -12,7 +13,7 @@ import os
 
 # CONFIGURACIÓN SCRIPT PYTHON
 ZEEBE_ADDRESS = "localhost:26500"
-BROKER_ADDRESS = "10.129.182.86" #"192.168.1.145" 
+BROKER_ADDRESS = "192.168.1.145" # "10.129.182.86" #
 MQTT_PORT = 1883
 MQTT_TOPIC = "tfg/sensors/+"  # valor'+' para el siguiente nivel (temp, hum, etc.) y '#' para todo el árbol (tfg/sensors/...)
 LOGS_DIR = "I:/UNIVERSIDAD/TFG/TFG-fravilde1/logs"
@@ -37,7 +38,7 @@ def start_asyncio_loop(loop):
 
 # MQTT ON MESSAGE CALLBACK
 def on_message(client, userdata, msg):
-    sensorId = msg.topic.split("/")[-1]  # El sensorId lo obtenemos del topic MQTT "tfg/sensors/{sensorId}"
+    sensor_id = msg.topic.split("/")[-1]  # El sensorId lo obtenemos del topic MQTT "tfg/sensors/{sensorId}"
 
     sesion_id = userdata.get("sesion_id")
     conn = None
@@ -48,15 +49,16 @@ def on_message(client, userdata, msg):
     timestamp = payload.get("timestamp")
     try:
         conn = database.get_conn()  # Obtenemos una conexión del pool para insertar la lectura
-        tipo_sensor = database.find_sensor_tipo(conn, sensorId) # Tipo sensor para saber como procesar la lectura
+        tipo_sensor = database.find_sensor_tipo(conn, sensor_id) # Tipo sensor para saber como procesar la lectura
         if tipo_sensor in ["mixto", "ambiental"]:
-            database.insert_lectura(conn, sensorId, value, timestamp, sesion_id)
-        elif tipo_sensor == 'alarma':
-            # no nos son necesarios los datos de sus medias, sobretodo los de las alarmas.
+            database.insert_lectura(conn, sensor_id, value, timestamp, sesion_id)
+
+        if tipo_sensor in ['mixto', 'alarma']:
+            alarm.procesar_datos_sensor(conn, sensor_id, value, sesion_id)
             pass
 
-        else:
-            logger.warning(f"[MQTT] Sensor desconocido: ID '{sensorId}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
+        if tipo_sensor not in ["mixto", "ambiental", 'alarma']:
+            logger.warning(f"[MQTT] Sensor desconocido: ID '{sensor_id}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
             return
 
     except Exception as e:
@@ -120,12 +122,14 @@ def iniciar_sesion(conn):
         #Solo puede haber una sesión en curso por horario_id y fecha, así que cogemos la primera (y única) que encontremos
         sesion_id = sesion_en_curso[0]
         database.update_sesion_estado(conn, sesion_id, "en_curso")
-        logger.info(f"Ya existe una sesión (ID: {sesion_id}) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.\n\n  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.\n")
+        logger.info(f"Ya existe una sesión (ID: {sesion_id}) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.")
+        print("\n  -  Use Ctrl+C si desea salir del programa.\n")
 
     else:
         #Creamos la sesión y obtenemos su ID
         sesion_id = database.insert_nueva_sesion(conn, horario_id, FECHA_ACTUAL)
-        logger.info(f"Sesión creada correctamente. ID: {sesion_id}\n\n  -  Usa Ctrl+C para detener el suscriptor y finalizar la sesión.\n")
+        logger.info(f"Sesión creada correctamente. ID: {sesion_id}")
+        print("\n  -  Use Ctrl+C si desea salir del programa.\n")
 
     return sesion_id
 
@@ -155,7 +159,6 @@ def main():
     loop_thread.daemon = True
     loop_thread.start()
 
-    print("\n-  BIENVENIDO: " + f"{FECHA_ACTUAL} | {HORA_ACTUAL}  - \n\n  -  Use Ctrl+C si desea salir del programa.\n")
     logger.info("-  BIENVENIDO: " + f"{FECHA_ACTUAL} | {HORA_ACTUAL}  - ")
     print("\n  -  Use Ctrl+C si desea salir del programa.\n")
     try:
@@ -169,10 +172,10 @@ def main():
         variables = {
             "sesion_id": sesion_id
         }
-        crear_proceso_camunda(async_loop, "eval-ambiental", variables)
+        # crear_proceso_camunda(async_loop, "eval-ambiental", variables)
 
     except KeyboardInterrupt:
-        logger.warning("\n Sesión no iniciada. Apagando...")
+        logger.warning("Sesión no iniciada. Apagando...")
         return
 
     # CONEXION MQTT y CONFIGURACION MQTT CLIENTE
@@ -185,7 +188,7 @@ def main():
     logger.info(f"[MQTT] Suscrito a topic '{MQTT_TOPIC}'. Esperando mensajes...")
     
     # INICIAR PROCESO DE EVALUACION SENSORES EN CAMUNDA
-    crear_proceso_camunda(async_loop, "eval-sensores", variables)
+    # crear_proceso_camunda(async_loop, "eval-sensores", variables)
 
     # Gestion de cerrado de sesion y desconexión MQTT
     try:
