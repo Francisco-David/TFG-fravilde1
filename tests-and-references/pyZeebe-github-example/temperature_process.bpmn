@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_16q5d21" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.37.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="temp-process" name="Temperature Process" isExecutable="true">
+    <bpmn:exclusiveGateway id="TGateway" name="What kind of alarm?">
+      <bpmn:incoming>Flow_1b3q7uu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fbxf0g</bpmn:outgoing>
+      <bpmn:outgoing>Flow_15l2cwz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0qjtvg7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="turnHeatTask" name="Turn on heat">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="activateHeating" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1fbxf0g</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p7lo0i</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1fbxf0g" name="Cold (t&#60;20)" sourceRef="TGateway" targetRef="turnHeatTask">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=temperature&lt;20</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_15l2cwz" name="Hot (t&#62;25)" sourceRef="TGateway" targetRef="turnCoolTask">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=temperature&gt;25</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="turnCoolTask" name="Turn on cool">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="activateCooling" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15l2cwz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jaymr1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent">
+      <bpmn:incoming>Flow_0jaymr1</bpmn:incoming>
+      <bpmn:incoming>Flow_0p7lo0i</bpmn:incoming>
+      <bpmn:incoming>Flow_0qjtvg7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0jaymr1" sourceRef="turnCoolTask" targetRef="EndEvent" />
+    <bpmn:sequenceFlow id="Flow_0p7lo0i" sourceRef="turnHeatTask" targetRef="EndEvent" />
+    <bpmn:startEvent id="StartEvent" name="Start Event">
+      <bpmn:outgoing>Flow_1b3q7uu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1b3q7uu" sourceRef="StartEvent" targetRef="TGateway" />
+    <bpmn:sequenceFlow id="Flow_0qjtvg7" name="chill (20&#60;=t&#60;=25)" sourceRef="TGateway" targetRef="EndEvent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=20&lt;=temperature and temperature &lt;=25</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmn:message id="Message_1lv54r4" name="temperatureAlarm">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=alarmId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="temp-process">
+      <bpmndi:BPMNShape id="BPMNShape_1v12m3p" bpmnElement="TGateway" isMarkerVisible="true">
+        <dc:Bounds x="305" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="369" y="156" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ndx5o1_di" bpmnElement="turnHeatTask">
+        <dc:Bounds x="470" y="270" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0nsr2ys" bpmnElement="turnCoolTask">
+        <dc:Bounds x="470" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0cceuvr_di" bpmnElement="StartEvent">
+        <dc:Bounds x="172" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="162" y="235" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0phv910_di" bpmnElement="EndEvent">
+        <dc:Bounds x="792" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1fbxf0g_di" bpmnElement="Flow_1fbxf0g">
+        <di:waypoint x="330" y="235" />
+        <di:waypoint x="330" y="310" />
+        <di:waypoint x="470" y="310" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="272" y="268" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15l2cwz_di" bpmnElement="Flow_15l2cwz">
+        <di:waypoint x="330" y="185" />
+        <di:waypoint x="330" y="120" />
+        <di:waypoint x="470" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="275" y="149" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jaymr1_di" bpmnElement="Flow_0jaymr1">
+        <di:waypoint x="570" y="120" />
+        <di:waypoint x="720" y="120" />
+        <di:waypoint x="720" y="210" />
+        <di:waypoint x="792" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p7lo0i_di" bpmnElement="Flow_0p7lo0i">
+        <di:waypoint x="570" y="310" />
+        <di:waypoint x="720" y="310" />
+        <di:waypoint x="720" y="210" />
+        <di:waypoint x="792" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b3q7uu_di" bpmnElement="Flow_1b3q7uu">
+        <di:waypoint x="208" y="210" />
+        <di:waypoint x="305" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qjtvg7_di" bpmnElement="Flow_0qjtvg7">
+        <di:waypoint x="355" y="210" />
+        <di:waypoint x="792" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="533" y="192" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
