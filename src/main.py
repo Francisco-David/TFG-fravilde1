@@ -73,7 +73,10 @@ def on_message(client, userdata, msg):
             if conn is not None:
                 database.put_conn(conn)  # Devolvemos la conexión al pool para que pueda ser reutilizada por otros hilos o procesos
     elif sesion_id=="DEBUG":
-        print(f"[DEBUG] MQTT Recibiendo: {sensor_id} - {value} - {timestamp}")
+        # print(f"[DEBUG] MQTT Recibiendo: {sensor_id} - {value} - {timestamp}")
+        if sensor_id != "gas" and sensor_id != "vib":
+            
+            print(f"[DEBUG] MQTT Recibiendo: {sensor_id} - {value} - {timestamp}")
 
 # FUNCION ASÍNCRONA PARA LAS LLAMADAS A CAMUNDA (VIA ZEEBE)
 async def comenzar_proceso_camunda_async(process_id, variables):

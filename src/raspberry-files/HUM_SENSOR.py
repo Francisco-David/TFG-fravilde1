@@ -19,6 +19,7 @@ def read_dht11_dat(DHTPIN):
     GPIO.output(DHTPIN, GPIO.LOW)
     time.sleep(0.02)
     GPIO.setup(DHTPIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    time.sleep(2)
 
     unchanged_count = 0
     last = -1
