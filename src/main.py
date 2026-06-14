@@ -13,7 +13,7 @@ import os
 
 # CONFIGURACIÓN SCRIPT PYTHON
 ZEEBE_ADDRESS = "localhost:26500"
-BROKER_ADDRESS = "192.168.1.145" # "10.129.182.86" #
+BROKER_ADDRESS = "10.129.182.86" # "192.168.1.145" # 
 MQTT_PORT = 1883
 MQTT_TOPIC = "tfg/sensors/+"  # valor'+' para el siguiente nivel (temp, hum, etc.) y '#' para todo el árbol (tfg/sensors/...)
 LOGS_DIR = "I:/UNIVERSIDAD/TFG/TFG-fravilde1/logs"
@@ -47,30 +47,33 @@ def on_message(client, userdata, msg):
     payload = json.loads(msg.payload.decode())
     value = payload.get("value")
     timestamp = payload.get("timestamp")
-    try:
-        conn = database.get_conn()  # Obtenemos una conexión del pool para insertar la lectura
-        tipo_sensor = database.find_sensor_tipo(conn, sensor_id) # Tipo sensor para saber como procesar la lectura
-        if tipo_sensor in ["mixto", "ambiental"]:
-            database.insert_lectura(conn, sensor_id, value, timestamp, sesion_id)
-
-        if tipo_sensor in ['mixto', 'alarma']:
-            alarm.procesar_datos_sensor(conn, sensor_id, value, sesion_id)
-            pass
-
-        if tipo_sensor not in ["mixto", "ambiental", 'alarma']:
-            logger.warning(f"[MQTT] Sensor desconocido: ID '{sensor_id}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
-            return
-
-    except Exception as e:
+    if sesion_id != "DEBUG" and sesion_id != "AUDIT":
         try:
-            conn.rollback()  # Si ha habido un error al insertar la lectura en la base de datos, hacemos rollback para evitar dejar la conexión en un estado inconsistente.
-                            #   Asi si el error no es de base de datos, evitamos que el programa caiga por un error que no se puede manejar.
-        except:
-            pass
-        logger.error(f"[MQTT] ERROR: {e}")
-    finally:
-        if conn is not None:
-            database.put_conn(conn)  # Devolvemos la conexión al pool para que pueda ser reutilizada por otros hilos o procesos
+            conn = database.get_conn()  # Obtenemos una conexión del pool para insertar la lectura
+            tipo_sensor = database.find_sensor_tipo(conn, sensor_id) # Tipo sensor para saber como procesar la lectura
+            if tipo_sensor in ["mixto", "ambiental"]:
+                database.insert_lectura(conn, sensor_id, value, timestamp, sesion_id)
+
+            if tipo_sensor in ['mixto', 'alarma']:
+                alarm.procesar_datos_sensor(conn, sensor_id, value, sesion_id)
+                pass
+
+            if tipo_sensor not in ["mixto", "ambiental", 'alarma']:
+                logger.warning(f"[MQTT] Sensor desconocido: ID '{sensor_id}' de tipo '{tipo_sensor}'. No se ha procesado el mensaje.")
+                return
+
+        except Exception as e:
+            try:
+                conn.rollback()  # Si ha habido un error al insertar la lectura en la base de datos, hacemos rollback para evitar dejar la conexión en un estado inconsistente.
+                                #   Asi si el error no es de base de datos, evitamos que el programa caiga por un error que no se puede manejar.
+            except:
+                pass
+            logger.error(f"[MQTT] ERROR: {e}")
+        finally:
+            if conn is not None:
+                database.put_conn(conn)  # Devolvemos la conexión al pool para que pueda ser reutilizada por otros hilos o procesos
+    elif sesion_id=="DEBUG":
+        print(f"[DEBUG] MQTT Recibiendo: {sensor_id} - {value} - {timestamp}")
 
 # FUNCION ASÍNCRONA PARA LAS LLAMADAS A CAMUNDA (VIA ZEEBE)
 async def comenzar_proceso_camunda_async(process_id, variables):
@@ -104,15 +107,21 @@ def camunda_callback(fut, process_id):
 # FUNCION PARA INICIAR SESIÓN: PIDE EL AULA, BUSCA EL HORARIO CORRESPONDIENTE Y CREA LA SESIÓN EN LA BASE DE DATOS, SI EXISTE LA PONE EN CURSO, SI NO EXISTE LA CREA Y LA PONE EN CURSO
 def iniciar_sesion(conn):
     while True:
-        aula = input("\t · Introduzca el aula (p.e A0.12):").strip()
+        print("Si desea iniciar el modo DEBUG para comprobar los mensajes MQTT use 'DEBUG' al introducir el aula.\nSi por el contrario desea iniciar el modo AUDIT para pedir informes use 'AUDIT' al introducir el aula.")
+        aula = input("\n\t · Introduzca el aula (p.e A0.12):").strip()
 
-        # Buscar el horario que corresponda al aula, día de la semana y hora actual
-        sesion_horario = database.find_horario(conn, aula, DIA_SEMANA, HORA_ACTUAL)
+        if aula != "DEBUG" and aula!= "AUDIT":
+            # Buscar el horario que corresponda al aula, día de la semana y hora actual
+            sesion_horario = database.find_horario(conn, aula, DIA_SEMANA, HORA_ACTUAL)
 
-        if sesion_horario is None:
-            logger.warning("No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.")
-        else:
-             break
+            if sesion_horario is None:
+                logger.warning("No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.")
+            else:
+                break
+        elif aula == "DEBUG":
+            return "DEBUG"
+        elif aula == "AUDIT":
+            return "AUDIT"
 
     horario_id = sesion_horario[0]
     #Comprobar si ya hay una sesión con ese horario_id y dia actual
@@ -168,48 +177,55 @@ def main():
         finally:
             database.put_conn(conn)
 
-        # INICIAR PROCESO DE EVALUACION AMBIENTE EN CAMUNDA
-        variables = {
-            "sesion_id": sesion_id
-        }
-        # crear_proceso_camunda(async_loop, "eval-ambiental", variables)
+        if sesion_id != "DEBUG" and sesion_id != "AUDIT":
+            # INICIAR PROCESO DE EVALUACION AMBIENTE EN CAMUNDA
+            variables = {
+                "sesion_id": sesion_id
+            }
+            crear_proceso_camunda(async_loop, "eval-ambiental", variables)
+        
 
     except KeyboardInterrupt:
+        print("\n")
         logger.warning("Sesión no iniciada. Apagando...")
         return
 
-    # CONEXION MQTT y CONFIGURACION MQTT CLIENTE
-    mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
-    mqtt_client.user_data_set({"sesion_id": sesion_id}) # Pasamos el ID de sesión
-    mqtt_client.on_message = on_message
-    mqtt_client.connect(BROKER_ADDRESS, MQTT_PORT, 60)
-    mqtt_client.subscribe(MQTT_TOPIC)
+    if sesion_id != "AUDIT":
+        # CONEXION MQTT y CONFIGURACION MQTT CLIENTE
+        mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+        mqtt_client.user_data_set({"sesion_id": sesion_id}) # Pasamos el ID de sesión
+        mqtt_client.on_message = on_message
+        mqtt_client.connect(BROKER_ADDRESS, MQTT_PORT, 60)
+        mqtt_client.subscribe(MQTT_TOPIC)
+        logger.info(f"[MQTT] Suscrito a topic '{MQTT_TOPIC}'. Esperando mensajes...")
 
-    logger.info(f"[MQTT] Suscrito a topic '{MQTT_TOPIC}'. Esperando mensajes...")
+        if sesion_id != "DEBUG":
+        # INICIAR PROCESO DE EVALUACION SENSORES EN CAMUNDA
+            crear_proceso_camunda(async_loop, "eval-sensores", variables)
+
+        # Gestion de cerrado de sesion y desconexión MQTT
+        try:
+            mqtt_client.loop_forever()
+        except KeyboardInterrupt:
+            logger.info("Apagando...")
+        finally:
+
+            # Al finalizar, actualizar el estado de la sesión a "finalizada"
+            if sesion_id is not None and sesion_id != "DEBUG":
+                conn = database.get_conn()  # Obtenemos una conexión del pool para actualizar el estado de la sesión
+                database.update_sesion_estado(conn, sesion_id, "finalizada")
+                database.put_conn(conn)  # Devolvemos la conexión al pool
+            database.close_all()  # Cerramos todas las conexiones del pool
+
+            # Detener MQTT y el loop de asyncio
+            mqtt_client.disconnect()
+            logger.info("[MQTT] Desconectado del broker MQTT.")
+                
+            if async_loop.is_running():
+                async_loop.call_soon_threadsafe(async_loop.stop)
+            logger.info("Apagado completo.")
+
     
-    # INICIAR PROCESO DE EVALUACION SENSORES EN CAMUNDA
-    # crear_proceso_camunda(async_loop, "eval-sensores", variables)
-
-    # Gestion de cerrado de sesion y desconexión MQTT
-    try:
-        mqtt_client.loop_forever()
-    except KeyboardInterrupt:
-        logger.info("Apagando...")
-    finally:
-
-        # Al finalizar, actualizar el estado de la sesión a "finalizada"
-        if sesion_id is not None:
-            conn = database.get_conn()  # Obtenemos una conexión del pool para actualizar el estado de la sesión
-            database.update_sesion_estado(conn, sesion_id, "finalizada")
-            database.put_conn(conn)  # Devolvemos la conexión al pool
-        database.close_all()  # Cerramos todas las conexiones del pool
-
-        # Detener MQTT y el loop de asyncio
-        mqtt_client.disconnect()
-        logger.info("[MQTT] Desconectado del broker MQTT.")
-        if async_loop.is_running():
-            async_loop.call_soon_threadsafe(async_loop.stop)
-        logger.info("Apagado completo.")
 
 if __name__ == "__main__":
     main()

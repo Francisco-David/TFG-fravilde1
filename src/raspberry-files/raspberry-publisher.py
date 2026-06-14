@@ -111,4 +111,14 @@ async def main():
     ]
     await asyncio.gather(*tasks, return_exceptions=True)
 
-asyncio.run(main())
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Interrupción del usuario (Ctrl+C). Limpiando recursos...")
+        client.loop_stop()
+        try:
+            client.disconnect()
+        except Exception:
+            pass
+        GPIO.cleanup()

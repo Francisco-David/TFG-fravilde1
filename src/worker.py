@@ -11,7 +11,6 @@ LOGS_DIR = "I:/UNIVERSIDAD/TFG/TFG-fravilde1/logs"
 logger = logging.getLogger(__name__)
 
 # WARNING de falta de jobs para activar cuando por ejemplo no hay jobs que hacer porque todos los sensores están operativos
-# logging.getLogger("pyzeebe").setLevel(logging.ERROR)
 logging.getLogger("grpc._cython.cygrpc").setLevel(logging.ERROR)
 logging.getLogger("pyzeebe.worker.job_executor").setLevel(logging.ERROR)
 logging.getLogger("pyzeebe.grpc_internals.zeebe_job_adapter").setLevel(logging.ERROR)
@@ -19,7 +18,7 @@ logging.getLogger("pyzeebe.grpc_internals.zeebe_job_adapter").setLevel(logging.E
 print("hello"+pyzeebe.__name__)
 
 async def main():
-    # CONFIGURAR LOGGING
+    # CONFIGURACION LOGS
     if not os.path.exists(LOGS_DIR):
         os.makedirs(LOGS_DIR)
     
@@ -27,7 +26,6 @@ async def main():
     
     logging.basicConfig(
         level=logging.DEBUG,
-        # format='%(asctime)s + %(name)s + [%(levelname)-s] %(message)s',
         format='%(asctime)s [%(levelname)-s] %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S',
         handlers=[

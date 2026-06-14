@@ -153,7 +153,7 @@ elif level == 'AV':
 else:
     accent_bg = '#e2e3e5'
     accent_fg = '#41464b'
-    title_prefix = 'INFORMACIÓN'
+    title_prefix = 'INFO'
 
 root.title(f'{title_prefix} (Código: {codigo})')
 root.geometry('520x240')

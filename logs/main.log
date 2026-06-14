@@ -1377,3 +1377,35 @@ Apagando...
 2026-06-09 02:53:25 [INFO] [DATABASE] Sesión con ID [1] finalizada.
 2026-06-09 02:53:25 [INFO] [MQTT] Desconectado del broker MQTT.
 2026-06-09 02:53:25 [INFO] Apagado completo.
+2026-06-14 13:28:47 [DEBUG] Using proactor: IocpProactor
+2026-06-14 13:28:47 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 13:29:08 [WARNING] Sesión no iniciada. Apagando...
+2026-06-14 13:29:11 [DEBUG] Using proactor: IocpProactor
+2026-06-14 13:29:11 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 13:29:19 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 13:29:48 [WARNING] Sesión no iniciada. Apagando...
+2026-06-14 13:30:52 [DEBUG] Using proactor: IocpProactor
+2026-06-14 13:30:52 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 13:30:58 [DEBUG] Using proactor: IocpProactor
+2026-06-14 13:30:58 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 13:31:00 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-14 13:31:00 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 'DEBUG'}
+2026-06-14 13:31:03 [ERROR] [ZEEBE] ERROR No se pudo iniciar el proceso 'eval-ambiental' de Camunda: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)", grpc_status:14}))
+2026-06-14 13:32:12 [DEBUG] Using proactor: IocpProactor
+2026-06-14 13:32:12 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 13:33:42 [DEBUG] Using proactor: IocpProactor
+2026-06-14 13:33:42 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 13:33:44 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-14 13:34:31 [DEBUG] Using proactor: IocpProactor
+2026-06-14 13:34:31 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 13:34:36 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-14 13:36:30 [INFO] Apagando...
+2026-06-14 13:36:30 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-14 13:36:30 [INFO] Apagado completo.
+2026-06-14 13:39:52 [DEBUG] Using proactor: IocpProactor
+2026-06-14 13:39:52 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 13:39:56 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-14 13:45:34 [INFO] Apagando...
+2026-06-14 13:45:34 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-14 13:45:34 [INFO] Apagado completo.
