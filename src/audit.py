@@ -1,11 +1,10 @@
 import logging
-import main
 import database
 from datetime import datetime
-from datetime import date, timedelta
+from datetime import timedelta
+
+
 logger = logging.getLogger(__name__)
-
-
 
 
 def get_informe_diario(conn, fecha):

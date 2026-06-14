@@ -164,9 +164,6 @@ async def comprobar_sensores(job: Job):
                     texto_aviso = f"[{nivel}] [CAMUNDA] Se ha recuperado la conexión con el sensor {nombre_sensor}"
                     alarm.generar_alerta(conn, codigo, sesion_id, nombre_sensor, texto_aviso, nivel)
                     
-
-                    # print(f'[CAMUNDA] sensor: {nombre_sensor} operativo\n')
-
                 elif not validez_transmision and estado_sensor=='operativo':
 
                     database.update_estado_sensor(conn, nombre_sensor,'defectuoso')
@@ -176,10 +173,6 @@ async def comprobar_sensores(job: Job):
                     codigo = f'{nivel[:2]}{nombre_sensor}C'
                     texto_aviso = f"[{nivel}] [CAMUNDA] Revise la conexión MQTT o la conexión física al sensor {nombre_sensor}"
                     alarm.generar_alerta(conn, codigo, sesion_id, nombre_sensor, texto_aviso, nivel)
-
-
-
-                    # print(f'[CAMUNDA] sensor: {nombre_sensor} defectuoso\n')
 
             else: # Se ha recibido una lectura pero es de sensor de alarma, es decir no se registra su valor continuamente por lo que no se puede decir su estado por la tabla de lectura
                 pass

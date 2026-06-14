@@ -515,11 +515,6 @@ if __name__ == "__main__":
 
     # main_delete_db(conn)
     # main_check_db("sensor", conn)
-    # print(find_todos_los_sensores_tipo(conn,'ambiental'))
-    # print(find_ultima_lectura_por_sensor(conn, 1))
-    # print(find_ultima_lectura_por_sensor(conn, 1)[0][0])
-    # print(find_validez_sensor(conn, "vib"))
-    # print(find_todos_los_sensores(conn))
     # main_check_db("sesion", conn)
     # insert_alerta(conn, 'tem', 'EX', 'AVtemX', 'AVISO', 1)
     # main_check_db("alerta", conn)
