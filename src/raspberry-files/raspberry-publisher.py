@@ -73,7 +73,6 @@ async def sensor_task(name, interval, channel=None):
         elif name=="hum":
             try:
                 read = read_dht11_dat(channel)
-                print(read)
                 if read:
                     humidity, temperature = read
                     value = humidity

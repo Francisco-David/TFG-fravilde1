@@ -71,7 +71,6 @@ def read_dht11_dat(DHTPIN):
             else:
                 continue
     if len(lengths) != 40:
-        print("lengths =",lengths)
         #print ("Data not good, skip")
         return False
 
