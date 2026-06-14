@@ -1,8 +1,6 @@
 from datetime import datetime
 import database
 import alarm
-import psycopg2
-from psycopg2 import pool
 import json
 import paho.mqtt.client as mqtt
 from pyzeebe import ZeebeClient, create_insecure_channel
@@ -10,6 +8,7 @@ import asyncio
 import threading
 import logging
 import os
+import audit
 
 # CONFIGURACIÓN SCRIPT PYTHON
 ZEEBE_ADDRESS = "localhost:26500"
@@ -110,7 +109,8 @@ def camunda_callback(fut, process_id):
 # FUNCION PARA INICIAR SESIÓN: PIDE EL AULA, BUSCA EL HORARIO CORRESPONDIENTE Y CREA LA SESIÓN EN LA BASE DE DATOS, SI EXISTE LA PONE EN CURSO, SI NO EXISTE LA CREA Y LA PONE EN CURSO
 def iniciar_sesion(conn):
     while True:
-        print("Si desea iniciar el modo DEBUG para comprobar los mensajes MQTT use 'DEBUG' al introducir el aula.\nSi por el contrario desea iniciar el modo AUDIT para pedir informes use 'AUDIT' al introducir el aula.")
+        print("\nSi desea iniciar el modo DEBUG para comprobar los mensajes MQTT use 'DEBUG' al introducir el aula.")
+        print("Si por el contrario desea iniciar el modo AUDIT para pedir informes use 'AUDIT' al introducir el aula.")
         aula = input("\n\t · Introduzca el aula (p.e A0.12):").strip()
 
         if aula != "DEBUG" and aula!= "AUDIT":
@@ -228,7 +228,21 @@ def main():
                 async_loop.call_soon_threadsafe(async_loop.stop)
             logger.info("Apagado completo.")
 
-    
+    #SI SE ELIGE AUDIT COMO OPCION
+    else:
+        try:
+            print(f"\n-- BIENVENIDO A LA PETICIÓN DE INFORMES - Día {FECHA_ACTUAL} (Día de la semana: {DIA_SEMANA})")
+            audit.formulario_informe(conn, FECHA_ACTUAL)
+        except KeyboardInterrupt:
+            print("\n")
+            logger.info("Apagando...")
+        finally:
+            database.close_all()  # Cerramos todas las conexiones del pool
+                
+            if async_loop.is_running():
+                async_loop.call_soon_threadsafe(async_loop.stop)
+            logger.info("Apagado completo.")
+
 
 if __name__ == "__main__":
     main()

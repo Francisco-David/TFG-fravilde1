@@ -95,3 +95,43 @@ pyzeebe.errors.job_errors.JobNotFoundError: Job 2251799814229862 not found
 2026-06-07 19:37:07 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 80
 2026-06-07 19:37:09 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
 2026-06-07 19:39:05 [INFO] [WORKER] Apagado completo.
+2026-06-14 19:37:09 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-14 19:37:14 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-14 19:37:28 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': None, 'sonValor': None, 'luzValor': None, 'humValor': None})
+2026-06-14 19:37:37 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] None(AVallC) - [AVISO] Revise la conexión MQTT o la conexión a los sensores, todos carecen de valor.
+2026-06-14 19:37:38 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [0]
+2026-06-14 19:37:38 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 0
+2026-06-14 19:38:55 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-14 19:40:30 [INFO] [DATABASE] Sensor 'tem' operativo.
+2026-06-14 19:40:30 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] tem(INtemC) - [INFO] se ha recuperado la conexión con el sensor tem
+2026-06-14 19:40:30 [INFO] [DATABASE] Sensor 'son' operativo.
+2026-06-14 19:40:30 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] son(INsonC) - [INFO] se ha recuperado la conexión con el sensor son
+2026-06-14 19:40:30 [INFO] [DATABASE] Sensor 'luz' operativo.
+2026-06-14 19:40:30 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] luz(INluzC) - [INFO] se ha recuperado la conexión con el sensor luz
+2026-06-14 19:40:30 [INFO] [DATABASE] Sensor 'hum' operativo.
+2026-06-14 19:40:30 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] hum(INhumC) - [INFO] se ha recuperado la conexión con el sensor hum
+2026-06-14 19:40:33 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-14 19:42:07 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-14 19:43:39 [INFO] [DATABASE] Sensor 'son' defectuoso.
+2026-06-14 19:43:39 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] son(AVsonC) - [AVISO] Revise la conexión MQTT o la conexión física al sensor son
+2026-06-14 19:43:42 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-14 19:44:49 [INFO] [WORKER] Apagado completo.
+2026-06-14 19:44:53 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-14 19:45:14 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
+2026-06-14 19:49:52 [INFO] [WORKER] Apagado completo.
+2026-06-14 21:21:55 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-14 21:22:21 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': 19.27, 'luzValor': 35.0, 'humValor': 36.6, 'sonValor': None})
+2026-06-14 21:22:21 [INFO] [WORKER] Apagado completo.
+2026-06-14 21:22:31 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-14 21:22:33 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [37.142857142857146]
+2026-06-14 21:22:33 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 37.142857142857146
+2026-06-14 21:22:33 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] None(AVallC) - [AVISO] [CAMUNDA] La puntuación ambiental comienza a deteriorarse (score: 37.142857142857146). Revise las condiciones de la clase.
+2026-06-14 21:22:35 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-14 21:23:22 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': 19.27, 'luzValor': 35.0, 'humValor': 36.6, 'sonValor': None})
+2026-06-14 21:23:24 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [37.142857142857146]
+2026-06-14 21:23:24 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 37.142857142857146
+2026-06-14 21:23:24 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] None(AVallC) - [AVISO] [CAMUNDA] La puntuación ambiental comienza a deteriorarse (score: 37.142857142857146). Revise las condiciones de la clase.
+2026-06-14 21:23:37 [INFO] [WORKER] Apagado completo.

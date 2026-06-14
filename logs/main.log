@@ -1439,3 +1439,271 @@ Apagando...
 2026-06-14 14:48:05 [INFO] Apagando...
 2026-06-14 14:48:05 [INFO] [MQTT] Desconectado del broker MQTT.
 2026-06-14 14:48:05 [INFO] Apagado completo.
+2026-06-14 19:33:29 [DEBUG] Using proactor: IocpProactor
+2026-06-14 19:33:29 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 19:36:19 [DEBUG] Using proactor: IocpProactor
+2026-06-14 19:36:19 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 19:36:21 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-14 19:36:46 [INFO] Apagando...
+2026-06-14 19:36:46 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-14 19:36:46 [INFO] Apagado completo.
+2026-06-14 19:36:53 [DEBUG] Using proactor: IocpProactor
+2026-06-14 19:36:53 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 19:37:04 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-14 19:37:04 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+2026-06-14 19:37:04 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-14 19:37:05 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-14 19:37:06 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 1}
+2026-06-14 19:37:06 [INFO] [ZEEBE] Comenzando el proceso 'eval-sensores' con variables: {'sesion_id': 1}
+2026-06-14 19:37:07 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-14 19:37:07 [INFO] [ZEEBE] Proceso 'eval-sensores' iniciado correctamente.
+2026-06-14 19:40:11 [INFO] [DATABASE] Nueva lectura: Sensor tem: [28.89] -  [14-06-2026 19:40:10]
+2026-06-14 19:40:11 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] tem(AVtemX) - [AVISO] Valores de 'tem' altos > 26ºC (28.89ºC)
+2026-06-14 19:40:11 [INFO] [DATABASE] Nueva lectura: Sensor son: [252] -  [14-06-2026 19:40:10]
+2026-06-14 19:40:11 [INFO] [DATABASE] Nueva lectura: Sensor luz: [21] -  [14-06-2026 19:40:10]
+2026-06-14 19:40:11 [INFO] [DATABASE] Nueva lectura: Sensor hum: [50.37] -  [14-06-2026 19:40:10]
+2026-06-14 19:40:21 [INFO] [DATABASE] Nueva lectura: Sensor tem: [25.18] -  [14-06-2026 19:40:21]
+2026-06-14 19:40:21 [INFO] [DATABASE] Nueva lectura: Sensor son: [258] -  [14-06-2026 19:40:21]
+2026-06-14 19:40:21 [INFO] [DATABASE] Nueva lectura: Sensor luz: [35] -  [14-06-2026 19:40:21]
+2026-06-14 19:40:21 [INFO] [DATABASE] Nueva lectura: Sensor hum: [68.57] -  [14-06-2026 19:40:21]
+2026-06-14 19:40:25 [INFO] [DATABASE] Nueva lectura: Sensor tem: [22.51] -  [14-06-2026 19:40:25]
+2026-06-14 19:40:25 [INFO] [DATABASE] Nueva lectura: Sensor son: [251] -  [14-06-2026 19:40:25]
+2026-06-14 19:40:25 [INFO] [DATABASE] Nueva lectura: Sensor luz: [25] -  [14-06-2026 19:40:25]
+2026-06-14 19:40:25 [INFO] [DATABASE] Nueva lectura: Sensor hum: [38.01] -  [14-06-2026 19:40:25]
+2026-06-14 19:40:50 [INFO] [DATABASE] Nueva lectura: Sensor tem: [17.84] -  [14-06-2026 19:40:49]
+2026-06-14 19:40:50 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] tem(AVtemN) - [AVISO] Valores de 'tem' bajos < 18ºC (17.84ºC)
+2026-06-14 19:40:50 [INFO] [DATABASE] Nueva lectura: Sensor son: [252] -  [14-06-2026 19:40:49]
+2026-06-14 19:40:50 [INFO] [DATABASE] Nueva lectura: Sensor luz: [28] -  [14-06-2026 19:40:49]
+2026-06-14 19:40:50 [INFO] [DATABASE] Nueva lectura: Sensor hum: [51.84] -  [14-06-2026 19:40:49]
+2026-06-14 19:41:04 [INFO] [DATABASE] Nueva lectura: Sensor tem: [19.27] -  [14-06-2026 19:41:04]
+2026-06-14 19:41:04 [INFO] [DATABASE] Nueva lectura: Sensor son: [254] -  [14-06-2026 19:41:04]
+2026-06-14 19:41:04 [INFO] [DATABASE] Nueva lectura: Sensor luz: [35] -  [14-06-2026 19:41:04]
+2026-06-14 19:41:04 [INFO] [DATABASE] Nueva lectura: Sensor hum: [36.6] -  [14-06-2026 19:41:04]
+2026-06-14 19:45:08 [INFO] Apagando...
+2026-06-14 19:45:08 [INFO] [DATABASE] Sesión con ID [1] finalizada.
+2026-06-14 19:45:08 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-14 19:45:08 [INFO] Apagado completo.
+2026-06-14 20:56:53 [DEBUG] Using proactor: IocpProactor
+2026-06-14 20:56:53 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 20:56:58 [INFO] Apagando...
+2026-06-14 20:56:58 [INFO] Apagado completo.
+2026-06-14 20:57:31 [DEBUG] Using proactor: IocpProactor
+2026-06-14 20:57:31 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 20:57:34 [INFO] Apagado completo.
+2026-06-14 21:11:11 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:11:11 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:11:13 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 21:11:20 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 21:11:42 [WARNING] Sesión no iniciada. Apagando...
+2026-06-14 21:11:44 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:11:44 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:11:44 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 21:11:46 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 21:11:53 [WARNING] Sesión no iniciada. Apagando...
+2026-06-14 21:13:16 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:13:16 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:13:20 [WARNING] [AUDIT] No existe acción para la instrucción introducida.
+2026-06-14 21:14:35 [WARNING] [AUDIT] No existe acción para la instrucción introducida.
+2026-06-14 21:14:35 [INFO] Apagando...
+2026-06-14 21:14:35 [INFO] Apagado completo.
+2026-06-14 21:14:37 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:14:37 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:14:42 [INFO] Apagado completo.
+2026-06-14 21:14:54 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:14:54 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:15:03 [INFO] Apagando...
+2026-06-14 21:15:03 [INFO] Apagado completo.
+2026-06-14 21:15:08 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:15:08 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:15:42 [INFO] Apagando...
+2026-06-14 21:15:42 [INFO] Apagado completo.
+2026-06-14 21:16:34 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:16:34 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:16:40 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 21:16:46 [WARNING] [AUDIT] No existe acción para la instrucción introducida.
+2026-06-14 21:16:57 [INFO] Apagando...
+2026-06-14 21:16:57 [INFO] Apagado completo.
+2026-06-14 21:21:50 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:21:50 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:21:59 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-14 21:21:59 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+2026-06-14 21:21:59 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-14 21:21:59 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 1}
+2026-06-14 21:21:59 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-14 21:22:54 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:22:54 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:23:01 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-14 21:23:01 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+2026-06-14 21:23:01 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-14 21:23:01 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 1}
+2026-06-14 21:23:01 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-14 21:23:19 [DEBUG] Using proactor: IocpProactor
+2026-06-14 21:23:19 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 21:23:20 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-14 21:23:20 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+2026-06-14 21:23:20 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-14 21:23:20 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 1}
+2026-06-14 21:23:20 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-14 22:08:57 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:08:57 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:09:00 [INFO] Apagado completo.
+2026-06-14 22:09:38 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:09:38 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:09:46 [INFO] Apagado completo.
+2026-06-14 22:10:17 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:10:17 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:10:19 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 22:10:21 [INFO] Apagado completo.
+2026-06-14 22:12:59 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:12:59 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:13:06 [INFO] Apagado completo.
+2026-06-14 22:14:06 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:14:06 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:15:04 [INFO] Apagando...
+2026-06-14 22:15:04 [INFO] Apagado completo.
+2026-06-14 22:15:06 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:15:06 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:15:38 [INFO] Apagando...
+2026-06-14 22:15:38 [INFO] Apagado completo.
+2026-06-14 22:15:40 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:15:40 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:15:42 [INFO] [DATABASE] Sesión con ID [1] en_curso.
+2026-06-14 22:15:42 [INFO] Ya existe una sesión (ID: 1) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+2026-06-14 22:15:42 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-14 22:15:42 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 1}
+2026-06-14 22:15:42 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-14 22:15:50 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:15:50 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:17:44 [INFO] Apagando...
+2026-06-14 22:17:44 [INFO] Apagado completo.
+2026-06-14 22:17:46 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:17:46 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:17:52 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 22:18:14 [INFO] Apagando...
+2026-06-14 22:18:14 [INFO] Apagado completo.
+2026-06-14 22:26:26 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:26:26 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:26:48 [INFO] Apagando...
+2026-06-14 22:26:48 [INFO] Apagado completo.
+2026-06-14 22:26:50 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:26:50 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:27:47 [INFO] Apagando...
+2026-06-14 22:27:47 [INFO] Apagado completo.
+2026-06-14 22:27:49 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:27:49 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:34:54 [INFO] Apagando...
+2026-06-14 22:34:54 [INFO] Apagado completo.
+2026-06-14 22:50:56 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:50:56 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:51:03 [INFO] Apagado completo.
+2026-06-14 22:51:31 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:51:31 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:51:33 [WARNING] No hay clase programada actualmente en ese aula. Sesión no creada. Inténtalo de nuevo.
+2026-06-14 22:51:39 [INFO] Apagado completo.
+2026-06-14 22:52:51 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:52:51 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:52:56 [INFO] Apagado completo.
+2026-06-14 22:55:39 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:55:39 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:55:45 [INFO] Apagado completo.
+2026-06-14 22:59:46 [DEBUG] Using proactor: IocpProactor
+2026-06-14 22:59:46 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 22:59:50 [INFO] Apagado completo.
+2026-06-14 23:01:54 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:01:54 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:02:04 [INFO] Apagado completo.
+2026-06-14 23:04:40 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:04:40 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:04:44 [INFO] Apagado completo.
+2026-06-14 23:04:57 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:04:57 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:05:02 [INFO] Apagado completo.
+2026-06-14 23:05:20 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:05:20 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:05:24 [INFO] Apagado completo.
+2026-06-14 23:05:46 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:05:46 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:05:49 [INFO] Apagado completo.
+2026-06-14 23:06:08 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:06:08 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:09:04 [INFO] Apagando...
+2026-06-14 23:09:04 [INFO] Apagado completo.
+2026-06-14 23:09:06 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:09:06 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:09:13 [INFO] Apagado completo.
+2026-06-14 23:10:17 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:10:17 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:10:24 [INFO] Apagado completo.
+2026-06-14 23:10:45 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:10:45 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:10:49 [INFO] Apagado completo.
+2026-06-14 23:13:05 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:13:05 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:13:33 [INFO] Apagando...
+2026-06-14 23:13:33 [INFO] Apagado completo.
+2026-06-14 23:14:19 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:14:19 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:25:48 [INFO] Apagando...
+2026-06-14 23:25:48 [INFO] Apagado completo.
+2026-06-14 23:25:50 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:25:50 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:25:54 [INFO] Apagado completo.
+2026-06-14 23:26:04 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:26:04 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:26:09 [WARNING] [AUDIT] No existe acción para la instrucción introducida.
+2026-06-14 23:26:18 [INFO] Apagado completo.
+2026-06-14 23:27:17 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:27:17 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:28:40 [INFO] Apagando...
+2026-06-14 23:28:40 [INFO] Apagado completo.
+2026-06-14 23:28:42 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:28:42 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:41:24 [INFO] Apagando...
+2026-06-14 23:41:24 [INFO] Apagado completo.
+2026-06-14 23:41:25 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:41:25 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:41:34 [INFO] Apagando...
+2026-06-14 23:41:34 [INFO] Apagado completo.
+2026-06-14 23:45:19 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:45:19 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:45:24 [INFO] Apagado completo.
+2026-06-14 23:45:40 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:45:40 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:45:44 [INFO] Apagado completo.
+2026-06-14 23:47:40 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:47:40 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:48:16 [INFO] Apagando...
+2026-06-14 23:48:16 [INFO] Apagado completo.
+2026-06-14 23:48:17 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:48:17 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:51:12 [INFO] Apagando...
+2026-06-14 23:51:12 [INFO] Apagado completo.
+2026-06-14 23:51:14 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:51:14 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:51:19 [INFO] Apagado completo.
+2026-06-14 23:51:35 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:51:35 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:58:21 [INFO] Apagando...
+2026-06-14 23:58:21 [INFO] Apagado completo.
+2026-06-14 23:58:31 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:58:31 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:59:12 [INFO] Apagando...
+2026-06-14 23:59:12 [INFO] Apagado completo.
+2026-06-14 23:59:13 [DEBUG] Using proactor: IocpProactor
+2026-06-14 23:59:13 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-14 23:59:29 [INFO] Apagando...
+2026-06-14 23:59:29 [INFO] Apagado completo.
+2026-06-15 00:06:34 [DEBUG] Using proactor: IocpProactor
+2026-06-15 00:06:34 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-15 00:07:00 [WARNING] Sesión no iniciada. Apagando...
+2026-06-15 00:07:03 [DEBUG] Using proactor: IocpProactor
+2026-06-15 00:07:03 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-15 00:17:20 [INFO] Apagando...
+2026-06-15 00:17:20 [INFO] Apagado completo.
+2026-06-15 00:17:22 [DEBUG] Using proactor: IocpProactor
+2026-06-15 00:17:22 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-15 00:17:27 [INFO] Apagado completo.
+2026-06-15 00:17:56 [DEBUG] Using proactor: IocpProactor
+2026-06-15 00:17:56 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-15 00:18:49 [INFO] Apagando...
+2026-06-15 00:18:49 [INFO] Apagado completo.

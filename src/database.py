@@ -82,6 +82,91 @@ def find_estado_sesion(conn, sesion_id):
         cur.execute(query, (sesion_id,))
         res = cur.fetchone()
         return res[0] if res else None
+    
+def get_sesiones_por_fecha(conn, fecha):
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT
+                s.sesion_id,
+                h.profesor,
+                h.grupo,
+                h.asignatura,
+                h.aula,
+                s.comienza,
+                s.finaliza
+            FROM sesion s
+            JOIN horario h
+                ON s.horario_id = h.horario_id
+            WHERE s.fecha = %s
+            ORDER BY s.comienza
+        """, (fecha,))
+
+        return cur.fetchall()
+    
+def get_estadisticas_sensores_por_sesion(conn, sesion_id):
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT
+                sensor_id,
+                MAX(valor),
+                MIN(valor),
+                AVG(valor)
+            FROM lectura
+            WHERE sesion_id = %s
+            GROUP BY sensor_id
+        """, (sesion_id,))
+
+        return cur.fetchall()
+    
+def get_alarmas_por_codigo_por_sesion(conn, sesion_id):
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT
+                codigo,
+                sensor_id,
+                COUNT(*) as total
+            FROM alerta
+            WHERE sesion_id = %s
+            GROUP BY codigo, sensor_id
+            ORDER BY total DESC
+        """, (sesion_id,))
+
+        return cur.fetchall()
+
+def get_sesiones_por_semana(conn, fecha_inicio, fecha_fin):
+
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT
+                s.sesion_id,
+                h.profesor,
+                h.grupo,
+                h.asignatura,
+                h.aula,
+                s.fecha,
+                s.comienza,
+                s.finaliza
+            FROM sesion s
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE s.fecha BETWEEN %s AND %s
+            ORDER BY s.fecha, s.comienza
+        """, (fecha_inicio, fecha_fin))
+
+        return cur.fetchall()
+
+def get_profesores_por_semana(conn, fecha_inicio, fecha_fin):
+
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT DISTINCT h.profesor
+            FROM sesion s
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE s.fecha BETWEEN %s AND %s
+            ORDER BY h.profesor
+        """, (fecha_inicio, fecha_fin))
+
+        return [row[0] for row in cur.fetchall()]
+
 
 
 # FUNCIONES HORARIO
@@ -231,6 +316,183 @@ def update_reconocimiento_alerta(conn, alerta_id, reconocida):
     conn.commit()
     logger.info(f"[DATABASE] Alerta '{alerta_id}' recnonocida: {reconocida}")
 
+# FUNCION INFORME
+def get_metricas_profesor_semanal(conn, profesor, fecha_inicio, fecha_fin):
+
+    with conn.cursor() as cur:
+
+        # SONIDO
+        cur.execute("""
+            SELECT
+                MAX(l.valor),
+                MIN(l.valor),
+                AVG(l.valor)
+            FROM lectura l
+            JOIN sesion s ON l.sesion_id = s.sesion_id
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE h.profesor = %s
+              AND l.sensor_id = 'son'
+              AND s.fecha BETWEEN %s AND %s
+        """, (profesor, fecha_inicio, fecha_fin))
+
+        sonido = cur.fetchone()
+
+        # ALARMAS
+        cur.execute("""
+            SELECT
+                a.codigo,
+                COUNT(*)
+            FROM alerta a
+            JOIN sesion s ON a.sesion_id = s.sesion_id
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE h.profesor = %s
+              AND s.fecha BETWEEN %s AND %s
+            GROUP BY a.codigo
+        """, (profesor, fecha_inicio, fecha_fin))
+
+        alarmas = cur.fetchall()
+
+        # DURACION
+        cur.execute("""
+            SELECT
+                AVG(EXTRACT(EPOCH FROM (s.finaliza - s.comienza)))
+            FROM sesion s
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE h.profesor = %s
+              AND s.fecha BETWEEN %s AND %s
+        """, (profesor, fecha_inicio, fecha_fin))
+
+        duracion = cur.fetchone()[0]
+
+    return {
+        "sonido": sonido,
+        "alarmas": alarmas,
+        "duracion_media": duracion
+    }
+
+def get_aulas_semana(conn, fecha_inicio, fecha_fin):
+
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT DISTINCT h.aula
+            FROM sesion s
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE s.fecha BETWEEN %s AND %s
+            ORDER BY h.aula
+        """, (fecha_inicio, fecha_fin))
+
+        return [row[0] for row in cur.fetchall()]
+    
+def get_grupos_semana(conn, fecha_inicio, fecha_fin):
+
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT DISTINCT h.grupo
+            FROM sesion s
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE s.fecha BETWEEN %s AND %s
+            ORDER BY h.grupo
+        """, (fecha_inicio, fecha_fin))
+
+        return [row[0] for row in cur.fetchall()]
+
+def get_sonido_semana_por_aula(conn, aula, fecha_inicio, fecha_fin):
+
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT
+                MAX(l.valor),
+                MIN(l.valor),
+                AVG(l.valor)
+            FROM lectura l
+            JOIN sesion s ON l.sesion_id = s.sesion_id
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE h.aula = %s
+              AND l.sensor_id = 'son'
+              AND s.fecha BETWEEN %s AND %s
+        """, (aula, fecha_inicio, fecha_fin))
+
+        res = cur.fetchone()
+        return res if res else None
+
+def get_sonido_semana_por_grupo(conn, grupo, fecha_inicio, fecha_fin):
+
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT
+                MAX(l.valor),
+                MIN(l.valor),
+                AVG(l.valor)
+            FROM lectura l
+            JOIN sesion s ON l.sesion_id = s.sesion_id
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE h.grupo = %s
+              AND l.sensor_id = 'son'
+              AND s.fecha BETWEEN %s AND %s
+        """, (grupo, fecha_inicio, fecha_fin))
+
+        res = cur.fetchone()
+        return res if res else None
+    
+
+    
+def get_estadisticas_sensores_por_sesion(conn, sesion_id):
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT
+                sensor_id,
+                MAX(valor),
+                MIN(valor),
+                AVG(valor)
+            FROM lectura
+            WHERE sesion_id = %s
+            GROUP BY sensor_id
+        """, (sesion_id,))
+
+        return cur.fetchall()
+
+def get_metricas_aula_semanal(conn, aula, fecha_inicio, fecha_fin):
+
+    with conn.cursor() as cur:
+
+        cur.execute("""
+            SELECT
+                l.sensor_id,
+                MAX(l.valor),
+                MIN(l.valor),
+                AVG(l.valor)
+            FROM lectura l
+            JOIN sesion s ON l.sesion_id = s.sesion_id
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE h.aula = %s
+              AND l.sensor_id IN ('tem', 'hum', 'son', 'luz')
+              AND s.fecha BETWEEN %s AND %s
+            GROUP BY l.sensor_id
+            ORDER BY l.sensor_id;
+        """, (aula, fecha_inicio, fecha_fin))
+
+        ambientales = cur.fetchall()
+
+        cur.execute("""
+            SELECT
+                a.codigo,
+                COUNT(*)
+            FROM alerta a
+            JOIN sesion s ON a.sesion_id = s.sesion_id
+            JOIN horario h ON s.horario_id = h.horario_id
+            WHERE h.aula = %s
+              AND s.fecha BETWEEN %s AND %s
+            GROUP BY a.codigo
+            ORDER BY a.codigo;
+        """, (aula, fecha_inicio, fecha_fin))
+
+        alarmas = cur.fetchall()
+
+    return {
+        "ambientales": ambientales,
+        "alarmas": alarmas
+    }
+
 
 # FUNCIONES DB
 def main_delete_db(conn):
@@ -251,7 +513,7 @@ if __name__ == "__main__":
     init_pool()
     conn = get_conn()
 
-    main_delete_db(conn)
+    # main_delete_db(conn)
     # main_check_db("sensor", conn)
     # print(find_todos_los_sensores_tipo(conn,'ambiental'))
     # print(find_ultima_lectura_por_sensor(conn, 1))
@@ -262,7 +524,7 @@ if __name__ == "__main__":
     # insert_alerta(conn, 'tem', 'EX', 'AVtemX', 'AVISO', 1)
     # main_check_db("alerta", conn)
     # alarm.lanzar_popup_alerta('HOLA',25,conn)
-    main_check_db("alerta", conn)
+    main_check_db("evaluacion", conn)
     # print(insert_alerta(conn, 'tem', 'EX', 'AVT1', 'AVISO', 1))
     # print(find_reconocimiento_alerta_por_codigo_en_sesion(conn, 'AVT1', 1)[0])
 

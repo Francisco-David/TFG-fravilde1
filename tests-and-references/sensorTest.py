@@ -6,7 +6,8 @@ import paho.mqtt.client as mqtt
 import json
 
 # MQTT CONFIG
-BROKER = "192.168.1.145" #"localhost"
+# BROKER_ADDRESS = "10.129.182.86" # "192.168.1.145" # 
+BROKER ="10.129.182.86" # "192.168.1.145" # "localhost" #
 PORT = 1883
 TOPIC = "tfg/sensors/"
 
@@ -33,7 +34,7 @@ def publish_message(sensor_name, value):
 async def sensor_test(name, interval, channel=None):
     while True:
         if name=="son" :
-            value = random.randint(100, 130)
+            value = random.randint(249, 260)
             publish_message(name, value)
             await asyncio.sleep(interval)
             

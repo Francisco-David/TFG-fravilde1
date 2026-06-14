@@ -5,13 +5,13 @@ import sys
 
 DEMO_PROJECT_PATH = "I:/UNIVERSIDAD/TFG/TFG-fravilde1"
 
-UMBRAL_AVISO_TEM_MAX = 28
-UMBRAL_ALARMA_TEM_MAX = 35
-UMBRAL_AVISO_TEM_MIN = 10
-UMBRAL_ALARMA_TEM_MIN = 5
+UMBRAL_AVISO_TEM_MAX = 26
+UMBRAL_ALARMA_TEM_MAX = 30
+UMBRAL_AVISO_TEM_MIN = 18
+UMBRAL_ALARMA_TEM_MIN = 10
 
-UMBRAL_AVISO_SON_MAX = 150
-UMBRAL_ALARMA_SON_MAX = 180
+UMBRAL_AVISO_SON_MAX = 290
+UMBRAL_ALARMA_SON_MAX = 390
 
 UMBRAL_AVISO_HUM_MAX = 70
 UMBRAL_ALARMA_HUM_MAX = 85
@@ -22,51 +22,56 @@ UMBRAL_ALARMA_LUZ_MIN = 10
 
 logger = logging.getLogger(__name__)
 
-def funcion_aux_comprobar_ack(conn, codigo, sesion_id, sensor_id, texto, nivel):
-        # Checkear que si hay un alerta con ese codigo (devuelve [alarma_id, reconocimeinto])
-        ack_alerta = database.find_reconocimiento_alerta_por_codigo_en_sesion(conn, codigo, sesion_id)
-        
-        if ack_alerta == None or not ack_alerta[1]:
-            id_nueva_alerta = database.insert_alerta(conn, sensor_id, texto, codigo, nivel, sesion_id)
-            demo_mostrar_popup_externo(id_nueva_alerta, texto, codigo)
+
+
+def generar_alerta(conn, codigo, sesion_id, sensor_id, texto, nivel):
+    # Checkear que si hay un alerta con ese codigo (devuelve [alarma_id, reconocimeinto])
+    ack_alerta = database.find_reconocimiento_alerta_por_codigo_en_sesion(conn, codigo, sesion_id)
+    
+    if ack_alerta == None or not ack_alerta[1]:
+        id_nueva_alerta = database.insert_alerta(conn, sensor_id, texto, codigo, nivel, sesion_id)
+        demo_mostrar_popup_externo(id_nueva_alerta, texto, codigo)
      
      
 
 def funcion_dos_umbrales_max(conn, umbral_aviso, umbral_alarma, unidad, sensor_id, value, sesion_id):
-        # AVISOS AV Y ALARMAS AL; SENSOR_ID; 
-        if umbral_aviso < value and value <= umbral_alarma:
-            nivel='AVISO'
-            codigo = f'{nivel[:2]}{sensor_id}X'
-            texto_aviso = f"[{nivel}] Valores de '{sensor_id}' altos > {umbral_aviso}{unidad} ({value}{unidad})"
-            funcion_aux_comprobar_ack(conn, codigo, sesion_id, sensor_id, texto_aviso, nivel)
+    # AVISOS AV Y ALARMAS AL; SENSOR_ID; 
+    if umbral_aviso < value and value <= umbral_alarma:
+        nivel='AVISO'
+        codigo = f'{nivel[:2]}{sensor_id}X'
+        texto_aviso = f"[{nivel}] Valores de '{sensor_id}' altos > {umbral_aviso}{unidad} ({value}{unidad})"
+        generar_alerta(conn, codigo, sesion_id, sensor_id, texto_aviso, nivel)
 
-        elif value > umbral_alarma:
-            nivel='ALARMA'
-            codigo = f'{nivel[:2]}{sensor_id}X'
-            texto_alarma = f"[{nivel}] NIVELES DE '{sensor_id}' PERJUDICIALES > {umbral_alarma}{unidad} ({value}{unidad})"
-            funcion_aux_comprobar_ack(conn, codigo, sesion_id, sensor_id, texto_alarma, nivel)
+    elif value > umbral_alarma:
+        nivel='ALARMA'
+        codigo = f'{nivel[:2]}{sensor_id}X'
+        texto_alarma = f"[{nivel}] NIVELES DE '{sensor_id}' PERJUDICIALES > {umbral_alarma}{unidad} ({value}{unidad})"
+        generar_alerta(conn, codigo, sesion_id, sensor_id, texto_alarma, nivel)
 
 
 def funcion_dos_umbrales_min(conn, umbral_aviso, umbral_alarma, unidad, sensor_id, value, sesion_id):
-        # AVISOS AV Y ALARMAS AL; SENSOR_ID; 
-        if umbral_alarma <= value and value < umbral_aviso:
-            nivel='AVISO'
-            codigo = f'{nivel[:2]}{sensor_id}N'
-            texto_aviso = f"[{nivel}] Valores de '{sensor_id}' bajos < {umbral_aviso}{unidad} ({value}{unidad})"
-            funcion_aux_comprobar_ack(conn, codigo, sesion_id, sensor_id, texto_aviso, nivel)
+    # AVISOS AV Y ALARMAS AL; SENSOR_ID; 
+    if umbral_alarma <= value and value < umbral_aviso:
+        nivel='AVISO'
+        codigo = f'{nivel[:2]}{sensor_id}N'
+        texto_aviso = f"[{nivel}] Valores de '{sensor_id}' bajos < {umbral_aviso}{unidad} ({value}{unidad})"
+        generar_alerta(conn, codigo, sesion_id, sensor_id, texto_aviso, nivel)
 
-        elif value < umbral_alarma:
-            nivel='ALARMA'
-            codigo = f'{nivel[:2]}{sensor_id}N'
-            texto_alarma = f"[{nivel}] NIVELES DE '{sensor_id}' PERJUDICIALES < {umbral_alarma}{unidad} ({value}{unidad})"
-            funcion_aux_comprobar_ack(conn, codigo, sesion_id, sensor_id, texto_alarma, nivel)
+    elif value < umbral_alarma:
+        nivel='ALARMA'
+        codigo = f'{nivel[:2]}{sensor_id}N'
+        texto_alarma = f"[{nivel}] NIVELES DE '{sensor_id}' PERJUDICIALES < {umbral_alarma}{unidad} ({value}{unidad})"
+        generar_alerta(conn, codigo, sesion_id, sensor_id, texto_alarma, nivel)
 
 def funcion_detectar(conn, sensor_id, value, sesion_id):
     if value>0:
         nivel='ALARMA'
-        codigo = f'{nivel[:2]}{sensor_id}M'
-        texto_alarma = f"[{nivel}] MANIPULACION DEL DISPOSITIVO DETECTADO POR '{sensor_id}'"
-        funcion_aux_comprobar_ack(conn, codigo, sesion_id, sensor_id, texto_alarma, nivel)
+        codigo = f'{nivel[:2]}{sensor_id}L'
+        if sensor_id == 'vib':
+            texto_alarma = f"[{nivel}] MANIPULACION DEL DISPOSITIVO DETECTADO POR '{sensor_id}'"
+        if sensor_id == 'gas':
+           texto_alarma = f"[{nivel}] NIVELES DE '{sensor_id}' PERJUDICIALES"
+        generar_alerta(conn, codigo, sesion_id, sensor_id, texto_alarma, nivel)
 
 def procesar_datos_sensor(conn, sensor_id, value, sesion_id):
     if sensor_id == "tem":

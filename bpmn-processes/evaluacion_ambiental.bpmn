@@ -2,48 +2,16 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1qqhaln" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.37.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
   <bpmn:process id="eval-ambiental" name="" isExecutable="true">
     <bpmn:extensionElements />
-    <bpmn:sequenceFlow id="Flow_0q5phtk" sourceRef="Activity_10jcal5" targetRef="ComprobarEstado" />
-    <bpmn:sequenceFlow id="Flow_19f90an" sourceRef="Activity_07j33ws" targetRef="ComprobarEstado" />
-    <bpmn:sequenceFlow id="Flow_0s1po4f" name="ALARMA" sourceRef="PuntuacionEvaluacion" targetRef="Activity_10jcal5">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=puntuacion&lt;30</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1x69fan" name="ADVERTENCIA" sourceRef="PuntuacionEvaluacion" targetRef="Activity_07j33ws">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=30&lt;=puntuacion and puntuacion&lt;=70</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1m4y154" name="OK" sourceRef="PuntuacionEvaluacion" targetRef="ComprobarEstado">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=puntuacion&gt;70</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1jfb7xu" sourceRef="EvaluacionAmbiental" targetRef="PuntuacionEvaluacion" />
     <bpmn:sequenceFlow id="Flow_1tfdt8g" sourceRef="UltimaLectura" targetRef="EvaluacionAmbiental" />
-    <bpmn:serviceTask id="Activity_10jcal5" name="Mostrar alarma ambiental">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="mostrarAlarma" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0s1po4f</bpmn:incoming>
-      <bpmn:outgoing>Flow_0q5phtk</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_07j33ws" name="Mostrar advertencia">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="mostrarAdvertencia" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1x69fan</bpmn:incoming>
-      <bpmn:outgoing>Flow_19f90an</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:endEvent id="EventoFinalizarEvaluaciones" name="Finalizar evaluaciones sesión">
       <bpmn:incoming>Flow_0tlg5p9</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:exclusiveGateway id="PuntuacionEvaluacion" name="Puntuación en evalución">
-      <bpmn:incoming>Flow_1jfb7xu</bpmn:incoming>
-      <bpmn:outgoing>Flow_1m4y154</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1x69fan</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0s1po4f</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="EvaluacionAmbiental" name="Evaluación ambiental">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="calculoEvaluacion" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1tfdt8g</bpmn:incoming>
-      <bpmn:outgoing>Flow_1jfb7xu</bpmn:outgoing>
+      <bpmn:outgoing>Flow_01b2d5b</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="UltimaLectura" name="Leer última lectura">
       <bpmn:extensionElements>
@@ -62,9 +30,7 @@
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="comprobarEstado" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1m4y154</bpmn:incoming>
-      <bpmn:incoming>Flow_0q5phtk</bpmn:incoming>
-      <bpmn:incoming>Flow_19f90an</bpmn:incoming>
+      <bpmn:incoming>Flow_01b2d5b</bpmn:incoming>
       <bpmn:outgoing>Flow_1yztjd2</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1yztjd2" sourceRef="ComprobarEstado" targetRef="Transcurso" />
@@ -94,139 +60,91 @@
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1y03not" sourceRef="TimerSetup" targetRef="UltimaLectura" />
+    <bpmn:sequenceFlow id="Flow_01b2d5b" sourceRef="EvaluacionAmbiental" targetRef="ComprobarEstado" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="eval-ambiental">
-      <bpmndi:BPMNShape id="Activity_10jcal5_di" bpmnElement="Activity_10jcal5">
-        <dc:Bounds x="910" y="300" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_07j33ws_di" bpmnElement="Activity_07j33ws">
-        <dc:Bounds x="910" y="170" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_10u3id1_di" bpmnElement="EventoFinalizarEvaluaciones">
-        <dc:Bounds x="1612" y="192" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1598" y="235" width="65" height="40" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1gt2oil_di" bpmnElement="PuntuacionEvaluacion" isMarkerVisible="true">
-        <dc:Bounds x="725" y="185" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="674" y="166" width="71" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1iii1w9_di" bpmnElement="EvaluacionAmbiental">
-        <dc:Bounds x="550" y="170" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0gd9bxn_di" bpmnElement="UltimaLectura">
-        <dc:Bounds x="380" y="170" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1yzhgi9_di" bpmnElement="Transcurso" isMarkerVisible="true">
-        <dc:Bounds x="1415" y="185" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1413" y="163" width="54" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0x8d4tl_di" bpmnElement="ComprobarEstado">
-        <dc:Bounds x="1240" y="170" width="100" height="80" />
+        <dc:Bounds x="380" y="90" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0n1ic9c_di" bpmnElement="EventoComenzarEvaluacion">
-        <dc:Bounds x="172" y="192" width="36" height="36" />
+        <dc:Bounds x="172" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="158" y="235" width="65" height="40" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1jgx6yl_di" bpmnElement="TimerBucle">
-        <dc:Bounds x="942" y="442" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="937" y="485" width="48" height="14" />
+          <dc:Bounds x="158" y="155" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1ct704w" bpmnElement="TimerSetup">
-        <dc:Bounds x="292" y="192" width="36" height="36" />
+        <dc:Bounds x="292" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="282" y="235" width="58" height="14" />
+          <dc:Bounds x="282" y="155" width="58" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0q5phtk_di" bpmnElement="Flow_0q5phtk">
-        <di:waypoint x="1010" y="340" />
-        <di:waypoint x="1090" y="340" />
-        <di:waypoint x="1090" y="210" />
-        <di:waypoint x="1240" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_19f90an_di" bpmnElement="Flow_19f90an">
-        <di:waypoint x="1010" y="210" />
-        <di:waypoint x="1240" y="210" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0s1po4f_di" bpmnElement="Flow_0s1po4f">
-        <di:waypoint x="750" y="235" />
-        <di:waypoint x="750" y="340" />
-        <di:waypoint x="910" y="340" />
+      <bpmndi:BPMNShape id="Gateway_1yzhgi9_di" bpmnElement="Transcurso" isMarkerVisible="true">
+        <dc:Bounds x="915" y="105" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="821" y="323" width="46" height="14" />
+          <dc:Bounds x="913" y="83" width="55" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1x69fan_di" bpmnElement="Flow_1x69fan">
-        <di:waypoint x="775" y="210" />
-        <di:waypoint x="910" y="210" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_10u3id1_di" bpmnElement="EventoFinalizarEvaluaciones">
+        <dc:Bounds x="1072" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="805" y="192" width="78" height="14" />
+          <dc:Bounds x="1058" y="155" width="65" height="40" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1m4y154_di" bpmnElement="Flow_1m4y154">
-        <di:waypoint x="750" y="185" />
-        <di:waypoint x="750" y="90" />
-        <di:waypoint x="1090" y="90" />
-        <di:waypoint x="1090" y="210" />
-        <di:waypoint x="1240" y="210" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iii1w9_di" bpmnElement="EvaluacionAmbiental">
+        <dc:Bounds x="580" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jgx6yl_di" bpmnElement="TimerBucle">
+        <dc:Bounds x="612" y="212" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="835" y="73" width="17" height="14" />
+          <dc:Bounds x="607" y="255" width="48" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1jfb7xu_di" bpmnElement="Flow_1jfb7xu">
-        <di:waypoint x="650" y="210" />
-        <di:waypoint x="725" y="210" />
-      </bpmndi:BPMNEdge>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x8d4tl_di" bpmnElement="ComprobarEstado">
+        <dc:Bounds x="760" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1tfdt8g_di" bpmnElement="Flow_1tfdt8g">
-        <di:waypoint x="480" y="210" />
-        <di:waypoint x="550" y="210" />
+        <di:waypoint x="480" y="130" />
+        <di:waypoint x="580" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1yztjd2_di" bpmnElement="Flow_1yztjd2">
-        <di:waypoint x="1340" y="210" />
-        <di:waypoint x="1415" y="210" />
+        <di:waypoint x="860" y="130" />
+        <di:waypoint x="915" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0k5epoi_di" bpmnElement="Flow_0k5epoi">
-        <di:waypoint x="1440" y="235" />
-        <di:waypoint x="1440" y="460" />
-        <di:waypoint x="978" y="460" />
+        <di:waypoint x="940" y="155" />
+        <di:waypoint x="940" y="230" />
+        <di:waypoint x="648" y="230" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1448" y="291" width="44" height="14" />
+          <dc:Bounds x="948" y="169" width="44" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0tlg5p9_di" bpmnElement="Flow_0tlg5p9">
-        <di:waypoint x="1465" y="210" />
-        <di:waypoint x="1612" y="210" />
+        <di:waypoint x="965" y="130" />
+        <di:waypoint x="1072" y="130" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1515" y="192" width="51" height="14" />
+          <dc:Bounds x="994" y="112" width="51" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0127g2c_di" bpmnElement="Flow_0127g2c">
-        <di:waypoint x="208" y="210" />
-        <di:waypoint x="292" y="210" />
+        <di:waypoint x="208" y="130" />
+        <di:waypoint x="292" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1jvo5sh_di" bpmnElement="Flow_1jvo5sh">
-        <di:waypoint x="942" y="460" />
-        <di:waypoint x="430" y="460" />
-        <di:waypoint x="430" y="250" />
+        <di:waypoint x="612" y="230" />
+        <di:waypoint x="430" y="230" />
+        <di:waypoint x="430" y="170" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1y03not_di" bpmnElement="Flow_1y03not">
-        <di:waypoint x="328" y="210" />
-        <di:waypoint x="380" y="210" />
+        <di:waypoint x="328" y="130" />
+        <di:waypoint x="380" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01b2d5b_di" bpmnElement="Flow_01b2d5b">
+        <di:waypoint x="680" y="130" />
+        <di:waypoint x="760" y="130" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
