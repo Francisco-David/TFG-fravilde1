@@ -32,8 +32,13 @@ def publish_message(sensor_name, value):
 # FUNCION ASINCRONA PARA TESTEO, SIMULA EL POLLING DE SENSORES CON VALORES ALEATORIOS CAMBIANTES CON SENTIDO PARA CADA SENSOR
 async def sensor_test(name, interval, channel=None):
     while True:
-        if name=="son" or name=="luz":
-            value = random.randint(0, 1023)
+        if name=="son" :
+            value = random.randint(100, 130)
+            publish_message(name, value)
+            await asyncio.sleep(interval)
+            
+        if name=="luz":
+            value = random.randint(20, 60)
             publish_message(name, value)
             await asyncio.sleep(interval)
             
@@ -48,12 +53,12 @@ async def sensor_test(name, interval, channel=None):
             await asyncio.sleep(interval)
             
         elif name=="vib":
-            value = random.choice([0, 1])  # Vibración detectada (1) o no detectada (0)
+            value = random.choice([0, 0])  # Vibración detectada (1) o no detectada (0)
             publish_message(name, value)
             await asyncio.sleep(interval)
             
         elif name=="gas":
-            value = round(random.uniform(200.0, 800.0), 2)  # Nivel de gas entre 200 y 800 ppm
+            value = random.choice([0, 0])  # Nivel de gas entre 200 y 800 ppm
             publish_message(name, value)
             await asyncio.sleep(interval)
 
@@ -69,4 +74,14 @@ async def main():
     ]
     await asyncio.gather(*tasks, return_exceptions=True)
 
-asyncio.run(main())
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Interrupción del usuario (Ctrl+C). Limpiando recursos...")
+        client.loop_stop()
+        try:
+            client.disconnect()
+        except Exception:
+            pass

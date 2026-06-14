@@ -121,4 +121,3 @@ if __name__ == "__main__":
             client.disconnect()
         except Exception:
             pass
-        GPIO.cleanup()

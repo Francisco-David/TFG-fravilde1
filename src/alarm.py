@@ -10,17 +10,15 @@ UMBRAL_ALARMA_TEM_MAX = 35
 UMBRAL_AVISO_TEM_MIN = 10
 UMBRAL_ALARMA_TEM_MIN = 5
 
-UMBRAL_AVISO_SON_MAX = 70
-UMBRAL_ALARMA_SON_MAX = 85
+UMBRAL_AVISO_SON_MAX = 150
+UMBRAL_ALARMA_SON_MAX = 180
 
 UMBRAL_AVISO_HUM_MAX = 70
 UMBRAL_ALARMA_HUM_MAX = 85
 
-UMBRAL_AVISO_LUZ_MIN = 200
-UMBRAL_ALARMA_LUZ_MIN = 100
+UMBRAL_AVISO_LUZ_MIN = 20
+UMBRAL_ALARMA_LUZ_MIN = 10
 
-UMBRAL_AVISO_GAS_MAX = 300
-UMBRAL_ALARMA_GAS_MAX = 600
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +61,7 @@ def funcion_dos_umbrales_min(conn, umbral_aviso, umbral_alarma, unidad, sensor_i
             texto_alarma = f"[{nivel}] NIVELES DE '{sensor_id}' PERJUDICIALES < {umbral_alarma}{unidad} ({value}{unidad})"
             funcion_aux_comprobar_ack(conn, codigo, sesion_id, sensor_id, texto_alarma, nivel)
 
-def funcion_vib(conn, sensor_id, value, sesion_id):
+def funcion_detectar(conn, sensor_id, value, sesion_id):
     if value>0:
         nivel='ALARMA'
         codigo = f'{nivel[:2]}{sensor_id}M'
@@ -77,7 +75,7 @@ def procesar_datos_sensor(conn, sensor_id, value, sesion_id):
         funcion_dos_umbrales_min(conn, UMBRAL_AVISO_TEM_MIN, UMBRAL_ALARMA_TEM_MIN, unidad, sensor_id, value, sesion_id)
 
     elif sensor_id == "son":
-        unidad="dB"
+        unidad="ADC"
         funcion_dos_umbrales_max(conn, UMBRAL_AVISO_SON_MAX, UMBRAL_ALARMA_SON_MAX, unidad, sensor_id, value, sesion_id)
     
     elif sensor_id == "hum":
@@ -89,11 +87,10 @@ def procesar_datos_sensor(conn, sensor_id, value, sesion_id):
         funcion_dos_umbrales_min(conn, UMBRAL_AVISO_LUZ_MIN, UMBRAL_ALARMA_LUZ_MIN, unidad, sensor_id, value, sesion_id)
 
     elif sensor_id == "vib":
-        funcion_vib(conn, sensor_id, value, sesion_id)
+        funcion_detectar(conn, sensor_id, value, sesion_id)
 
     elif sensor_id == "gas":
-        unidad="ppm"
-        funcion_dos_umbrales_max(conn, UMBRAL_AVISO_GAS_MAX, UMBRAL_ALARMA_GAS_MAX, unidad, sensor_id, value, sesion_id)
+        funcion_detectar(conn, sensor_id, value, sesion_id)
 
 
 def demo_mostrar_popup_externo(alerta_id, texto_aviso, codigo):
