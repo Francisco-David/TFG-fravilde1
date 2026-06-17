@@ -24,8 +24,12 @@ async def leer_lecturas(job: Job):
         estado_sensor = sensor[3]
         nombre_sensor = sensor[0]
         if estado_sensor=="operativo":
-            lectura_sensor = dicc_lecturas[nombre_sensor]
-            res[f"{nombre_sensor}Valor"] = lectura_sensor[1]
+            lectura_sensor = dicc_lecturas.get(nombre_sensor)
+            if lectura_sensor is not None:
+                res[f"{nombre_sensor}Valor"] = lectura_sensor[1]
+            else:
+                logger.warning(f"[CAMUNDA] Sensor {nombre_sensor} operativo pero sin lectura reciente para sesion {sesion_id}")
+                res[f"{nombre_sensor}Valor"] = None
         elif estado_sensor=="defectuoso":
             res[f"{nombre_sensor}Valor"] = None
 
@@ -47,47 +51,47 @@ async def calcular_evaluacion(job: Job):
     luz_valor = job.variables.get("luzValor")
 
     if tem_valor is not None:
-        tem_valor = 100
+        tem_score = 100
         if tem_valor < alarm.UMBRAL_ALARMA_TEM_MIN or tem_valor > alarm.UMBRAL_ALARMA_TEM_MAX:
-            tem_valor =  0
+            tem_score =  0
         if tem_valor < alarm.UMBRAL_AVISO_TEM_MIN:
-            tem_valor =  20
+            tem_score =  20
         if tem_valor > alarm.UMBRAL_AVISO_TEM_MAX:
-            tem_valor =  40
-        scores.append(tem_valor)
+            tem_score =  40
+        scores.append(tem_score)
         pesos.append(0.3)
 
     if hum_valor is not None:
-        hum_valor = 100
+        hum_score = 100
 
         if hum_valor > alarm.UMBRAL_ALARMA_HUM_MAX:
-            hum_valor = 0
+            hum_score = 0
         elif hum_valor > alarm.UMBRAL_AVISO_HUM_MAX:
-            hum_valor = 40
+            hum_score = 40
 
-        scores.append(hum_valor)
+        scores.append(hum_score)
         pesos.append(0.2)
 
     if son_valor is not None:
-        son_valor = 100
+        son_score = 100
 
         if son_valor > alarm.UMBRAL_ALARMA_SON_MAX:
-            son_valor = 0
+            son_score = 0
         elif son_valor > alarm.UMBRAL_AVISO_SON_MAX:
-            son_valor = 40
+            son_score = 40
 
-        scores.append(son_valor)
+        scores.append(son_score)
         pesos.append(0.3)
 
     if luz_valor is not None:
-        luz_valor = 100
+        luz_score = 100
 
         if luz_valor < alarm.UMBRAL_ALARMA_LUZ_MIN:
-            luz_valor = 0
+            luz_score = 0
         elif luz_valor < alarm.UMBRAL_AVISO_LUZ_MIN:
-            luz_valor = 40
+            luz_score = 40
 
-        scores.append(luz_valor)
+        scores.append(luz_score)
         pesos.append(0.2)
 
     conn = database.get_conn()
@@ -102,7 +106,6 @@ async def calcular_evaluacion(job: Job):
         puntuacion = round(sum(s * p for s, p in zip(scores, pesos)) / sum(pesos), 2)
 
     database.insert_evaluacion(conn, sesion_id, puntuacion)
-    database.put_conn(conn)
 
     logger.info(f'[CAMUNDA] "calculoEvaluacion" - sesion_id: {sesion_id}, puntuacion: {puntuacion}')
 
@@ -112,11 +115,13 @@ async def calcular_evaluacion(job: Job):
         texto_aviso = f"[{nivel}] [CAMUNDA] La puntuación ambiental es CRÍTICA (score: {puntuacion}). Revise las condiciones de la clase INMEDIATAMENTE."
         alarm.generar_alerta(conn, codigo, sesion_id, None, texto_aviso, nivel)
 
-    if puntuacion < (200/3):
+    if puntuacion <= (55):
         nivel='AVISO'
         codigo = f'{nivel[:2]}allC'
         texto_aviso = f"[{nivel}] [CAMUNDA] La puntuación ambiental comienza a deteriorarse (score: {puntuacion}). Revise las condiciones de la clase."
         alarm.generar_alerta(conn, codigo, sesion_id, None, texto_aviso, nivel)
+        
+    database.put_conn(conn)
 
 
     

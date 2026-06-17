@@ -513,13 +513,13 @@ if __name__ == "__main__":
     init_pool()
     conn = get_conn()
 
-    # main_delete_db(conn)
+    main_delete_db(conn)
     # main_check_db("sensor", conn)
     # main_check_db("sesion", conn)
     # insert_alerta(conn, 'tem', 'EX', 'AVtemX', 'AVISO', 1)
     # main_check_db("alerta", conn)
     # alarm.lanzar_popup_alerta('HOLA',25,conn)
-    main_check_db("evaluacion", conn)
+    # main_check_db("evaluacion", conn)
     # print(insert_alerta(conn, 'tem', 'EX', 'AVT1', 'AVISO', 1))
     # print(find_reconocimiento_alerta_por_codigo_en_sesion(conn, 'AVT1', 1)[0])
 

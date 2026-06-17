@@ -18,7 +18,7 @@ def get_informe_diario(conn, fecha):
     for sesion in sesiones:
 
         sesion_id, profesor, grupo, asignatura, aula, comienza, finaliza = sesion
-        fecha = datetime.strptime(fecha, "%Y-%m-%d").date()
+        fecha = datetime.strptime(str(fecha), "%Y-%m-%d").date()
 
         inicio = datetime.combine(fecha, comienza)
         fin = datetime.combine(fecha, finaliza)
@@ -107,37 +107,37 @@ def get_informe_semanal(conn, fecha):
             print(f"  {horas:.2f}h")
     
 
+    print("=" * 60)
+    print(f"\n INFORME AULAS ({fecha_inicio} - {fecha_fin})")
+
+    aulas = database.get_aulas_semana(conn, fecha_inicio, fecha_fin)
+
+    for aula in aulas:
+
+        print("\n" + "=" * 60)
+        print(f"AULA: {aula}")
         print("=" * 60)
-        print(f"\n INFORME AULAS ({fecha_inicio} - {fecha_fin})")
 
-        aulas = database.get_aulas_semana(conn, fecha_inicio, fecha_fin)
+        datos = database.get_metricas_aula_semanal(conn, aula, fecha_inicio, fecha_fin)
 
-        for aula in aulas:
+        print("\nSENSORES")
+        for sensor, maxv, minv, avg in datos["ambientales"]:
+            maxv = maxv if maxv is not None else 0
+            minv = minv if minv is not None else 0
+            avg = avg if avg is not None else 0
 
-            print("\n" + "=" * 60)
-            print(f"AULA: {aula}")
-            print("=" * 60)
+            print(f"\n{sensor}")
+            print(f"  Max: {maxv:.2f}")
+            print(f"  Min: {minv:.2f}")
+            print(f"  Media: {avg:.2f}")
 
-            datos = database.get_metricas_aula_semanal(conn, aula, fecha_inicio, fecha_fin)
+        # -------------------------
+        # ALARMAS
+        # -------------------------
+        print("\nALARMAS")
 
-            print("\nSENSORES")
-            for sensor, maxv, minv, avg in datos["ambientales"]:
-                maxv = maxv if maxv is not None else 0
-                minv = minv if minv is not None else 0
-                avg = avg if avg is not None else 0
-
-                print(f"\n{sensor}")
-                print(f"  Max: {maxv:.2f}")
-                print(f"  Min: {minv:.2f}")
-                print(f"  Media: {avg:.2f}")
-
-            # -------------------------
-            # ALARMAS
-            # -------------------------
-            print("\nALARMAS")
-
-            for nivel, total in datos["alarmas"]:
-                print(f"  {nivel}: {total}")
+        for nivel, total in datos["alarmas"]:
+            print(f"  {nivel}: {total}")
 
     print("=" * 60)
     print(f"\n INFORME GRUPOS ({fecha_inicio} - {fecha_fin})")

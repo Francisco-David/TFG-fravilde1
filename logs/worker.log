@@ -1,137 +1,165 @@
-2026-06-07 19:06:04 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
-2026-06-07 19:06:04 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:06:07 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:06:07 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:06:07 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:06:07 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:06:08 [INFO] [WORKER] Apagado completo.
-2026-06-07 19:11:03 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
-2026-06-07 19:11:03 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:11:05 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:05 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:05 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:05 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:10 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:10 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:10 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:10 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:15 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:15 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:15 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:15 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:11:19 [INFO] [WORKER] Apagado completo.
-2026-06-07 19:13:12 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
-2026-06-07 19:13:12 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:13:15 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:13:15 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:13:15 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:13:15 [DEBUG] Failed to receive any message from Core
-2026-06-07 19:13:15 [INFO] [WORKER] Apagado completo.
-2026-06-07 19:14:23 + grpc._cython.cygrpc + [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
-2026-06-07 19:14:23 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:14:26 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:14:26 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:14:26 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:14:26 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:14:30 + __main__ + [INFO] [WORKER] Apagado completo.
-2026-06-07 19:15:25 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:27:14 + grpc._cython.cygrpc + [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
-2026-06-07 19:27:26 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:28:52 + pyzeebe.worker.job_executor + [ERROR] Error in job executor. Task: comprobarSensores. Error: Job 2251799814229862 not found.
-Traceback (most recent call last):
-  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\grpc_internals\zeebe_job_adapter.py", line 124, in complete_job
-    await self._gateway_stub.CompleteJob(CompleteJobRequest(jobKey=job_key, variables=json.dumps(variables)))
-  File "I:\UNIVERSIDAD\Python\Lib\site-packages\grpc\aio\_call.py", line 327, in __await__
-    raise _create_rpc_error(
-grpc.aio._call.AioRpcError: <AioRpcError of RPC that terminated with:
-	status = StatusCode.NOT_FOUND
-	details = "Command 'COMPLETE' rejected with code 'NOT_FOUND': Expected to complete job with key '2251799814229862', but no such job was found"
-	debug_error_string = "UNKNOWN:Error received from peer  {grpc_status:5, grpc_message:"Command \'COMPLETE\' rejected with code \'NOT_FOUND\': Expected to complete job with key \'2251799814229862\', but no such job was found"}"
->
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\worker\job_executor.py", line 37, in execute_one_job
-    await self.task.job_handler(job, job_controller)
-  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\task\task_builder.py", line 50, in job_handler
-    await job_controller.set_success_status(variables=return_variables)
-  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\job\job.py", line 66, in set_success_status
-    await self._zeebe_adapter.complete_job(job_key=self._job.key, variables=variables or {})
-  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\grpc_internals\zeebe_job_adapter.py", line 127, in complete_job
-    raise JobNotFoundError(job_key=job_key) from grpc_error
-pyzeebe.errors.job_errors.JobNotFoundError: Job 2251799814229862 not found
-2026-06-07 19:29:14 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:29:16 + database + [INFO] [DATABASE] Nueva evaluación: Sesión 1: [80]
-2026-06-07 19:29:54 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:29:57 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:29:57 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:30:06 + grpc._cython.cygrpc + [DEBUG] Failed to receive any message from Core
-2026-06-07 19:30:40 + database + [INFO] [DATABASE] Sensor 'son' defectuoso.
-2026-06-07 19:31:13 + __main__ + [INFO] [WORKER] Apagado completo.
-2026-06-07 19:31:15 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:31:36 + __main__ + [INFO] [WORKER] Apagado completo.
-2026-06-07 19:31:38 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:31:39 + pyzeebe.grpc_internals.zeebe_job_adapter + [DEBUG] Got job: Job(key=2251799814230399, type='calculoEvaluacion', process_instance_key=2251799814229827, bpmn_process_id='eval-ambiental', process_definition_version=10, process_definition_key=2251799814206282, element_id='EvaluacionAmbiental', element_instance_key=2251799814230398, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1780853508427, variables=mappingproxy({'humValor': 59.11, 'luzValor': 720.0, 'sonValor': 922.0, 'temValor': 23.79, 'sesion_id': 1, 'puntuacion': 80, 'estadoSesion': 'en_curso'}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>) from zeebe
-2026-06-07 19:31:40 + database + [INFO] [DATABASE] Nueva evaluación: Sesión 1: [80]
-2026-06-07 19:31:42 + pyzeebe.grpc_internals.zeebe_job_adapter + [DEBUG] Got job: Job(key=2251799814230418, type='comprobarEstado', process_instance_key=2251799814229827, bpmn_process_id='eval-ambiental', process_definition_version=10, process_definition_key=2251799814206282, element_id='ComprobarEstado', element_instance_key=2251799814230417, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1780853511605, variables=mappingproxy({'humValor': 59.11, 'luzValor': 720.0, 'sonValor': 922.0, 'temValor': 23.79, 'sesion_id': 1, 'puntuacion': 80, 'estadoSesion': 'en_curso'}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>) from zeebe
-2026-06-07 19:32:16 + pyzeebe.grpc_internals.zeebe_job_adapter + [DEBUG] Got job: Job(key=2251799814230512, type='comprobarSensores', process_instance_key=2251799814229834, bpmn_process_id='eval-sensores', process_definition_version=2, process_definition_key=2251799814192264, element_id='ComprobarSensores', element_instance_key=2251799814230511, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1780853545455, variables=mappingproxy({'sesion_id': 1, 'estadoSesion': 'en_curso'}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>) from zeebe
-2026-06-07 19:32:22 + pyzeebe.grpc_internals.zeebe_job_adapter + [DEBUG] Got job: Job(key=2251799814230521, type='comprobarEstado', process_instance_key=2251799814229834, bpmn_process_id='eval-sensores', process_definition_version=2, process_definition_key=2251799814192264, element_id='ComprobarEstado', element_instance_key=2251799814230520, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1780853548204, variables=mappingproxy({'sesion_id': 1, 'estadoSesion': 'en_curso'}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>) from zeebe
-2026-06-07 19:32:41 + __main__ + [INFO] [WORKER] Apagado completo.
-2026-06-07 19:32:43 + __main__ + [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:33:45 + __main__ + [INFO] [WORKER] Apagado completo.
-2026-06-07 19:33:47 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:34:08 [INFO] [WORKER] Apagado completo.
-2026-06-07 19:35:02 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-07 19:35:03 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [80]
-2026-06-07 19:35:03 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 80
-2026-06-07 19:35:04 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
-2026-06-07 19:35:04 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
-2026-06-07 19:36:37 [INFO] [DATABASE] Sensor 'son' operativo.
-2026-06-07 19:36:38 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
-2026-06-07 19:37:07 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
- (lecturas: {'temValor': 21.03, 'humValor': 56.94, 'luzValor': 372.0, 'sonValor': 463.0})
-2026-06-07 19:37:07 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [80]
-2026-06-07 19:37:07 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 80
-2026-06-07 19:37:09 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
-2026-06-07 19:39:05 [INFO] [WORKER] Apagado completo.
-2026-06-14 19:37:09 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-14 19:37:14 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
-2026-06-14 19:37:28 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
- (lecturas: {'temValor': None, 'sonValor': None, 'luzValor': None, 'humValor': None})
-2026-06-14 19:37:37 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] None(AVallC) - [AVISO] Revise la conexión MQTT o la conexión a los sensores, todos carecen de valor.
-2026-06-14 19:37:38 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [0]
-2026-06-14 19:37:38 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 0
-2026-06-14 19:38:55 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
-2026-06-14 19:40:30 [INFO] [DATABASE] Sensor 'tem' operativo.
-2026-06-14 19:40:30 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] tem(INtemC) - [INFO] se ha recuperado la conexión con el sensor tem
-2026-06-14 19:40:30 [INFO] [DATABASE] Sensor 'son' operativo.
-2026-06-14 19:40:30 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] son(INsonC) - [INFO] se ha recuperado la conexión con el sensor son
-2026-06-14 19:40:30 [INFO] [DATABASE] Sensor 'luz' operativo.
-2026-06-14 19:40:30 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] luz(INluzC) - [INFO] se ha recuperado la conexión con el sensor luz
-2026-06-14 19:40:30 [INFO] [DATABASE] Sensor 'hum' operativo.
-2026-06-14 19:40:30 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] hum(INhumC) - [INFO] se ha recuperado la conexión con el sensor hum
-2026-06-14 19:40:33 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
-2026-06-14 19:42:07 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
-2026-06-14 19:43:39 [INFO] [DATABASE] Sensor 'son' defectuoso.
-2026-06-14 19:43:39 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] son(AVsonC) - [AVISO] Revise la conexión MQTT o la conexión física al sensor son
-2026-06-14 19:43:42 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
-2026-06-14 19:44:49 [INFO] [WORKER] Apagado completo.
-2026-06-14 19:44:53 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-14 19:45:14 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
-2026-06-14 19:49:52 [INFO] [WORKER] Apagado completo.
-2026-06-14 21:21:55 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-14 21:22:21 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
- (lecturas: {'temValor': 19.27, 'luzValor': 35.0, 'humValor': 36.6, 'sonValor': None})
-2026-06-14 21:22:21 [INFO] [WORKER] Apagado completo.
-2026-06-14 21:22:31 [INFO] [WORKER] Iniciando worker y esperando jobs...
-2026-06-14 21:22:33 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [37.142857142857146]
-2026-06-14 21:22:33 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 37.142857142857146
-2026-06-14 21:22:33 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] None(AVallC) - [AVISO] [CAMUNDA] La puntuación ambiental comienza a deteriorarse (score: 37.142857142857146). Revise las condiciones de la clase.
-2026-06-14 21:22:35 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
-2026-06-14 21:23:22 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
- (lecturas: {'temValor': 19.27, 'luzValor': 35.0, 'humValor': 36.6, 'sonValor': None})
-2026-06-14 21:23:24 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [37.142857142857146]
-2026-06-14 21:23:24 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 37.142857142857146
-2026-06-14 21:23:24 [INFO] [DATABASE] Nueva alerta: Sesión 1: [AVISO] None(AVallC) - [AVISO] [CAMUNDA] La puntuación ambiental comienza a deteriorarse (score: 37.142857142857146). Revise las condiciones de la clase.
-2026-06-14 21:23:37 [INFO] [WORKER] Apagado completo.
+2026-06-17 02:30:18 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 02:30:20 [INFO] [DATABASE] Sensor 'tem' operativo.
+2026-06-17 02:30:20 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] tem(INtemC) - [INFO] [CAMUNDA] Se ha recuperado la conexión con el sensor tem
+2026-06-17 02:30:20 [INFO] [DATABASE] Sensor 'son' operativo.
+2026-06-17 02:30:21 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] son(INsonC) - [INFO] [CAMUNDA] Se ha recuperado la conexión con el sensor son
+2026-06-17 02:30:21 [INFO] [DATABASE] Sensor 'luz' operativo.
+2026-06-17 02:30:21 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] luz(INluzC) - [INFO] [CAMUNDA] Se ha recuperado la conexión con el sensor luz
+2026-06-17 02:30:21 [INFO] [DATABASE] Sensor 'hum' operativo.
+2026-06-17 02:30:21 [INFO] [DATABASE] Nueva alerta: Sesión 1: [INFO] hum(INhumC) - [INFO] [CAMUNDA] Se ha recuperado la conexión con el sensor hum
+2026-06-17 02:30:22 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-17 02:30:30 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:30:37 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': 25.59, 'sonValor': 252.0, 'luzValor': 60.0, 'humValor': 44.47})
+2026-06-17 02:30:49 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [100.0]
+2026-06-17 02:30:49 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 100.0
+2026-06-17 02:30:51 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:30:56 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-17 02:30:56 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:31:12 [INFO] [WORKER] Apagado completo.
+2026-06-17 02:31:14 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 02:31:59 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:31:59 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:31:59 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:32:08 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-17 02:32:18 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:32:23 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:32:59 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': 30.0, 'sonValor': 258.0, 'luzValor': 60.0, 'humValor': 56.54})
+2026-06-17 02:33:00 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [82.0]
+2026-06-17 02:33:00 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 82.0
+2026-06-17 02:33:04 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-17 02:33:11 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:33:16 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:33:23 [INFO] [WORKER] Apagado completo.
+2026-06-17 02:33:29 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 02:33:43 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
+2026-06-17 02:35:08 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': 30.0, 'sonValor': 250.0, 'luzValor': 60.0, 'humValor': 56.54})
+2026-06-17 02:35:10 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [82.0]
+2026-06-17 02:35:10 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 82.0
+2026-06-17 02:35:11 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
+2026-06-17 02:35:19 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:37:56 [INFO] [WORKER] Apagado completo.
+2026-06-17 02:46:32 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 02:46:32 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': 24.42, 'sonValor': 259.0, 'luzValor': 55.0, 'humValor': 40.26})
+2026-06-17 02:46:33 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-17 02:46:35 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [100.0]
+2026-06-17 02:46:35 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 100.0
+2026-06-17 02:46:35 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:46:40 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: en_curso
+2026-06-17 02:46:40 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:46:43 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:46:43 [INFO] [WORKER] Apagado completo.
+2026-06-17 02:46:45 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 02:46:45 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:46:45 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:46:45 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:46:45 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:46:50 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:46:50 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:46:59 [INFO] [WORKER] Apagado completo.
+2026-06-17 02:47:01 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 02:48:08 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
+2026-06-17 02:48:14 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:48:43 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 1
+ (lecturas: {'temValor': 22.53, 'sonValor': 255.0, 'luzValor': 25.0, 'humValor': 60.84})
+2026-06-17 02:48:45 [INFO] [DATABASE] Nueva evaluación: Sesión 1: [100.0]
+2026-06-17 02:48:45 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 1, puntuacion: 100.0
+2026-06-17 02:48:48 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 1, estado: finalizada
+2026-06-17 02:49:47 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:49:49 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:49:55 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:50:00 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 02:50:02 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:50:05 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:50:07 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 02:50:10 [INFO] [WORKER] Apagado completo.
+2026-06-17 02:50:25 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 02:50:25 [DEBUG] Failed job: Job(key=2251799814392023, type='leerLecturas', process_instance_key=2251799814391955, bpmn_process_id='eval-ambiental', process_definition_version=11, process_definition_key=2251799814265626, element_id='UltimaLectura', element_instance_key=2251799814392022, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1781657435752, variables=mappingproxy({'sesion_id': 2}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>). Error: 'hum'.
+2026-06-17 02:50:25 [WARNING] Task type: leerLecturas - failed job Job(key=2251799814392023, type='leerLecturas', process_instance_key=2251799814391955, bpmn_process_id='eval-ambiental', process_definition_version=11, process_definition_key=2251799814265626, element_id='UltimaLectura', element_instance_key=2251799814392022, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=3, deadline=1781657435752, variables=mappingproxy({'sesion_id': 2}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>). Error: 'hum'.
+2026-06-17 02:50:26 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-17 02:50:27 [DEBUG] Failed job: Job(key=2251799814392023, type='leerLecturas', process_instance_key=2251799814391955, bpmn_process_id='eval-ambiental', process_definition_version=11, process_definition_key=2251799814265626, element_id='UltimaLectura', element_instance_key=2251799814392022, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=2, deadline=1781657436899, variables=mappingproxy({'sesion_id': 2}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>). Error: 'hum'.
+2026-06-17 02:50:27 [WARNING] Task type: leerLecturas - failed job Job(key=2251799814392023, type='leerLecturas', process_instance_key=2251799814391955, bpmn_process_id='eval-ambiental', process_definition_version=11, process_definition_key=2251799814265626, element_id='UltimaLectura', element_instance_key=2251799814392022, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=2, deadline=1781657436899, variables=mappingproxy({'sesion_id': 2}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>). Error: 'hum'.
+2026-06-17 02:50:28 [DEBUG] Failed job: Job(key=2251799814392023, type='leerLecturas', process_instance_key=2251799814391955, bpmn_process_id='eval-ambiental', process_definition_version=11, process_definition_key=2251799814265626, element_id='UltimaLectura', element_instance_key=2251799814392022, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=1, deadline=1781657437876, variables=mappingproxy({'sesion_id': 2}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>). Error: 'hum'.
+2026-06-17 02:50:28 [WARNING] Task type: leerLecturas - failed job Job(key=2251799814392023, type='leerLecturas', process_instance_key=2251799814391955, bpmn_process_id='eval-ambiental', process_definition_version=11, process_definition_key=2251799814265626, element_id='UltimaLectura', element_instance_key=2251799814392022, custom_headers=mappingproxy({}), worker='PACOmputadora', retries=1, deadline=1781657437876, variables=mappingproxy({'sesion_id': 2}), tenant_id='<default>', status=<JobStatus.Running: 'Running'>). Error: 'hum'.
+2026-06-17 02:50:46 [INFO] [WORKER] Apagado completo.
+2026-06-17 02:59:44 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 02:59:46 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-17 02:59:46 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:00:01 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 23.72, 'sonValor': 260.0, 'luzValor': 55.0, 'humValor': 52.88})
+2026-06-17 03:00:06 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [100.0]
+2026-06-17 03:00:06 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 100.0
+2026-06-17 03:00:06 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:00:11 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-17 03:00:19 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:01:20 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-17 03:01:41 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:01:46 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:01:49 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:01:49 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:01:53 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-17 03:01:54 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:02:00 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 25.13, 'sonValor': 250.0, 'luzValor': 47.0, 'humValor': 41.39})
+2026-06-17 03:02:04 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [100.0]
+2026-06-17 03:02:04 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 100.0
+2026-06-17 03:02:04 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:02:08 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-17 03:02:18 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 25.13, 'sonValor': 250.0, 'luzValor': 47.0, 'humValor': 41.39})
+2026-06-17 03:02:22 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [100.0]
+2026-06-17 03:02:22 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 100.0
+2026-06-17 03:02:27 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-17 03:02:30 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:02:31 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:02:56 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-17 03:02:57 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:03:26 [INFO] [DATABASE] Sensor 'son' defectuoso.
+2026-06-17 03:03:26 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] son(AVsonC) - [AVISO] [CAMUNDA] Revise la conexión MQTT o la conexión física al sensor son
+2026-06-17 03:03:28 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-17 03:03:35 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'calculoEvaluacion', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'calculoEvaluacion\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:03:43 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:04:10 [INFO] [WORKER] Apagado completo.
+2026-06-17 03:10:57 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-17 03:10:59 [INFO] [DATABASE] Sensor 'son' operativo.
+2026-06-17 03:10:59 [INFO] [DATABASE] Nueva alerta: Sesión 2: [INFO] son(INsonC) - [INFO] [CAMUNDA] Se ha recuperado la conexión con el sensor son
+2026-06-17 03:10:59 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:11:04 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-17 03:11:04 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:11:04 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarSensores', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"Expected to activate jobs of type \'comprobarSensores\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later.", grpc_status:8})). Retrying in 5 seconds...
+2026-06-17 03:11:15 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 24.67, 'luzValor': 60.0, 'humValor': 39.09, 'sonValor': 259.0})
+2026-06-17 03:11:15 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:11:20 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [100.0]
+2026-06-17 03:11:20 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 100.0
+2026-06-17 03:11:20 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'leerLecturas', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'leerLecturas\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:11:21 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeBackPressureError(grpc_error=AioRpcError(code=StatusCode.RESOURCE_EXHAUSTED, details=Expected to activate jobs of type 'comprobarEstado', but no jobs available and at least one broker returned 'RESOURCE_EXHAUSTED'. Please try again later., debug_error_string=UNKNOWN:Error received from peer  {grpc_status:8, grpc_message:"Expected to activate jobs of type \'comprobarEstado\', but no jobs available and at least one broker returned \'RESOURCE_EXHAUSTED\'. Please try again later."})). Retrying in 5 seconds...
+2026-06-17 03:11:27 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-17 03:12:05 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=IOCP/Socket: Connection reset (An existing connection was forcibly closed by the remote host.
+ -- 10054), debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"IOCP/Socket: Connection reset (An existing connection was forcibly closed by the remote host.\r\n -- 10054)", grpc_status:14})). Retrying in 5 seconds...
+2026-06-17 03:12:05 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=IOCP/Socket: Connection reset (An existing connection was forcibly closed by the remote host.
+ -- 10054), debug_error_string=UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"IOCP/Socket: Connection reset (An existing connection was forcibly closed by the remote host.\r\n -- 10054)"})). Retrying in 5 seconds...
+2026-06-17 03:12:05 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=IOCP/Socket: Connection reset (An existing connection was forcibly closed by the remote host.
+ -- 10054), debug_error_string=UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"IOCP/Socket: Connection reset (An existing connection was forcibly closed by the remote host.\r\n -- 10054)"})). Retrying in 5 seconds...
+2026-06-17 03:12:05 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=IOCP/Socket: Connection reset (An existing connection was forcibly closed by the remote host.
+ -- 10054), debug_error_string=UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"IOCP/Socket: Connection reset (An existing connection was forcibly closed by the remote host.\r\n -- 10054)"})). Retrying in 5 seconds...
+2026-06-17 03:12:12 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)"})). Retrying in 5 seconds...
+2026-06-17 03:12:12 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)", grpc_status:14})). Retrying in 5 seconds...
+2026-06-17 03:12:12 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)", grpc_status:14})). Retrying in 5 seconds...
+2026-06-17 03:12:12 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)"})). Retrying in 5 seconds...
+2026-06-17 03:12:17 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv6:%5B::1%5D:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv6:%5B::1%5D:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)", grpc_status:14})). Retrying in 5 seconds...
+2026-06-17 03:12:17 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv6:%5B::1%5D:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv6:%5B::1%5D:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)", grpc_status:14})). Retrying in 5 seconds...
+2026-06-17 03:12:17 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv6:%5B::1%5D:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv6:%5B::1%5D:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)"})). Retrying in 5 seconds...
+2026-06-17 03:12:17 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv6:%5B::1%5D:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
+ -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv6:%5B::1%5D:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)", grpc_status:14})). Retrying in 5 seconds...
+2026-06-17 03:13:03 [INFO] [WORKER] Apagado completo.

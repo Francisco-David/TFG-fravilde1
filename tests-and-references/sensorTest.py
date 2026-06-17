@@ -39,12 +39,12 @@ async def sensor_test(name, interval, channel=None):
             await asyncio.sleep(interval)
             
         if name=="luz":
-            value = random.randint(20, 60)
+            value = random.randint(25, 60)
             publish_message(name, value)
             await asyncio.sleep(interval)
             
         elif name=="tem":
-            value = round(random.uniform(15.0, 30.0), 2)  # Temperatura entre 15 y 30 grados
+            value = round(random.uniform(22.0, 26.1), 2)  # Temperatura entre 15 y 30 grados
             publish_message(name, value)
             await asyncio.sleep(interval)
             
@@ -54,7 +54,7 @@ async def sensor_test(name, interval, channel=None):
             await asyncio.sleep(interval)
             
         elif name=="vib":
-            value = random.choice([0, 0])  # Vibración detectada (1) o no detectada (0)
+            value = random.choice([1, 1])  # Vibración detectada (1) o no detectada (0)
             publish_message(name, value)
             await asyncio.sleep(interval)
             

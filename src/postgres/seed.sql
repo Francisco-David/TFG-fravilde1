@@ -28,7 +28,7 @@ VALUES
 ('FFI', 'Vicente Losada Torres', '1-1', 'G0.35', '12:40', '14:30', 2),
 
 -- MIERCOLES
-('CED', 'Francisco Perez Garcia', '1-1', 'G1.32', '08:30', '10:20', 3),
+('CED', 'Francisco Perez Garcia', '1-2', 'G1.32', '08:30', '10:20', 3),
 
 ('FP', 'David Felipe Benavides Cuevas', '1-1', 'A0.12', '10:40', '12:30', 3),
 ('FP', 'Jose Angel Galindo Duarte', '1-1', 'F1.31', '10:40', '12:30', 3),

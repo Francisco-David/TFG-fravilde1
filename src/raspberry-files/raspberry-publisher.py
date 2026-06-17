@@ -83,7 +83,7 @@ async def sensor_task(name, interval, channel=None):
             
         elif name=="vib":
             try:
-                GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_UP)    # Set BtnPin's mode is input, and pull up to high level(3.3V)
+                GPIO.setup(channel, GPIO.IN) # pull_up_down=GPIO.PUD_UP)    # Set BtnPin's mode is input, and pull up to high level(3.3V)
                 value = GPIO.input(channel)
                 publish_message(name, value)
             except Exception as e:
