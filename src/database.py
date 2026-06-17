@@ -1,12 +1,7 @@
 from psycopg2.pool import ThreadedConnectionPool
 import logging
+import main as mainfile
 
-PROJECT_PATH = "I:/UNIVERSIDAD/TFG"
-
-LOCALHOST = "localhost"
-DATABASE = "fravilde1_tfg"
-USER = "postgres"
-# PASSWORD = "admin"
 
 _pool = None
 logger = logging.getLogger(__name__)
@@ -15,9 +10,9 @@ def init_pool():
     global _pool
     _pool = ThreadedConnectionPool(
         1, 10,
-        host=LOCALHOST,
-        database=DATABASE,
-        user=USER,
+        host=mainfile.LOCALHOST,
+        database=mainfile.DATABASE,
+        user=mainfile.USER,
         # password=PASSWORD
     )
 
@@ -499,7 +494,7 @@ def main_delete_db(conn):
     files = ["/TFG-fravilde1/src/postgres/drop.sql", "/TFG-fravilde1/src/postgres/schema.sql", "/TFG-fravilde1/src/postgres/seed.sql"]
     with conn.cursor() as cur:
         for f in files:
-            cur.execute(open(PROJECT_PATH + f, encoding="utf-8").read())
+            cur.execute(open(mainfile.PROJECT_PATH + f, encoding="utf-8").read())
     conn.commit()
 
 def main_check_db(table_name, conn):

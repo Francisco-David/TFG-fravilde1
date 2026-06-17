@@ -5,7 +5,7 @@ from task import router
 import database
 import logging
 import os
-import main
+import main as mainfile
 
 
 logger = logging.getLogger(__name__)
@@ -17,10 +17,10 @@ logging.getLogger("pyzeebe.grpc_internals.zeebe_job_adapter").setLevel(logging.E
 
 async def main():
     # CONFIGURACION LOGS
-    if not os.path.exists(main.LOGS_DIR):
-        os.makedirs(main.LOGS_DIR)
+    if not os.path.exists(mainfile.LOGS_DIR):
+        os.makedirs(mainfile.LOGS_DIR)
     
-    log_file = f"{main.LOGS_DIR}/worker.log"
+    log_file = f"{mainfile.LOGS_DIR}/worker.log"
     
     logging.basicConfig(
         level=logging.DEBUG,
