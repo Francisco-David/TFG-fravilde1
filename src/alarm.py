@@ -2,8 +2,7 @@ import database
 import logging
 import subprocess
 import sys
-
-DEMO_PROJECT_PATH = "I:/UNIVERSIDAD/TFG/TFG-fravilde1"
+import main as mainfile
 
 UMBRAL_AVISO_TEM_MAX = 26
 UMBRAL_ALARMA_TEM_MAX = 30
@@ -207,4 +206,4 @@ root.focus_force()
 root.mainloop()
 """
     )
-    subprocess.Popen([sys.executable, "-c", script, str(int(alerta_id)), texto_aviso, codigo, DEMO_PROJECT_PATH], close_fds=True)
+    subprocess.Popen([sys.executable, "-c", script, str(int(alerta_id)), texto_aviso, codigo, mainfile.PROJECT_PATH], close_fds=True)
