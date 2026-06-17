@@ -14,6 +14,9 @@ logger = logging.getLogger(__name__)
 logging.getLogger("grpc._cython.cygrpc").setLevel(logging.ERROR)
 logging.getLogger("pyzeebe.worker.job_executor").setLevel(logging.ERROR)
 logging.getLogger("pyzeebe.grpc_internals.zeebe_job_adapter").setLevel(logging.ERROR)
+logging.getLogger("pyzeebe").setLevel(logging.ERROR)
+logging.getLogger("pyzeebe.worker").setLevel(logging.ERROR)
+logging.getLogger("grpc").setLevel(logging.ERROR)
 
 async def main():
     # CONFIGURACION LOGS
