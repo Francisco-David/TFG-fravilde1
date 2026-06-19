@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 
 # MQTT CONFIG
-BROKER = "192.168.1.145" # "10.129.182.86" #
+BROKER = "10.129.182.86" #"192.168.1.145" # 
 PORT = 1883
 TOPIC = "tfg/sensors/tem"
 

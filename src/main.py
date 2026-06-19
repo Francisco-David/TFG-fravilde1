@@ -16,7 +16,7 @@ PROJECT_PATH = "I:/UNIVERSIDAD/TFG/TFG-fravilde1"
 
 # CONFIGURACIÓN SCRIPT PYTHON
 ZEEBE_ADDRESS = "localhost:26500"
-BROKER_ADDRESS = "192.168.1.145" # "10.129.182.86" # 
+BROKER_ADDRESS = "10.129.182.86" # "192.168.1.145" # 
 MQTT_PORT = 1883
 MQTT_TOPIC = "tfg/sensors/+"  # valor'+' para el siguiente nivel (temp, hum, etc.) y '#' para todo el árbol (tfg/sensors/...)
 

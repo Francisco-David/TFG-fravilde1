@@ -261,3 +261,31 @@ pyzeebe.errors.zeebe_errors.ZeebeDeadlineExceeded: ZeebeDeadlineExceeded(grpc_er
 2026-06-19 16:31:07 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 74.29
 2026-06-19 16:31:16 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
 2026-06-19 16:31:55 [INFO] [WORKER] Apagado completo.
+2026-06-19 17:36:19 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 17:36:30 [INFO] [DATABASE] Sensor 'son' operativo.
+2026-06-19 17:36:31 [INFO] [DATABASE] Nueva alerta: Sesión 2: [INFO] son(INsonC) - [INFO] [CAMUNDA] Se ha recuperado la conexión con el sensor son
+2026-06-19 17:36:32 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 58.0, 'humValor': 69.75, 'sonValor': 253.0})
+2026-06-19 17:36:53 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [82.0]
+2026-06-19 17:36:53 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 82.0
+2026-06-19 17:37:41 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 17:37:41 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 17:38:32 [INFO] [WORKER] Apagado completo.
+2026-06-19 17:39:10 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 17:39:44 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 31.0, 'humValor': 55.88, 'sonValor': 257.0})
+2026-06-19 17:39:48 [INFO] [WORKER] Apagado completo.
+2026-06-19 17:42:28 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 17:42:37 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 17:43:07 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 28.0, 'humValor': 49.97, 'sonValor': 255.0})
+2026-06-19 17:43:09 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [82.0]
+2026-06-19 17:43:09 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 82.0
+2026-06-19 17:43:12 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 17:44:14 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-19 17:45:16 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 28.0, 'humValor': 49.97, 'sonValor': 255.0})
+2026-06-19 17:45:21 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [82.0]
+2026-06-19 17:45:21 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 82.0
+2026-06-19 17:45:27 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-19 17:51:42 [INFO] [WORKER] Apagado completo.
