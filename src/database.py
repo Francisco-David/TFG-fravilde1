@@ -491,7 +491,7 @@ def get_metricas_aula_semanal(conn, aula, fecha_inicio, fecha_fin):
 
 # FUNCIONES DB
 def main_delete_db(conn):
-    files = ["/TFG-fravilde1/src/postgres/drop.sql", "/TFG-fravilde1/src/postgres/schema.sql", "/TFG-fravilde1/src/postgres/seed.sql"]
+    files = ["/src/postgres/drop.sql", "/src/postgres/schema.sql", "/src/postgres/seed.sql"]
     with conn.cursor() as cur:
         for f in files:
             cur.execute(open(mainfile.PROJECT_PATH + f, encoding="utf-8").read())

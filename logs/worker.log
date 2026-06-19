@@ -173,3 +173,91 @@
 2026-06-17 05:08:40 [WARNING] Failed to activate jobs from the gateway. Exception: ZeebeGatewayUnavailableError(grpc_error=AioRpcError(code=StatusCode.UNAVAILABLE, details=failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.
  -- 10061), debug_error_string=UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:26500: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)"})). Retrying in 5 seconds...
 2026-06-17 05:08:43 [INFO] [WORKER] Apagado completo.
+2026-06-19 16:12:32 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 16:12:47 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 25.26, 'luzValor': 59.0, 'humValor': 36.84, 'sonValor': 255.0})
+2026-06-19 16:12:48 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:13:08 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [100.0]
+2026-06-19 16:13:08 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 100.0
+2026-06-19 16:13:08 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:16:59 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 16:17:00 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:17:00 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 26.09, 'luzValor': 46.0, 'humValor': 46.57, 'sonValor': 250.0})
+2026-06-19 16:17:02 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [82.0]
+2026-06-19 16:17:02 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 82.0
+2026-06-19 16:17:07 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:18:34 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:19:13 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 46.0, 'humValor': 58.87, 'sonValor': 258.0})
+2026-06-19 16:19:14 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [82.0]
+2026-06-19 16:19:14 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 82.0
+2026-06-19 16:19:16 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-19 16:20:06 [INFO] [DATABASE] Sensor 'son' defectuoso.
+2026-06-19 16:20:06 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] son(AVsonC) - [AVISO] [CAMUNDA] Revise la conexión MQTT o la conexión física al sensor son
+2026-06-19 16:20:07 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-19 16:22:17 [INFO] [WORKER] Apagado completo.
+2026-06-19 16:22:36 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 16:22:38 [INFO] [DATABASE] Sensor 'son' operativo.
+2026-06-19 16:22:39 [INFO] [DATABASE] Nueva alerta: Sesión 2: [INFO] son(INsonC) - [INFO] [CAMUNDA] Se ha recuperado la conexión con el sensor son
+2026-06-19 16:22:46 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:22:53 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 49.0, 'humValor': 41.35, 'sonValor': 254.0})
+2026-06-19 16:23:01 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [82.0]
+2026-06-19 16:23:01 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 82.0
+2026-06-19 16:23:03 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-19 16:24:24 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-19 16:25:01 [INFO] [WORKER] Apagado completo.
+2026-06-19 16:25:21 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 16:25:27 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:25:43 [ERROR] Error in job executor. Task: comprobarEstado. Error: ZeebeDeadlineExceeded(grpc_error=AioRpcError(code=StatusCode.DEADLINE_EXCEEDED, details=Time out between gateway and broker: Request command-api-1 to 192.168.56.1:26501 timed out in PT15S, debug_error_string=UNKNOWN:Error received from peer  {grpc_status:4, grpc_message:"Time out between gateway and broker: Request command-api-1 to 192.168.56.1:26501 timed out in PT15S"})).
+Traceback (most recent call last):
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\grpc_internals\zeebe_job_adapter.py", line 124, in complete_job
+    await self._gateway_stub.CompleteJob(CompleteJobRequest(jobKey=job_key, variables=json.dumps(variables)))
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\grpc\aio\_call.py", line 327, in __await__
+    raise _create_rpc_error(
+grpc.aio._call.AioRpcError: <AioRpcError of RPC that terminated with:
+	status = StatusCode.DEADLINE_EXCEEDED
+	details = "Time out between gateway and broker: Request command-api-1 to 192.168.56.1:26501 timed out in PT15S"
+	debug_error_string = "UNKNOWN:Error received from peer  {grpc_status:4, grpc_message:"Time out between gateway and broker: Request command-api-1 to 192.168.56.1:26501 timed out in PT15S"}"
+>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\worker\job_executor.py", line 37, in execute_one_job
+    await self.task.job_handler(job, job_controller)
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\task\task_builder.py", line 50, in job_handler
+    await job_controller.set_success_status(variables=return_variables)
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\job\job.py", line 66, in set_success_status
+    await self._zeebe_adapter.complete_job(job_key=self._job.key, variables=variables or {})
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\grpc_internals\zeebe_job_adapter.py", line 130, in complete_job
+    await self._handle_grpc_error(grpc_error)
+  File "I:\UNIVERSIDAD\Python\Lib\site-packages\pyzeebe\grpc_internals\zeebe_adapter_base.py", line 44, in _handle_grpc_error
+    raise pyzeebe_error
+pyzeebe.errors.zeebe_errors.ZeebeDeadlineExceeded: ZeebeDeadlineExceeded(grpc_error=AioRpcError(code=StatusCode.DEADLINE_EXCEEDED, details=Time out between gateway and broker: Request command-api-1 to 192.168.56.1:26501 timed out in PT15S, debug_error_string=UNKNOWN:Error received from peer  {grpc_status:4, grpc_message:"Time out between gateway and broker: Request command-api-1 to 192.168.56.1:26501 timed out in PT15S"}))
+2026-06-19 16:26:22 [INFO] [WORKER] Apagado completo.
+2026-06-19 16:26:24 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 16:26:32 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 53.0, 'humValor': 32.15, 'sonValor': 251.0})
+2026-06-19 16:26:35 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [82.0]
+2026-06-19 16:26:35 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 82.0
+2026-06-19 16:26:36 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:27:04 [INFO] [WORKER] Apagado completo.
+2026-06-19 16:27:08 [INFO] [WORKER] Iniciando worker y esperando jobs...
+2026-06-19 16:27:19 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:28:37 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 53.0, 'humValor': 54.21, 'sonValor': 254.0})
+2026-06-19 16:28:40 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [82.0]
+2026-06-19 16:28:40 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 82.0
+2026-06-19 16:28:46 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:29:05 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: en_curso
+2026-06-19 16:30:37 [INFO] [DATABASE] Sensor 'son' defectuoso.
+2026-06-19 16:30:37 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] son(AVsonC) - [AVISO] [CAMUNDA] Revise la conexión MQTT o la conexión física al sensor son
+2026-06-19 16:30:42 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-19 16:31:03 [INFO] [CAMUNDA] "leerLecturas" - sesion_id: 2
+ (lecturas: {'temValor': 30.0, 'luzValor': 56.0, 'humValor': 54.21, 'sonValor': None})
+2026-06-19 16:31:07 [INFO] [DATABASE] Nueva evaluación: Sesión 2: [74.29]
+2026-06-19 16:31:07 [INFO] [CAMUNDA] "calculoEvaluacion" - sesion_id: 2, puntuacion: 74.29
+2026-06-19 16:31:16 [INFO] [CAMUNDA] "comprobarEstado" - sesion_id: 2, estado: finalizada
+2026-06-19 16:31:55 [INFO] [WORKER] Apagado completo.

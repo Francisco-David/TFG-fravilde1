@@ -161,3 +161,105 @@
 2026-06-17 03:12:57 [INFO] [DATABASE] Sesión con ID [2] finalizada.
 2026-06-17 03:12:57 [INFO] [MQTT] Desconectado del broker MQTT.
 2026-06-17 03:12:57 [INFO] Apagado completo.
+2026-06-19 16:11:57 [DEBUG] Using proactor: IocpProactor
+2026-06-19 16:11:57 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-19 16:12:11 [INFO] [DATABASE] Sesión con ID [2] en_curso.
+2026-06-19 16:12:11 [INFO] Ya existe una sesión (ID: 2) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+2026-06-19 16:12:11 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-19 16:12:13 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 2}
+2026-06-19 16:12:13 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-19 16:12:14 [INFO] [ZEEBE] Comenzando el proceso 'eval-sensores' con variables: {'sesion_id': 2}
+2026-06-19 16:12:20 [INFO] [ZEEBE] Proceso 'eval-sensores' iniciado correctamente.
+2026-06-19 16:12:20 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-19 16:12:28 [INFO] [DATABASE] Nueva lectura: Sensor tem: [25.26] -  [19-06-2026 16:12:23]
+2026-06-19 16:12:28 [INFO] [DATABASE] Nueva lectura: Sensor son: [255] -  [19-06-2026 16:12:23]
+2026-06-19 16:12:28 [INFO] [DATABASE] Nueva lectura: Sensor luz: [59] -  [19-06-2026 16:12:23]
+2026-06-19 16:12:28 [INFO] [DATABASE] Nueva lectura: Sensor hum: [36.84] -  [19-06-2026 16:12:23]
+2026-06-19 16:12:53 [INFO] [DATABASE] Nueva lectura: Sensor son: [260] -  [19-06-2026 16:12:53]
+2026-06-19 16:13:23 [INFO] [DATABASE] Nueva lectura: Sensor son: [259] -  [19-06-2026 16:13:23]
+2026-06-19 16:13:53 [INFO] [DATABASE] Nueva lectura: Sensor son: [254] -  [19-06-2026 16:13:53]
+2026-06-19 16:14:23 [INFO] [DATABASE] Nueva lectura: Sensor tem: [24.6] -  [19-06-2026 16:14:23]
+2026-06-19 16:14:23 [INFO] [DATABASE] Nueva lectura: Sensor hum: [44.07] -  [19-06-2026 16:14:23]
+2026-06-19 16:14:23 [INFO] [DATABASE] Nueva lectura: Sensor son: [251] -  [19-06-2026 16:14:23]
+2026-06-19 16:14:53 [INFO] [DATABASE] Nueva lectura: Sensor son: [252] -  [19-06-2026 16:14:53]
+2026-06-19 16:15:23 [INFO] [DATABASE] Nueva lectura: Sensor son: [249] -  [19-06-2026 16:15:23]
+2026-06-19 16:15:53 [INFO] [DATABASE] Nueva lectura: Sensor luz: [46] -  [19-06-2026 16:15:53]
+2026-06-19 16:15:53 [INFO] [DATABASE] Nueva lectura: Sensor son: [252] -  [19-06-2026 16:15:53]
+2026-06-19 16:16:23 [INFO] [DATABASE] Nueva lectura: Sensor tem: [26.09] -  [19-06-2026 16:16:23]
+2026-06-19 16:16:24 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] tem(AVtemX) - [AVISO] Valores de 'tem' altos > 26ºC (26.09ºC)
+2026-06-19 16:16:24 [INFO] [DATABASE] Nueva lectura: Sensor hum: [46.57] -  [19-06-2026 16:16:23]
+2026-06-19 16:16:24 [INFO] [DATABASE] Nueva lectura: Sensor son: [259] -  [19-06-2026 16:16:23]
+2026-06-19 16:16:53 [INFO] [DATABASE] Nueva lectura: Sensor son: [250] -  [19-06-2026 16:16:53]
+2026-06-19 16:17:20 [INFO] [DATABASE] Nueva lectura: Sensor tem: [30] -  [19-06-2026 16:17:20]
+2026-06-19 16:17:20 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] tem(AVtemX) - [AVISO] Valores de 'tem' altos > 26ºC (30ºC)
+2026-06-19 16:17:23 [INFO] [DATABASE] Nueva lectura: Sensor son: [250] -  [19-06-2026 16:17:23]
+2026-06-19 16:17:53 [INFO] [DATABASE] Nueva lectura: Sensor son: [251] -  [19-06-2026 16:17:53]
+2026-06-19 16:18:23 [INFO] [DATABASE] Nueva lectura: Sensor tem: [23.09] -  [19-06-2026 16:18:23]
+2026-06-19 16:18:23 [INFO] [DATABASE] Nueva lectura: Sensor hum: [58.87] -  [19-06-2026 16:18:23]
+2026-06-19 16:18:23 [INFO] [DATABASE] Nueva lectura: Sensor son: [258] -  [19-06-2026 16:18:23]
+2026-06-19 16:18:46 [INFO] [DATABASE] Nueva lectura: Sensor tem: [30] -  [19-06-2026 16:18:46]
+2026-06-19 16:18:46 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] tem(AVtemX) - [AVISO] Valores de 'tem' altos > 26ºC (30ºC)
+2026-06-19 16:18:51 [INFO] Apagando...
+2026-06-19 16:18:51 [INFO] [DATABASE] Sesión con ID [2] finalizada.
+2026-06-19 16:18:51 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-19 16:18:51 [INFO] Apagado completo.
+2026-06-19 16:22:22 [DEBUG] Using proactor: IocpProactor
+2026-06-19 16:22:22 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-19 16:22:25 [INFO] [DATABASE] Sesión con ID [2] en_curso.
+2026-06-19 16:22:25 [INFO] Ya existe una sesión (ID: 2) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+2026-06-19 16:22:25 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-19 16:22:25 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 2}
+2026-06-19 16:22:25 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-19 16:22:25 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-19 16:22:25 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-19 16:22:25 [INFO] [ZEEBE] Comenzando el proceso 'eval-sensores' con variables: {'sesion_id': 2}
+2026-06-19 16:22:25 [INFO] [ZEEBE] Proceso 'eval-sensores' iniciado correctamente.
+2026-06-19 16:22:31 [INFO] [DATABASE] Nueva lectura: Sensor tem: [24.26] -  [19-06-2026 16:22:31]
+2026-06-19 16:22:31 [INFO] [DATABASE] Nueva lectura: Sensor son: [254] -  [19-06-2026 16:22:31]
+2026-06-19 16:22:31 [INFO] [DATABASE] Nueva lectura: Sensor luz: [49] -  [19-06-2026 16:22:31]
+2026-06-19 16:22:31 [INFO] [DATABASE] Nueva lectura: Sensor hum: [41.35] -  [19-06-2026 16:22:31]
+2026-06-19 16:22:41 [INFO] [DATABASE] Nueva lectura: Sensor tem: [30] -  [19-06-2026 16:22:41]
+2026-06-19 16:22:41 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] tem(AVtemX) - [AVISO] Valores de 'tem' altos > 26ºC (30ºC)
+2026-06-19 16:23:01 [INFO] [DATABASE] Nueva lectura: Sensor son: [259] -  [19-06-2026 16:23:01]
+2026-06-19 16:23:03 [INFO] Apagando...
+2026-06-19 16:23:03 [INFO] [DATABASE] Sesión con ID [2] finalizada.
+2026-06-19 16:23:03 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-19 16:23:03 [INFO] Apagado completo.
+2026-06-19 16:25:10 [DEBUG] Using proactor: IocpProactor
+2026-06-19 16:25:10 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-19 16:25:13 [INFO] [DATABASE] Sesión con ID [2] en_curso.
+2026-06-19 16:25:13 [INFO] Ya existe una sesión (ID: 2) para este horario y fecha. Se ha actualizado su estado a 'en_curso'.
+2026-06-19 16:25:13 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-19 16:25:13 [INFO] [ZEEBE] Comenzando el proceso 'eval-ambiental' con variables: {'sesion_id': 2}
+2026-06-19 16:25:13 [INFO] [ZEEBE] Proceso 'eval-ambiental' iniciado correctamente.
+2026-06-19 16:25:13 [INFO] [MQTT] Suscrito a topic 'tfg/sensors/+'. Esperando mensajes...
+2026-06-19 16:25:13 [DEBUG] Using AsyncIOEngine.POLLER as I/O engine
+2026-06-19 16:25:13 [INFO] [ZEEBE] Comenzando el proceso 'eval-sensores' con variables: {'sesion_id': 2}
+2026-06-19 16:25:13 [INFO] [ZEEBE] Proceso 'eval-sensores' iniciado correctamente.
+2026-06-19 16:25:18 [INFO] [DATABASE] Nueva lectura: Sensor tem: [26.01] -  [19-06-2026 16:25:18]
+2026-06-19 16:25:18 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] tem(AVtemX) - [AVISO] Valores de 'tem' altos > 26ºC (26.01ºC)
+2026-06-19 16:25:18 [INFO] [DATABASE] Nueva lectura: Sensor son: [252] -  [19-06-2026 16:25:18]
+2026-06-19 16:25:18 [INFO] [DATABASE] Nueva lectura: Sensor luz: [53] -  [19-06-2026 16:25:18]
+2026-06-19 16:25:18 [INFO] [DATABASE] Nueva lectura: Sensor hum: [32.15] -  [19-06-2026 16:25:18]
+2026-06-19 16:25:26 [INFO] [DATABASE] Nueva lectura: Sensor tem: [30] -  [19-06-2026 16:25:26]
+2026-06-19 16:25:27 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] tem(AVtemX) - [AVISO] Valores de 'tem' altos > 26ºC (30ºC)
+2026-06-19 16:25:48 [INFO] [DATABASE] Nueva lectura: Sensor son: [258] -  [19-06-2026 16:25:48]
+2026-06-19 16:26:18 [INFO] [DATABASE] Nueva lectura: Sensor son: [251] -  [19-06-2026 16:26:18]
+2026-06-19 16:26:48 [INFO] [DATABASE] Nueva lectura: Sensor son: [249] -  [19-06-2026 16:26:48]
+2026-06-19 16:27:18 [INFO] [DATABASE] Nueva lectura: Sensor tem: [22.01] -  [19-06-2026 16:27:18]
+2026-06-19 16:27:18 [INFO] [DATABASE] Nueva lectura: Sensor hum: [54.21] -  [19-06-2026 16:27:18]
+2026-06-19 16:27:18 [INFO] [DATABASE] Nueva lectura: Sensor son: [253] -  [19-06-2026 16:27:18]
+2026-06-19 16:27:33 [INFO] [DATABASE] Nueva lectura: Sensor tem: [30] -  [19-06-2026 16:27:33]
+2026-06-19 16:27:33 [INFO] [DATABASE] Nueva alerta: Sesión 2: [AVISO] tem(AVtemX) - [AVISO] Valores de 'tem' altos > 26ºC (30ºC)
+2026-06-19 16:27:48 [INFO] [DATABASE] Nueva lectura: Sensor son: [255] -  [19-06-2026 16:27:48]
+2026-06-19 16:28:18 [INFO] [DATABASE] Nueva lectura: Sensor son: [254] -  [19-06-2026 16:28:18]
+2026-06-19 16:28:48 [INFO] [DATABASE] Nueva lectura: Sensor luz: [56] -  [19-06-2026 16:28:48]
+2026-06-19 16:28:48 [INFO] [DATABASE] Nueva lectura: Sensor son: [257] -  [19-06-2026 16:28:48]
+2026-06-19 16:29:15 [INFO] Apagando...
+2026-06-19 16:29:15 [INFO] [DATABASE] Sesión con ID [2] finalizada.
+2026-06-19 16:29:15 [INFO] [MQTT] Desconectado del broker MQTT.
+2026-06-19 16:29:15 [INFO] Apagado completo.
+2026-06-19 16:33:22 [DEBUG] Using proactor: IocpProactor
+2026-06-19 16:33:22 [INFO] -  BIENVENIDO: 2026-05-20 | 10:50  - 
+2026-06-19 16:34:33 [INFO] Apagando...
+2026-06-19 16:34:33 [INFO] Apagado completo.

@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 
 # WARNING de falta de jobs para activar cuando por ejemplo no hay jobs que hacer porque todos los sensores están operativos
 logging.getLogger("grpc._cython.cygrpc").setLevel(logging.ERROR)
-logging.getLogger("pyzeebe.worker.job_executor").setLevel(logging.ERROR)
-logging.getLogger("pyzeebe.grpc_internals.zeebe_job_adapter").setLevel(logging.ERROR)
+# logging.getLogger("pyzeebe.worker.job_executor").setLevel(logging.ERROR)
+# logging.getLogger("pyzeebe.grpc_internals.zeebe_job_adapter").setLevel(logging.ERROR)
 logging.getLogger("pyzeebe").setLevel(logging.ERROR)
-logging.getLogger("pyzeebe.worker").setLevel(logging.ERROR)
+# logging.getLogger("pyzeebe.worker").setLevel(logging.ERROR)
 logging.getLogger("grpc").setLevel(logging.ERROR)
 
 async def main():

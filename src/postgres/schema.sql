@@ -54,6 +54,6 @@ CREATE TABLE alerta (
 CREATE TABLE evaluacion (
     evaluacion_id SERIAL PRIMARY KEY,
     sesion_id  INTEGER REFERENCES sesion(sesion_id) ON DELETE SET NULL,
-    puntuacion TEXT NOT NULL,
+    puntuacion FLOAT NOT NULL,
     timestamp TIMESTAMP NOT NULL DEFAULT now()
 );
